@@ -1,2 +1,2 @@
 # Communty-Networking-App
-Timy - open source mobile app for groups to communicate and organize
+UbuApp- open source continental mobile app for community & resource networking in Africa
