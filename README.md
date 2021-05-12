@@ -1,5 +1,7 @@
-# UbuApp
-UbuApp- open source continental mobile app for community & resource networking in Africa
+# Afrocom Platform APP
+An interactive map based App that collects and map data postings ( user demography, postings, polls, projects,reports, campaigns, businesses, resources, etc.) A directory like 
+And these data will be spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatically changes.
+
 
 image src:\
 
