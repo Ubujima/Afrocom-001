@@ -19,7 +19,7 @@ Table of contents
 Brave welcomes contributions of all kinds! You can make a huge impact without writing a single line of code
 
 ### Help triage issues
-One of the easiest ways to help is to [look through our issues tab](https://github.com/brave/brave-browser/issues)
+One of the easiest ways to help is to [look through our issues tab](https://github.com/Ubujima/Afrocom/issues)
 * Does the issue still happen? Sometimes we fix the problem and don't always close the issue
 * Are there clear steps to reproduce the issue? If not, let's find and document some
 * Is the issue a duplicate? If so, share the issue that is being duplicated in the conversation
@@ -28,8 +28,8 @@ One of the easiest ways to help is to [look through our issues tab](https://gith
 
 ### Updating documentation
 Documentation is extremely important. There are lots of areas we can improve:
-* Having more clear or up-to-date instructions in the README for both [`brave-browser`](https://github.com/brave/brave-browser/blob/master/README.md) and [`brave-core`](https://github.com/brave/brave-core/blob/master/README.md).
-* Capturing/updating helpful information [in our wiki](https://github.com/brave/brave-browser/wiki). You'll need to reach out to a Brave team member to request permission - you can do this by creating a new issue or tagging a Brave team member in an existing issue.
+* Having more clear or up-to-date instructions in the README for both [`brave-browser`](https://github.com/Ubujima/Afrocom/blob/master/README.md) and [`brave-core`](https://github.com/Ubujima/Afrocom/blob/master/README.md).
+* Capturing/updating helpful information [in our wiki](https://github.com/Ubujima/Afrocom/wiki). You'll need to reach out to a Brave team member to request permission - you can do this by creating a new issue or tagging a Brave team member in an existing issue.
 * Helping to propose a way to bring documentation to other languages. Right now, everything is in English
 * Improving this document :smile:
 
@@ -40,7 +40,7 @@ We're missing translations for many languages and some translations might be inc
 For everything you'd need to get started, check out https://www.transifex.com/brave/brave/ :smile:
 
 ### Work on the code
-* The [repo's wiki](https://github.com/brave/brave-browser/wiki) has instructions for cloning the repo and getting setup on your platform of choice
+* The [repo's wiki](https://github.com/Ubujima/Afrocom/wiki) has instructions for cloning the repo and getting setup on your platform of choice
 * Check out the [troubleshooting page](https://github.com/brave/brave-browser/wiki/Troubleshooting) if you get stuck
 * Once you're up and running, find an interesting issue to fix. Check out issues labelled with [good first issue](https://github.com/brave/brave-browser/labels/good%20first%20issue)
   - some issues only require knowledge of JavaScript (for example, pages using React and our [Brave UI library](https://github.com/brave/brave-ui))
@@ -48,8 +48,8 @@ For everything you'd need to get started, check out https://www.transifex.com/br
 
 ## Getting started
 * Make sure you have a [GitHub account](https://github.com/join).
-* Submit a [ticket](https://github.com/brave/brave-browser/issues) for your issue if one does not already exist. Please include the Brave version, operating system, and steps to reproduce the issue.
-* Fork the repository on GitHub (this might be [`brave-browser`](https://github.com/brave/brave-browser), [`brave-core`](https://github.com/brave/brave-core), or both).
+* Submit a [ticket](https://github.com/Ubujima/Afrocom/issues) for your issue if one does not already exist. Please include the Brave version, operating system, and steps to reproduce the issue.
+* Fork the repository on GitHub (this might be [`brave-browser`](https://github.com/Ubujima/Afrocom), [`brave-core`](https://github.com/Ubujima/Afrocom), or both).
 * For changes to JavaScript files, we recommend installing a [Standard](http://standardjs.com/) plugin for your preferred text editor in order to ensure code style consistency.
 * For C++ changes, you can consider setting up [clang-format](https://chromium.googlesource.com/chromium/src/+/master/docs/sublime_ide.md#Format-Selection-with-Clang_Format-Chromium-only) for your editor.
 * For changes which involve patches, please check out our [Patching Chromium](https://github.com/brave/brave-browser/wiki/Patching-Chromium) guide.
