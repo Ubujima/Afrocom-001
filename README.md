@@ -3,8 +3,23 @@
 A directory like 
 - And these data get be spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatically changes.
 
+# Contributing
+Please see the contributing guidelines.
 
-image src:\
+# Community
+Join the Q&A community if you'd like to get more involved with Brave. You can ask for help, discuss features you'd like to see, and a lot more. We'd love to have your help so that we can continue improving Brave.
+
+Help us translate Brave to your language by submitting translations at https://www.transifex.com/brave/brave/.
+
+Follow @brave on Twitter for important news and announcements.
+
+# Install prerequisites
+Follow the instructions for your platform:
+
+macOS
+Windows
+Linux/Android
+
 
 
 # Main Features 
