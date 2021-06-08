@@ -1,25 +1,25 @@
-# Afrocom
-A `Super`, `Interactive map`, `Directory based`&`Geotagged` Application that collects & maps members activities (users, postings, polls, projects,reports, campaigns, businesses, resources, etc.) These data get spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatically changes.
+## Afrocom
+A `Super`, `Interactive map`, `Directory based` & `Geotagged` Application that collects & maps members activities (users, postings, polls, projects,reports, campaigns, businesses, resources, etc.) These data get spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatially changes.
 
-`afrocentric & afrothentic`
-`members built, owned & ran`
-`realtime data mapping & access`
-`community & resource networking`
-`change facilitation through projects & campaign tools`
-`80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team`
-`and whole lot more`
+-`afrocentric & afrothentic`
+-`members built, owned & ran`
+-`realtime data mapping & access`
+-`community & resource networking`
+-`change facilitation through projects & campaign tools`
+-`80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team`
+-`and whole lot more`
 
-## Download App
+### Download App
 Explore Africa around you with Afrocom.
 
 <a href="https://apps.apple.com/us/app/spot-videos/id1564675926?utm_source=github&utm_campaign=static" target="blank"><img src="https://raw.githubusercontent.com/dshukertjr/spot/main/assets/readme/download_ios.svg" alt="Download from AppStore" height="96" /></a></span><a href='https://play.google.com/store/apps/details?id=app.spotvideo&utm_source=github&utm_campaign=static&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target="blank"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="100" /></a>
 
 
-## Features
+### Features
 * App features is mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
 
 
-## Screenshots
+### Screenshots
 
 Welcome Page               |  Login Page               | Signup Page               |  Forgot Password Page
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
@@ -37,15 +37,15 @@ Tweet Detail Page         |  Tweet Thread              |   Nested Tweet Thread  
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/TweetDetail/screenshot_3.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/TweetDetail/screenshot_4.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/TweetDetail/screenshot_1.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/TweetDetail/screenshot_2.jpg?raw=true)|
 
-Notification Page         |  Notification Page         |   Notification Page       | Notification Setting Page
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 
-# Contributing
+
+## Contributing
 
 If you wish to contribute a change to any of the existing feature or add new in this repo,
 please review our [contribution guide](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/CONTRIBUTING.md),
-and send a [pull request](https://github.com/TheAlphamerc/flutter_twitter_clone/pulls). I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request.
----
+and send a [pull request](https://github.com/TheAlphamerc/flutter_twitter_clone/pulls). 
+I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request.
+
 
 ## Getting Started
 
