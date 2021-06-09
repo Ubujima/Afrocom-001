@@ -228,10 +228,9 @@ _\*Afrocom works on iOS and Android._
 This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
 <details>
      <summary> Click to expand </summary>
+	
 - Adding Strings
   
-```
-
 1. To add a new localizable string, open the `app_en.arb` file at `lib/l10n/arb/app_en.arb`.
 
 ```arb
@@ -272,9 +271,8 @@ Widget build(BuildContext context) {
 }
 ```
 
-
 - Adding Supported Locales
-    
+
 Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info.plist` to include the new locale.
 
 ```xml
@@ -287,11 +285,10 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 	</array>
 
     ...
-
+```
 
 - Adding Translations
 
-     
 1. For each supported locale, add a new ARB file in `lib/l10n/arb`.
 
 ```
@@ -326,9 +323,7 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
     }
 }
 ```
-
 </details>
-
 
 
 ## Created & Maintained By
