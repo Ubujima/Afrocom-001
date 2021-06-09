@@ -331,6 +331,6 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [Ubujima Foundation](https://github.com/ubujima) ([Twitter](https://www.twitter.com/ubujima)) ([Insta](https://www.instagram.com/ubujima))
  
 
-> If you found this project worth donating and please donnate here [PayPal](https://paypal.me/ubujima/)
+> If you found this project worth donating and please donnate here [PayPal](https://paypal.me/ubujima?locale.x=en_US)
 
 
