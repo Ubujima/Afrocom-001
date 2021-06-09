@@ -42,9 +42,8 @@ Tweet Detail Page         |  Tweet Thread              |   Nested Tweet Thread  
 ## Contributing
 
 If you wish to contribute a change to any of the existing feature or add new in this repo,
-please review our [contribution guide](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/CONTRIBUTING.md),
-and send a [pull request](https://github.com/TheAlphamerc/flutter_twitter_clone/pulls). 
-I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request.
+please review our [contribution guide](https://github.com/Ubujima/Afrocom/blob/master/CONTRIBUTING.md), check out our issues list [issues list](https://github.com/Ubujima/Afrocom/issues) or send a [pull request](https://github.com/Ubujima/Afrocom/pulls). 
+We welcome and encourage all pull requests. It usually will take us within 24-48 hours to respond to any issue or request.
 
 
 ### Getting Started
@@ -227,10 +226,9 @@ _\*Afrocom works on iOS and Android._
      
 ### Working with Localizations 
 This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
-
-- Adding Strings
 <details>
      <summary> Click to expand </summary>
+- Adding Strings
   
 ```
 
@@ -274,12 +272,8 @@ Widget build(BuildContext context) {
 }
 ```
 
-</details>
-
 
 - Adding Supported Locales
-<details>
-     <summary> Click to expand </summary>
     
 Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info.plist` to include the new locale.
 
@@ -293,14 +287,10 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 	</array>
 
     ...
-```
-
-</details>
 
 
 - Adding Translations
-<details>
-     <summary> Click to expand </summary>
+
      
 1. For each supported locale, add a new ARB file in `lib/l10n/arb`.
 
