@@ -1,13 +1,13 @@
 ## Afrocom
 A `Super`, `Interactive map`, `Directory based` & `Geotagged` Application that collects & maps members activities (users, postings, polls, projects,reports, campaigns, businesses, resources, etc.) These data get spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatially changes.
 
--`afrocentric & afrothentic`
--`members built, owned & ran`
--`realtime data mapping & access`
--`community & resource networking`
--`change facilitation through projects & campaign tools`
--`80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team`
--`and whole lot more`
+* afrocentric & afrothentic
+* members built, owned & ran
+* realtime data mapping & access
+* community & resource networking
+* change facilitation through projects & campaign tools
+* 80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team
+* and whole lot more
 
 ### Download App
 Explore Africa around you with Afrocom.
@@ -16,7 +16,7 @@ Explore Africa around you with Afrocom.
 
 
 ### Features
-* App features is mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
+App features and status are mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
 
 
 ### Screenshots
@@ -47,14 +47,12 @@ and send a [pull request](https://github.com/TheAlphamerc/flutter_twitter_clone/
 I welcome and encourage all pull requests. It usually will take me within 24-48 hours to respond to any issue or request.
 
 
-## Getting Started
+### Getting Started
 
 This project contains 3 branches:
-
 - development
 - staging
 - production
-
 To run the desired flavor either use the launch configuration in VSCode/Android Studio or use the following commands:
 
 ```sh
@@ -73,7 +71,7 @@ _\*Afrocom works on iOS and Android._
 ---
 
 
-## Dependencies
+### Dependencies
 <details>
      <summary> Click to expand </summary>
      
@@ -95,7 +93,7 @@ _\*Afrocom works on iOS and Android._
 </details>
 
 
-## Directory Structure
+### Directory Structure
 <details>
      <summary> Click to expand </summary>
   
@@ -227,14 +225,127 @@ _\*Afrocom works on iOS and Android._
 
 </details>
      
+### Working with Localizations 
+This project relies on [flutter_localizations][flutter_localizations_link] and follows the [official internationalization guide for Flutter][internationalization_link].
+
+- Adding Strings
+<details>
+     <summary> Click to expand </summary>
+  
+```
+
+1. To add a new localizable string, open the `app_en.arb` file at `lib/l10n/arb/app_en.arb`.
+
+```arb
+{
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    }
+}
+```
+
+2. Then add a new key/value and description
+
+```arb
+{
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    },
+    "helloWorld": "Hello World",
+    "@helloWorld": {
+        "description": "Hello World Text"
+    }
+}
+```
+
+3. Use the new string
+
+```dart
+import 'package:spot/l10n/l10n.dart';
+
+@override
+Widget build(BuildContext context) {
+  final l10n = context.l10n;
+  return Text(l10n.helloWorld);
+}
+```
+
+</details>
+
+
+- Adding Supported Locales
+<details>
+     <summary> Click to expand </summary>
+    
+Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info.plist` to include the new locale.
+
+```xml
+    ...
+
+    <key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>es</string>
+	</array>
+
+    ...
+```
+
+</details>
+
+
+- Adding Translations
+<details>
+     <summary> Click to expand </summary>
+     
+1. For each supported locale, add a new ARB file in `lib/l10n/arb`.
+
+```
+├── l10n
+│   ├── arb
+│   │   ├── app_en.arb
+│   │   └── app_es.arb
+```
+
+2. Add the translated strings to each `.arb` file:
+
+`app_en.arb`
+
+```arb
+{
+    "@@locale": "en",
+    "counterAppBarTitle": "Counter",
+    "@counterAppBarTitle": {
+        "description": "Text shown in the AppBar of the Counter Page"
+    }
+}
+```
+
+`app_es.arb`
+
+```arb
+{
+    "@@locale": "es",
+    "counterAppBarTitle": "Contador",
+    "@counterAppBarTitle": {
+        "description": "Texto mostrado en la AppBar de la página del contador"
+    }
+}
+```
+
+</details>
+
+
 
 ## Created & Maintained By
 
 [Ubujima Foundation](https://github.com/ubujima) ([Twitter](https://www.twitter.com/ubujima)) ([Insta](https://www.instagram.com/ubujima))
  
 
-> If you found this project helpful or you learned something from the source code and want to thank me, consider buying me a cup of :coffee:
->
-> * [PayPal](https://paypal.me/ubujima/)
+> If you found this project worth donating and please donnate here [PayPal](https://paypal.me/ubujima/)
 
 
