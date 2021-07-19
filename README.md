@@ -1,4 +1,6 @@
 ## Afrocom
+![Spot Screenshots](https://github.com/Ubujima/Afrocom/blob/master/Afrocom%20logo.png?raw=true)
+https://github.com/Ubujima/Afrocom/blob/master/Afrocom%20logo.png
 A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects & maps members activities (users, postings, polls, projects,reports, campaigns, businesses, resources, etc.) These data get spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatially changes.
 
 * afrocentric & afrothentic
