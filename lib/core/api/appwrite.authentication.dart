@@ -9,7 +9,8 @@ class AppwriteAuthentication {
         .signUp(name: name, email: email, password: password);
   }
 
-  static Future login({required String email, required String password}) async {
+  static Future<void> login(
+      {required String email, required String password}) async {
     await AppwriteAPI.createInstance.login(email: email, password: password);
   }
 }

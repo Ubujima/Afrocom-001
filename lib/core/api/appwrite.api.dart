@@ -1,4 +1,3 @@
-import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/core/models/user.model.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
@@ -13,8 +12,9 @@ class AppwriteAPI {
   final NavigationUtility navigationUtility = new NavigationUtility();
   AppwriteAPI._initialize() {
     _client = Client(
-      endPoint: AppwriteCredentials.AppwriteEndpoint,
-    ).setProject(AppwriteCredentials.AppwriteProjectID).setSelfSigned();
+      endPoint: "http://afro-com.com/v1",
+    ).setProject("60d0b068a4012");
+    print(_client.endPoint);
     _account = Account(_client);
     _database = Database(_client);
     _storage = Storage(_client);

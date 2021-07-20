@@ -1,12 +1,24 @@
+import 'package:afrocom/app/constants/images.tag.dart';
+import 'package:afrocom/app/routes/app.routes.dart';
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
-import 'package:afrocom/meta/utilities/snackbar.utility.dart';
+import 'package:afrocom/app/shared/textStyles.dart';
+import 'package:afrocom/meta/utilities/navigation.utility.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:afrocom/meta/widgets/custom_button.dart';
 import 'package:afrocom/meta/widgets/custom_text_field.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginWidgets {
+  static Container appLogo() {
+    return Container(
+      height: 100,
+      width: 100,
+      child: Image.asset(ImageTags.AppLogo),
+    );
+  }
+
   static Container loginSection(
       {required List<TextEditingController> textEditingController}) {
     return Container(
@@ -52,36 +64,78 @@ class LoginWidgets {
     );
   }
 
-  static signupScreenText({required dynamic onPressed}) {
-    return Center(
-      child: RichText(
-        text: TextSpan(children: <TextSpan>[
-          TextSpan(
-            text: "Don't have an account? ",
-            style: TextStyle(
-                color: KConstantColors.textColor,
-                fontWeight: FontWeight.w700,
-                fontFamily: KConstantFonts.Monteserrat),
-          ),
-          TextSpan(
-            text: "Signup",
-            recognizer: TapGestureRecognizer()..onTap = onPressed,
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: 17.0,
-                color: KConstantColors.textColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: KConstantFonts.MonteserratB),
-          )
-        ]),
+  static thirdPartyLogin() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          CustomButton(
+              iconData: EvaIcons.google,
+              tag: "Google",
+              height: 50,
+              onPressed: () {},
+              width: 120),
+          CustomButton(
+              iconData: EvaIcons.facebook,
+              tag: "Facebook",
+              height: 50,
+              onPressed: () {},
+              width: 110),
+          CustomButton(
+              iconData: EvaIcons.linkedin,
+              tag: "LinkedIn",
+              height: 50,
+              onPressed: () {},
+              width: 120)
+        ],
       ),
     );
   }
 
-  static skipAuthentication() {
+  static signUpButton({required dynamic onPressed}) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: 50,
+        width: 200,
+        child: Center(
+          child: Text(
+            "Signup",
+            style: KConstantTextStyles.BHeading1(fontSize: 16),
+          ),
+        ),
+        decoration: BoxDecoration(
+            color: KConstantColors.darkColor,
+            borderRadius: BorderRadius.circular(5)),
+      ),
+    );
+  }
+
+  static signupScreenText({required dynamic onPressed}) {
+    return Center(
+      child: Column(
+        children: [
+          Text("Don't have an account?",
+              style: TextStyle(
+                  color: KConstantColors.textColor,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: KConstantFonts.Monteserrat)),
+          vSizedBox1,
+          signUpButton(onPressed: onPressed)
+        ],
+      ),
+    );
+  }
+
+  static skipAuthentication({
+    required BuildContext context,
+  }) {
+    final NavigationUtility navigationUtility = new NavigationUtility();
     return Center(
         child: TextButton(
-      onPressed: () {},
+      onPressed: () {
+        navigationUtility.navigateTo(context, HomeRoute);
+      },
       child: Text(
         "Skip for now",
         style: TextStyle(

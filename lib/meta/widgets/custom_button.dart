@@ -34,7 +34,7 @@ class CustomButton extends StatelessWidget {
               hSizedBox1,
               Text(
                 tag,
-                style: KConstantTextStyles.MBody1(fontSize: 16),
+                style: KConstantTextStyles.MBody1(fontSize: 14),
               ),
             ],
           ),

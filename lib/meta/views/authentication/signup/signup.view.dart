@@ -1,5 +1,8 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/core/api/appwrite.api.dart';
+import 'package:afrocom/core/api/appwrite.authentication.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:provider/provider.dart';
 import 'signup.exports.dart';
 
 class SignupView extends StatefulWidget {
@@ -8,13 +11,26 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
+  TextEditingController usernamenameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    usernamenameController = TextEditingController();
+    emailController = TextEditingController();
+    nameController = TextEditingController();
+    passwordController = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authenticationNotifier = Provider.of<AuthenticationNotifier>(context);
     final navigationUtility = new NavigationUtility();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     List<TextEditingController> textEditingController = [
+      usernamenameController,
       nameController,
       emailController,
       passwordController
@@ -25,44 +41,43 @@ class _SignupViewState extends State<SignupView> {
           child: Container(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  vSizedBox5,
-                  vSizedBox2,
-                  Text("Welcome to Afrocom!",
-                      style: KConstantTextStyles.MBody1(fontSize: 30)),
-                  Text("Create a new account to get started.",
-                      style: KConstantTextStyles.MBody1(fontSize: 20)),
-                  vSizedBox3,
-                  SignupWidgets.signupSection(
-                      textEditingController: textEditingController),
-                  vSizedBox3,
-                  SignupWidgets.signupButton(
-                      context: context,
-                      onPressed: () async {
-                        String name = nameController.text;
-                        String email = emailController.text;
-                        String password = passwordController.text;
-                        if (name.isNotEmpty &&
-                            email.isNotEmpty &&
-                            password.isNotEmpty) {
-                          await AppwriteAPI.createInstance.signUp(
-                              name: name, email: email, password: password);
-                        } else {
-                          SnackbarUtility.showSnackbar(
-                              context: context, message: "Fill in the details");
-                        }
-                      }),
-                  vSizedBox3,
-                  vSizedBox3,
-                  SignupWidgets.loginScreenText(
-                      onPressed: () =>
-                          navigationUtility.navigateTo(context, LoginRoute)),
-                  vSizedBox2,
-                  // SignupWidgets.skipAuthentication(context: context)
-                ],
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    vSizedBox4,
+                    SignupWidgets.appLogo(),
+                    vSizedBox2,
+                    Text("Create a new account to get started.",
+                        style: KConstantTextStyles.MBody1(fontSize: 20)),
+                    vSizedBox3,
+                    SignupWidgets.signupSection(
+                        context: context,
+                        textEditingController: textEditingController),
+                    vSizedBox3,
+                    SignupWidgets.signupButton(
+                        context: context,
+                        onPressed: () async {
+                          String username = usernamenameController.text;
+                          String email = emailController.text;
+                          String password = passwordController.text;
+                          AppwriteAPI.createInstance.signUp(
+                              name: username, email: email, password: password);
+                          // authenticationNotifier.signUp(
+                          //     context: context,
+                          //     username: username,
+                          //     email: email,
+                          //     password: password);
+                        }),
+                    vSizedBox3,
+                    SignupWidgets.loginScreenText(
+                        onPressed: () =>
+                            navigationUtility.navigateTo(context, LoginRoute)),
+                    vSizedBox2,
+                    // SignupWidgets.skipAuthentication(context: context)
+                  ],
+                ),
               ),
             ),
           ),

@@ -3,10 +3,18 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 class HomeViewWidgets {
   static AppBar homeAppBar = AppBar(
+    automaticallyImplyLeading: false,
     backgroundColor: KConstantColors.bgColor,
-    title: Text(
-      "Afrocom",
-      style: KConstantTextStyles.BHeading1(fontSize: 20),
+    title: Container(
+      child: TextField(
+        style: KConstantTextStyles.MBody1(fontSize: 18),
+        decoration: InputDecoration.collapsed(
+          hintText: "Search afrocom",
+          hintStyle:
+              TextStyle(color: KConstantColors.whiteColor, fontSize: 16.0),
+        ),
+      ),
+      width: 300,
     ),
     actions: [
       IconButton(
