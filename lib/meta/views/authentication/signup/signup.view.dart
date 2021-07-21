@@ -1,6 +1,5 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/core/api/appwrite.api.dart';
-import 'package:afrocom/core/api/appwrite.authentication.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:provider/provider.dart';
 import 'signup.exports.dart';
@@ -63,7 +62,10 @@ class _SignupViewState extends State<SignupView> {
                           String email = emailController.text;
                           String password = passwordController.text;
                           AppwriteAPI.createInstance.signUp(
-                              name: username, email: email, password: password);
+                              context: context,
+                              name: username,
+                              email: email,
+                              password: password);
                           // authenticationNotifier.signUp(
                           //     context: context,
                           //     username: username,

@@ -1,3 +1,4 @@
+import 'package:afrocom/core/api/appwrite.api.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/home/add_post/add_post.view.dart';
 import 'package:afrocom/meta/views/home/map_view/map_view.view.dart';
@@ -13,6 +14,11 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     int homeIndex = 0;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          AppwriteAPI.createInstance.getUser(context);
+        },
+      ),
       appBar: HomeViewWidgets.homeAppBar,
       body: PageView(
         onPageChanged: (index) {

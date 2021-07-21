@@ -110,8 +110,8 @@ class AddPost extends StatelessWidget {
               ),
               vSizedBox4,
               GestureDetector(
-                onTap: () => AppwriteAPI.createInstance
-                    .addData(data: postController.text),
+                // onTap: () => AppwriteAPI.createInstance
+                //     .addData(data: postController.text),
                 child: Container(
                   height: 50,
                   width: 200,
