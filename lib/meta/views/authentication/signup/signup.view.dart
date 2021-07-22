@@ -1,6 +1,8 @@
 import 'package:afrocom/app/shared/colors.dart';
-import 'package:afrocom/core/api/appwrite.api.dart';
+import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:afrocom/core/notifier/utility.notifier.dart';
 import 'package:provider/provider.dart';
 import 'signup.exports.dart';
 
@@ -10,29 +12,34 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-  TextEditingController usernamenameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController userfullnameController = TextEditingController();
+  TextEditingController useremailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController userpasswordController = TextEditingController();
 
   @override
   void initState() {
-    usernamenameController = TextEditingController();
-    emailController = TextEditingController();
-    nameController = TextEditingController();
-    passwordController = TextEditingController();
+    userfullnameController = TextEditingController();
+    useremailController = TextEditingController();
+    usernameController = TextEditingController();
+    userpasswordController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final authenticationNotifier = Provider.of<AuthenticationNotifier>(context);
+    final databaseNotifier =
+        Provider.of<DatabaseNotifier>(context, listen: false);
+    final utilityNotifier =
+        Provider.of<UtilityNotifier>(context, listen: false);
+    final authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     final navigationUtility = new NavigationUtility();
     List<TextEditingController> textEditingController = [
-      usernamenameController,
-      nameController,
-      emailController,
-      passwordController
+      userfullnameController,
+      usernameController,
+      useremailController,
+      userpasswordController
     ];
     return Scaffold(
         backgroundColor: KConstantColors.bgColor,
@@ -58,19 +65,16 @@ class _SignupViewState extends State<SignupView> {
                     SignupWidgets.signupButton(
                         context: context,
                         onPressed: () async {
-                          String username = usernamenameController.text;
-                          String email = emailController.text;
-                          String password = passwordController.text;
-                          AppwriteAPI.createInstance.signUp(
+                          String userfullname = userfullnameController.text;
+                          String useremail = useremailController.text;
+                          String username = usernameController.text;
+                          String userpassword = userpasswordController.text;
+                          await authenticationNotifier.signUp(
                               context: context,
-                              name: username,
-                              email: email,
-                              password: password);
-                          // authenticationNotifier.signUp(
-                          //     context: context,
-                          //     username: username,
-                          //     email: email,
-                          //     password: password);
+                              userfullname: userfullname,
+                              username: username,
+                              useremail: useremail,
+                              userpassword: userpassword);
                         }),
                     vSizedBox3,
                     SignupWidgets.loginScreenText(

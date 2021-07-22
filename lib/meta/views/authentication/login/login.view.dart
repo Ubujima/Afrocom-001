@@ -1,4 +1,6 @@
-import 'package:afrocom/core/api/appwrite.api.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:provider/provider.dart';
 import 'login.exports.dart';
 
 class LoginView extends StatefulWidget {
@@ -18,12 +20,37 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
+    final databaseNotifier =
+        Provider.of<DatabaseNotifier>(context, listen: false);
     final navigationUtility = new NavigationUtility();
     List<TextEditingController> textEditingController = [
       emailController,
       passwordController
     ];
     return Scaffold(
+      floatingActionButton: Container(
+        width: 200,
+        child: Row(
+          children: [
+            FloatingActionButton(
+              heroTag: "add data",
+              child: Icon(Icons.add),
+              onPressed: () {
+                // databaseNotifier.submitUserData(context: context);
+              },
+            ),
+            // FloatingActionButton(
+            //   heroTag: "avav",
+            //   child: Icon(Icons.remove),
+            //   onPressed: () {
+            //     authenticationNotifier.logOut(context: context);
+            //   },
+            // ),
+          ],
+        ),
+      ),
       backgroundColor: KConstantColors.bgColor,
       body: SingleChildScrollView(
         child: Container(
@@ -46,11 +73,10 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () async {
                         String email = emailController.text;
                         String password = passwordController.text;
-                        await AppwriteAPI.createInstance
-                            .login(email: email, password: password)
-                            .whenComplete(() {
-                          navigationUtility.navigateTo(context, HomeRoute);
-                        });
+                        await authenticationNotifier.login(
+                            context: context,
+                            useremail: email,
+                            userpassword: password);
                       }),
                   vSizedBox3,
                   LoginWidgets.thirdPartyLogin(),

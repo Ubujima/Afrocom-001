@@ -3,12 +3,14 @@ import 'package:afrocom/app/routes/app.routes.dart';
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
+import 'package:afrocom/core/notifier/utility.notifier.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
 import 'package:afrocom/meta/widgets/custom_text_field.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupWidgets {
   static Container appLogo() {
@@ -46,12 +48,8 @@ class SignupWidgets {
                 tag: "Date of birth",
                 height: 40,
                 onPressed: () async {
-                  DateTime selectedDate = DateTime.now();
-                  final DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: selectedDate,
-                      firstDate: DateTime(2015, 8),
-                      lastDate: DateTime(2101));
+                  await Provider.of<UtilityNotifier>(context, listen: false)
+                      .selectUserDOB(context);
                 },
                 width: 200)
           ],

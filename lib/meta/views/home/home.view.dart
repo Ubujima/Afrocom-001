@@ -1,7 +1,9 @@
 import 'package:afrocom/core/api/appwrite.api.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/home/add_post/add_post.view.dart';
 import 'package:afrocom/meta/views/home/map_view/map_view.view.dart';
+import 'package:provider/provider.dart';
 import 'map_view/components/home_appbar.dart';
 
 class HomeView extends StatefulWidget {
@@ -12,11 +14,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     int homeIndex = 0;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          AppwriteAPI.createInstance.getUser(context);
+          authenticationNotifier.logOut(context: context);
         },
       ),
       appBar: HomeViewWidgets.homeAppBar,

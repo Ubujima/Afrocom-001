@@ -1,5 +1,4 @@
 import 'package:afrocom/app/constants/images.tag.dart';
-import 'package:afrocom/core/api/appwrite.api.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
 

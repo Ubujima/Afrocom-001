@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/core/models/user.model.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
+import 'package:logger/logger.dart';
 
 class AppwriteAPI {
+  final _logger = Logger();
   static AppwriteAPI? _instance;
   late Client _client;
   late Database _database;
@@ -26,35 +30,70 @@ class AppwriteAPI {
     return _instance!;
   }
 
-  //! Authentication
-  Future signUp(
-      {required BuildContext context,
-      required String name,
-      required String email,
-      required String password}) async {
-    try {
-      var response =
-          await _account.create(name: name, email: email, password: password);
-      var res = User.fromMap(response.data);
-      print(res.toJson());
-      return res.toJson();
-    } on AppwriteException catch (error) {
-      print(error.message);
-      SnackbarUtility.showSnackbar(context: context, message: error.message!);
-    } catch (error) {
-      print(error);
-    }
-  }
+  // //! Authentication
+  // Future signUp(
+  //     {required BuildContext context,
+  //     required String name,
+  //     required String email,
+  //     required String password}) async {
+  //   try {
+  //     var response =
+  //         await _account.create(name: name, email: email, password: password);
+  //     var res = User.fromMap(response.data);
+  //     print(res);
+  //     if (res.status == 0) {
+  //       SnackbarUtility.showSnackbar(
+  //           context: context, message: "Something went wrong, Try again");
+  //     }
+  //     return res.toJson();
+  //   } on AppwriteException catch (error) {
+  //     print(error.response);
+  //     var errorCode = error.code;
+  //     switch (errorCode) {
+  //       case 429: //! Too many requests
+  //         SnackbarUtility.showSnackbar(
+  //             context: context, message: "Server error, Try again!");
+  //         break;
+  //       case 400:
+  //         SnackbarUtility.showSnackbar(
+  //             context: context, message: "Bad request, Try again!");
+  //     }
+  //   } catch (error) {
+  //     print(error);
+  //   }
+  // }
 
-  Future login({required String email, required String password}) async {
-    try {
-      var response =
-          await _account.createSession(email: email, password: password);
-      print(response.data);
-    } on AppwriteException catch (error) {
-      print(error.message);
-    }
-  }
+  // Future login(
+  //     {required BuildContext context,
+  //     required String email,
+  //     required String password}) async {
+  //   try {
+  //     var response =
+  //         await _account.createSession(email: email, password: password);
+  //     if (response.data != null) {
+  //       _logger.i(response.data);
+  //       var res = response.statusMessage;
+  //       SnackbarUtility.showSnackbar(context: context, message: res!);
+  //     }
+  //   } on AppwriteException catch (error) {
+  //     _logger.i(error.response);
+  //     var errorCode = error.code;
+  //     switch (errorCode) {
+  //       case 400:
+  //         SnackbarUtility.showSnackbar(
+  //             context: context, message: "Enter valid email address");
+  //         break;
+  //       case 401:
+  //         SnackbarUtility.showSnackbar(
+  //             context: context, message: "Wrong password!");
+  //         break;
+  //       case 429:
+  //         SnackbarUtility.showSnackbar(
+  //             context: context, message: "Server error, Try again");
+  //         break;
+  //     }
+  //   }
+  // }
 
   Future getUser(BuildContext context) async {
     dynamic res;
