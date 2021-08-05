@@ -1,7 +1,7 @@
-import 'package:afrocom/core/api/appwrite.api.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/home/add_post/add_post.view.dart';
+import 'package:afrocom/meta/views/home/feed/feed.view.dart';
 import 'package:afrocom/meta/views/home/map_view/map_view.view.dart';
 import 'package:provider/provider.dart';
 import 'map_view/components/home_appbar.dart';
@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
             homeIndex = index;
           });
         },
-        children: [MapView(), AddPost()],
+        children: [MapView(), FeedView(), AddPost()],
       ),
       backgroundColor: KConstantColors.bgColor,
       bottomNavigationBar:

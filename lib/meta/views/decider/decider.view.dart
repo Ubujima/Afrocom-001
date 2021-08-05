@@ -2,7 +2,7 @@ import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/authentication/login/login.view.dart';
 import 'package:afrocom/meta/views/home/home.view.dart';
-import 'package:afrocom/meta/views/splash_view/splash.view.dart';
+import 'package:afrocom/meta/views/onboarding/onboarding.view.dart';
 import 'package:provider/provider.dart';
 
 class SessionDecider extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SessionDeciderState extends State<SessionDecider> {
       future: authenticationNotifier.getCurrentUserSession(context: context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SplashView();
+          return OnBoardingView();
         }
         if (snapshot.hasData) {
           return HomeView();

@@ -51,17 +51,9 @@ class AuthenticationNotifier extends ChangeNotifier {
 
   Future getCurrentUserSession({required BuildContext context}) async {
     try {
-      return await AppwriteAuthenticationAPI.createInstance
+      var user = await AppwriteAuthenticationAPI.createInstance
           .getCurrentUserSession(context: context);
-      // switch (userStatusCode) {
-      //   case 200:
-      //     navigationUtility.navigateTo(context, HomeRoute);
-      //     break;
-      //   default:
-      //     {
-      //       navigationUtility.navigateTo(context, LoginRoute);
-      //     }
-      // }
+      return user;
     } catch (error) {
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong, try again");

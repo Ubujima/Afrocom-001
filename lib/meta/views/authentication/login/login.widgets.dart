@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class LoginWidgets {
   static Container appLogo() {
     return Container(
+      color: KConstantColors.whiteColor,
       height: 100,
       width: 100,
       child: Image.asset(ImageTags.AppLogo),
@@ -72,21 +73,17 @@ class LoginWidgets {
           CustomButton(
               iconData: EvaIcons.google,
               tag: "Google",
+              buttonColor: Colors.redAccent,
               height: 50,
               onPressed: () {},
               width: 120),
           CustomButton(
               iconData: EvaIcons.facebook,
               tag: "Facebook",
+              buttonColor: Colors.blueAccent,
               height: 50,
               onPressed: () {},
               width: 110),
-          CustomButton(
-              iconData: EvaIcons.linkedin,
-              tag: "LinkedIn",
-              height: 50,
-              onPressed: () {},
-              width: 120)
         ],
       ),
     );

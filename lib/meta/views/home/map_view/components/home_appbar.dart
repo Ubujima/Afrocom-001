@@ -38,8 +38,8 @@ class HomeViewWidgets {
       currentIndex: kIndex,
       items: [
         CustomNavigationBarItem(icon: Icon(Icons.map)),
-        CustomNavigationBarItem(icon: Icon(Icons.add_circle_outline)),
-        CustomNavigationBarItem(icon: Icon(Icons.map))
+        CustomNavigationBarItem(icon: Icon(Icons.feed)),
+        CustomNavigationBarItem(icon: Icon(Icons.add))
       ],
     );
   }

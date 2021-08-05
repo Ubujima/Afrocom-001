@@ -1,11 +1,29 @@
+import 'dart:convert';
 import 'package:afrocom/app/constants/images.tag.dart';
+import 'package:afrocom/core/models/post.model.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:afrocom/core/notifier/storage.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
-class AddPost extends StatelessWidget {
+class AddPost extends StatefulWidget {
+  @override
+  _AddPostState createState() => _AddPostState();
+}
+
+class _AddPostState extends State<AddPost> {
   @override
   Widget build(BuildContext context) {
-    final postController = TextEditingController();
+    final databaseNotifier =
+        Provider.of<DatabaseNotifier>(context, listen: false);
+    final storageNotifier =
+        Provider.of<StorageNotifier>(context, listen: false);
+    final authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
+    var currentDate = DateTime.now();
+    final captionController = TextEditingController();
     return Scaffold(
       backgroundColor: KConstantColors.bgColor,
       body: Container(
@@ -16,7 +34,7 @@ class AddPost extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   child: TextField(
-                    controller: postController,
+                    controller: captionController,
                     decoration: new InputDecoration(
                         filled: true,
                         hintText: "Write something...",
@@ -42,6 +60,7 @@ class AddPost extends StatelessWidget {
                     CustomButton(
                       iconData: Icons.camera,
                       height: 50,
+                      buttonColor: KConstantColors.bgColorFaint,
                       width: 180,
                       tag: "Camera",
                       onPressed: () {},
@@ -50,14 +69,18 @@ class AddPost extends StatelessWidget {
                       iconData: Icons.camera,
                       height: 50,
                       width: 180,
+                      buttonColor: KConstantColors.bgColorFaint,
                       tag: "Gallery",
-                      onPressed: () {},
+                      onPressed: () async {
+                        await storageNotifier.uploadFile(context: context);
+                      },
                     )
                   ],
                 ),
               ),
               vSizedBox1,
               CustomButton(
+                buttonColor: KConstantColors.bgColorFaint,
                 iconData: Icons.document_scanner,
                 height: 50,
                 width: 380,
@@ -109,8 +132,26 @@ class AddPost extends StatelessWidget {
               ),
               vSizedBox4,
               GestureDetector(
-                // onTap: () => AppwriteAPI.createInstance
-                //     .addData(data: postController.text),
+                onTap: () async {
+                  final postcaption = captionController.text;
+                  var user = await authenticationNotifier.getCurrentUserSession(
+                      context: context);
+                  final Map userdata = await jsonDecode(user);
+                  final postuser = userdata['name'];
+                  final postImage = storageNotifier.postImage;
+                  // Future.delayed(Duration(seconds: 2)).whenComplete(() async {
+                  //   await databaseNotifier.createPost(
+                  //       context: context,
+                  //       post: Post(
+                  //           postcaption,
+                  //           postuser ?? "",
+                  //           currentDate.toString(),
+                  //           "India",
+                  //           postImage ?? "",
+                  //           "",
+                  //           ""));
+                  // });
+                },
                 child: Container(
                   height: 50,
                   width: 200,
@@ -128,14 +169,6 @@ class AddPost extends StatelessWidget {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   backgroundColor: KConstantColors.bgColorFaint,
-      //   child: Icon(
-      //     Icons.add,
-      //     color: KConstantColors.whiteColor,
-      //   ),
-      // ),
     );
   }
 }

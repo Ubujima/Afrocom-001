@@ -45,8 +45,8 @@ class AppwriteAuthenticationAPI {
           Provider.of<DatabaseNotifier>(context, listen: false);
       final utilityNotifier =
           Provider.of<UtilityNotifier>(context, listen: false);
-      var userdob =
-          utilityNotifier.pickedUserDOB!.toLocal().toString().split(" ")[0];
+      // var userdob =
+      //     utilityNotifier.pickedUserDOB!.toLocal().toString().split(" ")[0];
       //! Response  from Appwrite
       var response = await _account.create(
           name: username, email: useremail, password: userpassword);
@@ -54,15 +54,15 @@ class AppwriteAuthenticationAPI {
         var responseStatusCode = response.statusCode;
         //! Adding data only when status code is 201
         if (responseStatusCode == 201) {
-          var res = User.fromMap(response.data);
-          //! Submit data in user database
-          Future.delayed(Duration(seconds: 1)).whenComplete(() async {
-            await databaseNotifier.submitUserData(
-                context: context,
-                signedUser:
-                    SignedUser(username, useremail, userfullname, userdob));
-          });
-          return res.toJson();
+          // var res = User.fromMap(response.data);
+          // //! Submit data in user database
+          // Future.delayed(Duration(seconds: 1)).whenComplete(() async {
+          //   await databaseNotifier.submitUserData(
+          //       context: context,
+          //       signedUser:
+          //           SignedUser(username, useremail, userfullname, userdob));
+          // });
+          // return res.toJson();
         }
       }
     } on AppwriteException catch (error) {
@@ -134,8 +134,8 @@ class AppwriteAuthenticationAPI {
       var responseStatusCode = res.statusCode;
       if (responseStatusCode == 200) {
         var user = User.fromMap(res.data);
-        _logger.i("${user.name} has logged in");
-        return responseStatusCode;
+        // _logger.i("${user.name} has logged in");
+        return user.toJson();
       }
     } on AppwriteException catch (error) {
       _logger.i(error.response);

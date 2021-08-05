@@ -15,10 +15,7 @@ void main() {
 class Core extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: AppProviders.providers,
-      child: Lava(),
-    );
+    return MultiProvider(providers: AppProviders.providers, child: Lava());
   }
 }
 
@@ -27,7 +24,7 @@ class Lava extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginRoute,
+      initialRoute: OnBoardingRoute,
       routes: routes,
       theme: ThemeData(
           accentColor: KConstantColors.greenColor,

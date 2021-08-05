@@ -46,6 +46,7 @@ class SignupWidgets {
             CustomButton(
                 iconData: EvaIcons.calendar,
                 tag: "Date of birth",
+                buttonColor: KConstantColors.bgColorFaint,
                 height: 40,
                 onPressed: () async {
                   await Provider.of<UtilityNotifier>(context, listen: false)

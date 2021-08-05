@@ -30,28 +30,7 @@ class _LoginViewState extends State<LoginView> {
       passwordController
     ];
     return Scaffold(
-      floatingActionButton: Container(
-        width: 200,
-        child: Row(
-          children: [
-            FloatingActionButton(
-              heroTag: "add data",
-              child: Icon(Icons.add),
-              onPressed: () {
-                // databaseNotifier.submitUserData(context: context);
-              },
-            ),
-            // FloatingActionButton(
-            //   heroTag: "avav",
-            //   child: Icon(Icons.remove),
-            //   onPressed: () {
-            //     authenticationNotifier.logOut(context: context);
-            //   },
-            // ),
-          ],
-        ),
-      ),
-      backgroundColor: KConstantColors.bgColor,
+      backgroundColor: KConstantColors.darkColor,
       body: SingleChildScrollView(
         child: Container(
           child: Padding(

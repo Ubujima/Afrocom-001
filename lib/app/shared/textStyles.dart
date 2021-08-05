@@ -15,6 +15,7 @@ class KConstantTextStyles {
     return TextStyle(
         fontFamily: KConstantFonts.Monteserrat,
         color: KConstantColors.whiteColor,
+        fontWeight: FontWeight.w800,
         fontSize: fontSize);
   }
 }
