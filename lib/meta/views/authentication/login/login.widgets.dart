@@ -1,10 +1,9 @@
 import 'package:afrocom/app/constants/images.tag.dart';
-import 'package:afrocom/app/routes/app.routes.dart';
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
-import 'package:afrocom/meta/utilities/navigation.utility.dart';
+import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
 import 'package:afrocom/meta/widgets/custom_text_field.dart';
@@ -21,7 +20,8 @@ class LoginWidgets {
   }
 
   static Container loginSection(
-      {required List<TextEditingController> textEditingController}) {
+      {required BuildContext context,
+      required List<TextEditingController> textEditingController}) {
     return Container(
       width: 400,
       child: Center(
@@ -30,10 +30,10 @@ class LoginWidgets {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomTextField.stylishTextField(
-                "Enter email", textEditingController[0]),
+                0.9, context, "Enter email", textEditingController[0]),
             vSizedBox1,
             CustomTextField.stylishTextField(
-                "Enter password", textEditingController[1]),
+                0.9, context, "Enter password", textEditingController[1]),
           ],
         ),
       ),
@@ -46,16 +46,16 @@ class LoginWidgets {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          width: 200.0,
-          height: 50.0,
+          width: SizeConfig.setWidth(context: context, factor: 0.85),
+          height: SizeConfig.setHeight(context: context, factor: 0.06),
           decoration: BoxDecoration(
               color: Colors.white.withOpacity(1),
-              borderRadius: BorderRadius.circular(18.0)),
+              borderRadius: BorderRadius.circular(5.0)),
           child: Center(
             child: Text(
               "Login",
               style: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: SizeConfig.sfontSize,
                   fontWeight: FontWeight.w900,
                   fontFamily: KConstantFonts.MonteserratB),
             ),
@@ -89,58 +89,24 @@ class LoginWidgets {
     );
   }
 
-  static signUpButton({required dynamic onPressed}) {
+  static signUpButton(
+      {required BuildContext context, required dynamic onPressed}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: 50,
-        width: 200,
+        height: SizeConfig.setHeight(context: context, factor: 0.06),
+        width: SizeConfig.setWidth(context: context, factor: 0.85),
         child: Center(
           child: Text(
-            "Signup",
-            style: KConstantTextStyles.BHeading1(fontSize: 16),
+            "Create New Account",
+            style:
+                KConstantTextStyles.BHeading1(fontSize: SizeConfig.sfontSize!),
           ),
         ),
         decoration: BoxDecoration(
-            color: KConstantColors.darkColor,
+            color: KConstantColors.bgColorFaint,
             borderRadius: BorderRadius.circular(5)),
       ),
     );
-  }
-
-  static signupScreenText({required dynamic onPressed}) {
-    return Center(
-      child: Column(
-        children: [
-          Text("Don't have an account?",
-              style: TextStyle(
-                  color: KConstantColors.textColor,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: KConstantFonts.Monteserrat)),
-          vSizedBox1,
-          signUpButton(onPressed: onPressed)
-        ],
-      ),
-    );
-  }
-
-  static skipAuthentication({
-    required BuildContext context,
-  }) {
-    final NavigationUtility navigationUtility = new NavigationUtility();
-    return Center(
-        child: TextButton(
-      onPressed: () {
-        navigationUtility.navigateTo(context, HomeRoute);
-      },
-      child: Text(
-        "Skip for now",
-        style: TextStyle(
-            color: KConstantColors.textColor,
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.w700,
-            fontFamily: KConstantFonts.Monteserrat),
-      ),
-    ));
   }
 }

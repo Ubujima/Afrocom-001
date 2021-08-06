@@ -23,4 +23,22 @@ class SizeConfig {
   static double setHeight(
           {required BuildContext context, required double factor}) =>
       MediaQuery.of(context).size.height * factor;
+  static double verticalSpacing(
+          {required BuildContext context, required double factor}) =>
+      MediaQuery.of(context).size.height * factor;
+  static double horizontalSpacing(
+          {required BuildContext context, required double factor}) =>
+      MediaQuery.of(context).size.width * factor;
+
+  static SizedBox verticalSizedBox(
+          {required BuildContext context, required double factor}) =>
+      SizedBox(
+        height: verticalSpacing(context: context, factor: factor),
+      );
+
+  static SizedBox horizontalSizedBox(
+          {required BuildContext context, required double factor}) =>
+      SizedBox(
+        height: horizontalSpacing(context: context, factor: factor),
+      );
 }

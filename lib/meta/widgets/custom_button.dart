@@ -28,9 +28,13 @@ class CustomButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                child: Icon(iconData, color: KConstantColors.whiteColor),
-              ),
+              iconData != null
+                  ? SizedBox(
+                      child: Icon(iconData, color: KConstantColors.whiteColor),
+                    )
+                  : Container(
+                      width: 0,
+                    ),
               hSizedBox1,
               Text(tag, style: KConstantTextStyles.MBody1(fontSize: 14)),
             ],

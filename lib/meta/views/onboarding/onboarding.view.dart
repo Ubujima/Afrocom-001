@@ -35,8 +35,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               vSizedBox4,
               Container(
                   color: KConstantColors.whiteColor,
-                  height: 200,
-                  width: 200,
+                  height: SizeConfig.setHeight(context: context, factor: 0.25),
+                  width: SizeConfig.setWidth(context: context, factor: 0.5),
                   child: Image.asset(ImageTags.AppLogo)),
               vSizedBox1,
               Text("Afrocom",
@@ -45,7 +45,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               Text("Afrocentric & Afrothentic",
                   style: KConstantTextStyles.MBody1(
                       fontSize: SizeConfig.mFontSize!)),
-              SizedBox(height: 300),
+              SizeConfig.verticalSizedBox(context: context, factor: 0.3),
               OnBoardingButton(
                   buttonTitle: "Connect to Interact",
                   onPressed: () {

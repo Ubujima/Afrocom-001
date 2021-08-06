@@ -1,11 +1,26 @@
+import 'dart:math';
+
+import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:flutter/cupertino.dart';
 
 class AuthenticationNotifier extends ChangeNotifier {
+  bool? _accountAlreadyExists;
+  bool? get accountAlreadyExists => _accountAlreadyExists;
+
+  bool? _checkedTandC = false;
+  bool? get checkedTandC => _checkedTandC;
+
+  void toggleTermsAndConditionCheck() {
+    _checkedTandC = !_checkedTandC!;
+    notifyListeners();
+  }
+
   Future signUp(
       {required BuildContext context,
       required String userfullname,
+      required SignedUser signedUser,
       required String username,
       required String useremail,
       required String userpassword}) async {
@@ -15,6 +30,7 @@ class AuthenticationNotifier extends ChangeNotifier {
           useremail.isNotEmpty &&
           userpassword.isNotEmpty) {
         await AppwriteAuthenticationAPI.createInstance.signUp(
+            signedUser: signedUser,
             context: context,
             username: username,
             useremail: useremail,
@@ -22,7 +38,7 @@ class AuthenticationNotifier extends ChangeNotifier {
             userpassword: userpassword);
       } else {
         SnackbarUtility.showSnackbar(
-            context: context, message: "Fill the required details");
+            context: context, message: "Fill the required (*) details.");
       }
     } catch (error) {
       SnackbarUtility.showSnackbar(
@@ -44,6 +60,7 @@ class AuthenticationNotifier extends ChangeNotifier {
             context: context, message: "Fill the required details");
       }
     } catch (error) {
+      print(error);
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong, try again");
     }
@@ -55,6 +72,7 @@ class AuthenticationNotifier extends ChangeNotifier {
           .getCurrentUserSession(context: context);
       return user;
     } catch (error) {
+      // print(error);
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong, try again");
     }

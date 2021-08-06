@@ -1,8 +1,8 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
-import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/core/notifier/utility.notifier.dart';
+import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:provider/provider.dart';
 import 'signup.exports.dart';
 
@@ -12,37 +12,38 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-  TextEditingController userfullnameController = TextEditingController();
+  TextEditingController userfirstnameController = TextEditingController();
+  TextEditingController userlastnameController = TextEditingController();
   TextEditingController useremailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController userpasswordController = TextEditingController();
+  TextEditingController userconfirmpasswordController = TextEditingController();
 
   @override
   void initState() {
-    userfullnameController = TextEditingController();
+    userfirstnameController = TextEditingController();
+    userlastnameController = TextEditingController();
     useremailController = TextEditingController();
     usernameController = TextEditingController();
     userpasswordController = TextEditingController();
+    userconfirmpasswordController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final databaseNotifier =
-        Provider.of<DatabaseNotifier>(context, listen: false);
-    final utilityNotifier =
-        Provider.of<UtilityNotifier>(context, listen: false);
     final authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
-    final navigationUtility = new NavigationUtility();
-    List<TextEditingController> textEditingController = [
-      userfullnameController,
-      usernameController,
-      useremailController,
-      userpasswordController
-    ];
+    Map<String, TextEditingController> textEditingController = {
+      "userfirstname": userfirstnameController,
+      "userlastname": userlastnameController,
+      "useremail": useremailController,
+      "username": usernameController,
+      "userpassword": userpasswordController,
+      "userconfirmpasswordController": userconfirmpasswordController
+    };
     return Scaffold(
-        backgroundColor: KConstantColors.bgColor,
+        backgroundColor: KConstantColors.darkColor,
         body: SingleChildScrollView(
           child: Container(
             child: Padding(
@@ -52,36 +53,64 @@ class _SignupViewState extends State<SignupView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    vSizedBox4,
-                    SignupWidgets.appLogo(),
+                    SizeConfig.verticalSizedBox(context: context, factor: 0.07),
+                    SignupWidgets.appLogo(context: context),
                     vSizedBox2,
-                    Text("Create a new account to get started.",
-                        style: KConstantTextStyles.MBody1(fontSize: 20)),
-                    vSizedBox3,
                     SignupWidgets.signupSection(
                         context: context,
                         textEditingController: textEditingController),
-                    vSizedBox3,
+                    vSizedBox2,
+                    SignupWidgets.termsAndConditions(context: context),
+                    vSizedBox2,
                     SignupWidgets.signupButton(
                         context: context,
                         onPressed: () async {
-                          String userfullname = userfullnameController.text;
+                          String userfirstname = userfirstnameController.text;
+                          String userlastname = userlastnameController.text;
                           String useremail = useremailController.text;
                           String username = usernameController.text;
                           String userpassword = userpasswordController.text;
-                          await authenticationNotifier.signUp(
-                              context: context,
-                              userfullname: userfullname,
-                              username: username,
-                              useremail: useremail,
-                              userpassword: userpassword);
+                          String confirmedpassword =
+                              userconfirmpasswordController.text;
+                          dynamic userDOB = Provider.of<UtilityNotifier>(
+                                  context,
+                                  listen: false)
+                              .pickedUserDOB!
+                              .toLocal()
+                              .toString()
+                              .split(" ")[0];
+                          String usersex = Provider.of<UtilityNotifier>(context,
+                                  listen: false)
+                              .userSex;
+                          String userorigin = Provider.of<UtilityNotifier>(
+                                  context,
+                                  listen: false)
+                              .userOrigin;
+                          String userfullname =
+                              userfirstname + " " + userlastname;
+                          if (userpassword == confirmedpassword) {
+                            await authenticationNotifier.signUp(
+                                signedUser: SignedUser(
+                                  username,
+                                  useremail,
+                                  userfirstname,
+                                  userlastname,
+                                  userDOB,
+                                  usersex,
+                                  userorigin,
+                                ),
+                                context: context,
+                                userfullname: userfullname,
+                                username: username,
+                                useremail: useremail,
+                                userpassword: userpassword);
+                          } else {
+                            SnackbarUtility.showSnackbar(
+                                context: context,
+                                message: "Passwords do not match");
+                          }
                         }),
                     vSizedBox3,
-                    SignupWidgets.loginScreenText(
-                        onPressed: () =>
-                            navigationUtility.navigateTo(context, LoginRoute)),
-                    vSizedBox2,
-                    // SignupWidgets.skipAuthentication(context: context)
                   ],
                 ),
               ),

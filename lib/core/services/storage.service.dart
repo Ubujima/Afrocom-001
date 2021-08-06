@@ -10,8 +10,8 @@ class StorageService {
   late Storage _storage;
 
   StorageService._initialize() {
-    _client = Client(endPoint: AppwriteCredentials.AppwriteEndpoint)
-        .setProject(AppwriteCredentials.AppwriteProjectID)
+    _client = Client(endPoint: AppwriteCredentials.AppwriteLocalEndpoint)
+        .setProject(AppwriteCredentials.AppwriteLocalProjectID)
         .setSelfSigned();
     _storage = Storage(_client);
   }

@@ -11,7 +11,7 @@ class FeedView extends StatelessWidget {
       backgroundColor: KConstantColors.bgColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          databaseNotifier.fetchPosts(context: context);
+          // databaseNotifier.fetchPosts(context: context);
         },
       ),
     );

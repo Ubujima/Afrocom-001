@@ -1,12 +1,13 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
+import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField {
-  static stylishTextField(
+  static stylishTextField(double widthFactor, BuildContext context,
       String hintText, TextEditingController textEditingController) {
     return Container(
-      width: 400,
+      width: SizeConfig.setWidth(context: context, factor: widthFactor),
       child: Center(
         child: TextField(
           controller: textEditingController,
@@ -16,10 +17,10 @@ class CustomTextField {
               hintText: hintText,
               hintStyle: new TextStyle(
                   color: KConstantColors.textColor, fontSize: 16.0),
-              fillColor: KConstantColors.darkColor,
+              fillColor: KConstantColors.bgColorFaint,
               border: new OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.all(const Radius.circular(10.0)))),
+                  borderRadius: BorderRadius.all(const Radius.circular(5.0)))),
         ),
       ),
     );

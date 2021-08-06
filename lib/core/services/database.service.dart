@@ -15,8 +15,8 @@ class DatabaseService {
   late Database _database;
 
   DatabaseService._initialize() {
-    _client = Client(endPoint: AppwriteCredentials.AppwriteEndpoint)
-        .setProject(AppwriteCredentials.AppwriteProjectID)
+    _client = Client(endPoint: AppwriteCredentials.AppwriteLocalEndpoint)
+        .setProject(AppwriteCredentials.AppwriteLocalProjectID)
         .setSelfSigned();
     _database = Database(_client);
   }
@@ -29,30 +29,25 @@ class DatabaseService {
 
   Future submitUserData(
       {required BuildContext context, required SignedUser signedUser}) async {
+    print("Submitting data");
     try {
       var response = await _database.createDocument(
-        collectionId: DatabaseCredentials.UserCollectionID,
-        data: signedUser.toJson(),
-      );
+          collectionId: "610d7c664edbe",
+          data: signedUser.toJson(),
+          read: ['*'],
+          write: ['*']);
+      print(response.data);
       var resStatusCode = response.statusCode;
+      print("Database status : $resStatusCode");
       if (resStatusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            duration: Duration(seconds: 6),
-            content: Row(
-              children: [
-                SizedBox(
-                    height: 10, width: 10, child: CircularProgressIndicator()),
-                hSizedBox2,
-                Text("Creating new account, Please wait")
-              ],
-            )));
+        print("Data added");
       }
     } on SocketException catch (error) {
-      _logger.i(error);
+      _logger.i(error.message);
     } on AppwriteException catch (error) {
       _logger.i(error.response);
-      SnackbarUtility.showSnackbar(
-          context: context, message: "No internet connection");
+      _logger.i(error.code);
+      _logger.i(error.message);
       var errorCode = error.code;
       switch (errorCode) {
         case 429: //! Too many requests
