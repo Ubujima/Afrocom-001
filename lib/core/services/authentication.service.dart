@@ -3,7 +3,6 @@ import 'package:afrocom/app/routes/app.routes.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/models/user.model.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
-import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
@@ -47,39 +46,20 @@ class AppwriteAuthenticationAPI {
       print("Executing sign up process...");
       final databaseNotifier =
           Provider.of<DatabaseNotifier>(context, listen: false);
-      // //! Response  from Appwrite
       var response = await _account.create(
           name: username, email: useremail, password: userpassword);
       if (response.data != null) {
         var responseStatusCode = response.statusCode;
         print("Signing process status code : $responseStatusCode");
         print("Signing process response : ${response.data}");
-        //   //! Adding data only when status code is 201
         if (responseStatusCode == 201) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: KConstantColors.greenColor,
-                duration: Duration(seconds: 6),
-                content: Row(children: [
-                  SizedBox(
-                      height: 10,
-                      width: 10,
-                      child: CircularProgressIndicator()),
-                  hSizedBox2,
-                  Text(
-                    "Creating new account, Please wait",
-                    style: KConstantTextStyles.BHeading1(
-                        fontSize: SizeConfig.sfontSize!),
-                  )
-                ])),
-          );
-          await databaseNotifier
-              .submitUserData(context: context, signedUser: signedUser)
-              .whenComplete(() {
-            Future.delayed(Duration(seconds: 8)).whenComplete(() {
-              Navigator.of(context).pushNamed(HomeRoute);
-            });
+          SnackbarUtility.showLoadingSnackbar(
+              time: 6,
+              title: "Creating new account, Please wait",
+              context: context);
+          Future.delayed(Duration(seconds: 8)).whenComplete(() async {
+            await databaseNotifier.submitUserData(
+                context: context, signedUser: signedUser);
           });
         }
       }

@@ -1,11 +1,21 @@
-import 'dart:math';
-
+import 'package:afrocom/app/constants/database.credentials.dart';
+import 'package:afrocom/core/models/oAuth/facebook_user.model.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
+import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:afrocom/core/services/OAuth2.service.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
+import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
+import 'package:afrocom/meta/views/authentication/signup/signup.exports.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+enum UserLoggedType { EmailUser, OAuthUser }
 
 class AuthenticationNotifier extends ChangeNotifier {
+  UserLoggedType? _userLoggedType;
+  UserLoggedType? get userLoggedType => _userLoggedType;
+
   bool? _accountAlreadyExists;
   bool? get accountAlreadyExists => _accountAlreadyExists;
 
@@ -15,6 +25,61 @@ class AuthenticationNotifier extends ChangeNotifier {
   void toggleTermsAndConditionCheck() {
     _checkedTandC = !_checkedTandC!;
     notifyListeners();
+  }
+
+  String? _currentUserDocumentId;
+  String? get currentUserDocumentId => _currentUserDocumentId;
+
+  String? _currentUserImage;
+  String? get currentUserImage => _currentUserImage;
+
+  Future loginWithFacebook({required BuildContext context}) async {
+    try {
+      var _facebookData =
+          await OAUthService.createInstance.facebookLogin(context: context);
+      final response = FacebookUser.fromJson(_facebookData);
+      if (response.email.isNotEmpty &&
+          response.name.isNotEmpty &&
+          response.picture.data.url.isNotEmpty) {
+        _currentUserImage = response.picture.data.url;
+        notifyListeners();
+        _userLoggedType = UserLoggedType.OAuthUser;
+        notifyListeners();
+        SnackbarUtility.showSnackbar(
+            context: context, message: "${response.name} has logged in!");
+        final databaseNotifier =
+            Provider.of<DatabaseNotifier>(context, listen: false);
+        final useremail = response.email;
+        var isUserExists = await DatabaseService.createInstance.checkIfExists(
+            dataKey: "useremail",
+            identifier: useremail,
+            collectionId: DatabaseCredentials.UserCollectionID);
+        if (!isUserExists) {
+          Future.delayed(Duration(seconds: 8)).whenComplete(() async {
+            final username = response.name;
+            final userfirstname = response.name.split(" ")[0];
+            final userlastname = response.name.split(" ")[1];
+            var userDocumentId = await databaseNotifier.submitUserData(
+                context: context,
+                signedUser: SignedUser(
+                    username, useremail, userfirstname, userlastname));
+            _currentUserDocumentId = userDocumentId;
+            notifyListeners();
+          });
+        } else {
+          NavigationUtility().navigateTo(context, HomeRoute);
+          SnackbarUtility.showSnackbar(
+              context: context,
+              message: "User data is already submitted in database");
+        }
+      } else {
+        SnackbarUtility.showSnackbar(
+            context: context, message: "Server error, Try again.");
+      }
+    } catch (e) {
+      SnackbarUtility.showSnackbar(
+          context: context, message: "Server error, Try again.");
+    }
   }
 
   Future signUp(

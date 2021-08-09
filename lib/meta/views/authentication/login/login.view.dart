@@ -27,10 +27,13 @@ class _LoginViewState extends State<LoginView> {
       passwordController
     ];
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       authenticationNotifier.getCurrentUserSession(context: context),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // DatabaseService.createInstance.checkIfExists(
+
+          // collectionId: DatabaseCredentials.UserCollectionID);
+        },
+      ),
       backgroundColor: KConstantColors.darkColor,
       body: SingleChildScrollView(
         child: Container(
@@ -79,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
                             fontSize: SizeConfig.sfontSize!)),
                   ),
                   SizeConfig.verticalSizedBox(context: context, factor: 0.05),
-                  LoginWidgets.thirdPartyLogin(),
+                  LoginWidgets.thirdPartyLogin(context: context),
                   SizeConfig.verticalSizedBox(context: context, factor: 0.03),
                   LoginWidgets.signUpButton(
                       context: context,

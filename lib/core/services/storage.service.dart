@@ -2,7 +2,6 @@ import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
-import 'package:image_picker/image_picker.dart';
 
 class StorageService {
   static StorageService? _instance;
@@ -22,18 +21,11 @@ class StorageService {
     return _instance!;
   }
 
-  pickUserImage() async {
-    final picker = ImagePicker();
-    var _pickerImage = await picker.pickImage(source: ImageSource.gallery);
-    if (_pickerImage != null) {
-      return _pickerImage.path;
-    }
-  }
-
-  Future uploadFile({required BuildContext context}) async {
-    var _pickedFile = await pickUserImage();
+  Future uploadUserProfilePicture(
+      {required String imagePath, required BuildContext context}) async {
     try {
-      var _file = await MultipartFile.fromFile(_pickedFile);
+      print("Uploading profile picture");
+      var _file = await MultipartFile.fromFile(imagePath);
       final response =
           await _storage.createFile(file: _file, read: ["*"], write: ["*"]);
       final resStatusCode = response.statusCode;

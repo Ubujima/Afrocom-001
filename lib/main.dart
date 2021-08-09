@@ -24,7 +24,7 @@ class Lava extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: OnBoardingRoute,
+      initialRoute: LoginRoute,
       routes: routes,
       theme: ThemeData(
           accentColor: KConstantColors.greenColor,

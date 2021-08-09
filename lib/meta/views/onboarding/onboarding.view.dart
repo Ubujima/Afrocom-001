@@ -25,6 +25,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: KConstantColors.darkColor,
       body: Container(
         child: Center(

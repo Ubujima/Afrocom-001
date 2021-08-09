@@ -3,11 +3,13 @@ import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
 import 'package:afrocom/meta/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginWidgets {
   static Container appLogo() {
@@ -65,7 +67,9 @@ class LoginWidgets {
     );
   }
 
-  static thirdPartyLogin() {
+  static thirdPartyLogin({required BuildContext context}) {
+    final _authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,7 +86,10 @@ class LoginWidgets {
               tag: "Facebook",
               buttonColor: Colors.blueAccent,
               height: 50,
-              onPressed: () {},
+              onPressed: () async {
+                await _authenticationNotifier.loginWithFacebook(
+                    context: context);
+              },
               width: 110),
         ],
       ),

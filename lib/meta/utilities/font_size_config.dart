@@ -3,10 +3,10 @@ import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 class SizeConfig {
   static MediaQueryData? _mediaQueryData;
   static double? height;
-  static double? width;
-  static double? titleSize;
-  static double? sfontSize;
-  static double? mFontSize;
+  static double? width = 0;
+  static double? titleSize = 0;
+  static double? sfontSize = 0;
+  static double? mFontSize = 0;
 
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
@@ -39,6 +39,6 @@ class SizeConfig {
   static SizedBox horizontalSizedBox(
           {required BuildContext context, required double factor}) =>
       SizedBox(
-        height: horizontalSpacing(context: context, factor: factor),
+        width: horizontalSpacing(context: context, factor: factor),
       );
 }

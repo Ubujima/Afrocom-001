@@ -9,18 +9,29 @@ class SignedUser {
   String useremail;
   String userfirstname;
   String userlastname;
+  bool? isOAuth;
+  String? userphonenumber;
+  String? userimage;
   String? userDOB;
   String? usersex;
   String? userorigin;
   SignedUser(
       this.username, this.useremail, this.userfirstname, this.userlastname,
-      [this.userDOB, this.usersex, this.userorigin]);
+      [this.isOAuth,
+      this.userphonenumber,
+      this.userimage,
+      this.userDOB,
+      this.usersex,
+      this.userorigin]);
 
   factory SignedUser.fromJson(Map<String, dynamic> json) => SignedUser(
       json["username"],
       json["useremail"],
       json["userfirstname"],
       json["userlastname"],
+      json["isOAuth"],
+      json["userphonenumber"],
+      json["userimage"],
       json["userDOB"],
       json["usersex"],
       json["userorigin"]);
@@ -30,6 +41,9 @@ class SignedUser {
         "useremail": useremail,
         "userfirstname": userfirstname,
         "userlastname": userlastname,
+        "isOAuth": isOAuth,
+        "userphonenumber": userphonenumber,
+        "userimage": userimage,
         "userDOB": userDOB,
         "usersex": usersex,
         "userorigin": userorigin,
