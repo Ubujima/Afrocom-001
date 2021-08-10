@@ -57,7 +57,7 @@ class LoginWidgets {
             child: Text(
               "Login",
               style: TextStyle(
-                  fontSize: SizeConfig.sfontSize,
+                  fontSize: 16,
                   fontWeight: FontWeight.w900,
                   fontFamily: KConstantFonts.MonteserratB),
             ),
@@ -79,7 +79,9 @@ class LoginWidgets {
               tag: "Google",
               buttonColor: Colors.redAccent,
               height: 50,
-              onPressed: () {},
+              onPressed: () async {
+                await _authenticationNotifier.loginWithGoogle(context: context);
+              },
               width: 120),
           CustomButton(
               iconData: EvaIcons.facebook,
@@ -106,8 +108,7 @@ class LoginWidgets {
         child: Center(
           child: Text(
             "Create New Account",
-            style:
-                KConstantTextStyles.BHeading1(fontSize: SizeConfig.sfontSize!),
+            style: KConstantTextStyles.BHeading1(fontSize: 16),
           ),
         ),
         decoration: BoxDecoration(

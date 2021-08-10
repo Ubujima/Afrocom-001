@@ -1,6 +1,7 @@
 import 'package:afrocom/app/constants/database.credentials.dart';
 import 'package:afrocom/core/models/oAuth/facebook_user.model.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
+import 'package:afrocom/core/notifier/cache.notifier.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/core/services/OAuth2.service.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
@@ -34,6 +35,8 @@ class AuthenticationNotifier extends ChangeNotifier {
   String? get currentUserImage => _currentUserImage;
 
   Future loginWithFacebook({required BuildContext context}) async {
+    final cacheNotifier = Provider.of<CacheNotifier>(context, listen: false);
+
     try {
       var _facebookData =
           await OAUthService.createInstance.facebookLogin(context: context);
@@ -41,6 +44,8 @@ class AuthenticationNotifier extends ChangeNotifier {
       if (response.email.isNotEmpty &&
           response.name.isNotEmpty &&
           response.picture.data.url.isNotEmpty) {
+        await cacheNotifier.writeCache(
+            key: "facebookuser", value: response.email);
         _currentUserImage = response.picture.data.url;
         notifyListeners();
         _userLoggedType = UserLoggedType.OAuthUser;
@@ -79,6 +84,15 @@ class AuthenticationNotifier extends ChangeNotifier {
     } catch (e) {
       SnackbarUtility.showSnackbar(
           context: context, message: "Server error, Try again.");
+    }
+  }
+
+  Future loginWithGoogle({required BuildContext context}) async {
+    try {
+      await AppwriteAuthenticationAPI.createInstance
+          .googleLogin(context: context);
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -137,7 +151,6 @@ class AuthenticationNotifier extends ChangeNotifier {
           .getCurrentUserSession(context: context);
       return user;
     } catch (error) {
-      // print(error);
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong, try again");
     }

@@ -1,8 +1,6 @@
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'font_size_config.dart';
-
 class SnackbarUtility {
   static showSnackbar(
       {required BuildContext context, required String message}) {
@@ -27,8 +25,7 @@ class SnackbarUtility {
           hSizedBox2,
           Text(
             title,
-            style:
-                KConstantTextStyles.BHeading1(fontSize: SizeConfig.sfontSize!),
+            style: KConstantTextStyles.BHeading1(fontSize: 16),
           )
         ])));
   }

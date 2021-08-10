@@ -1,13 +1,13 @@
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/app/routes/app.routes.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
-import 'package:afrocom/core/models/user.model.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +23,8 @@ class AppwriteAuthenticationAPI {
         .setProject(AppwriteCredentials.AppwriteLocalProjectID)
         .setSelfSigned(status: true);
     _account = Account(_client);
-    print("The endpoint is...");
-    print(_account.client.endPoint);
   }
   static AppwriteAuthenticationAPI get createInstance {
-    print("Initializing instance");
     if (_instance == null) {
       _instance = AppwriteAuthenticationAPI._initialize();
     }
@@ -130,39 +127,36 @@ class AppwriteAuthenticationAPI {
 
   //! Get current session of the user
   Future getCurrentUserSession({required BuildContext context}) async {
+    var user;
     try {
       var res = await _account.get();
       var responseStatusCode = res.statusCode;
       if (responseStatusCode == 200) {
-        print(res.statusCode);
-        print(res.data);
-        var user = User.fromMap(res.data);
-        return user.toJson();
+        user = res.data;
+        var loggedUser = res.data['name'];
+        print("$loggedUser is logged in.");
       }
     } on AppwriteException catch (error) {
       _logger.i(error.response);
       _logger.i(error.code);
       var responseCode = error.code;
       if (responseCode == 401) {
-        SnackbarUtility.showSnackbar(
-            context: context,
-            message: "Session expired. Please login one more time.");
+        print("Session expired. Please login one more time.");
       }
     }
+    return user;
   }
 
   //! Log out/Remove current session
   Future logOut({required BuildContext context}) async {
-    final NavigationUtility navigationUtility = new NavigationUtility();
     try {
       var response = await _account.deleteSession(sessionId: "current");
-      _logger.i(response.statusCode);
       var responseCode = response.statusCode;
       if (responseCode == 204) {
         SnackbarUtility.showLoadingSnackbar(
-            time: 2, title: "Logging out", context: context);
-        Future.delayed(Duration(seconds: 2)).whenComplete(() {
-          navigationUtility.navigateTo(context, LoginRoute);
+            time: 4, title: "Logging out", context: context);
+        Future.delayed(Duration(seconds: 5)).whenComplete(() {
+          Navigator.of(context).pushNamed(LoginRoute);
         });
       }
     } on AppwriteException catch (error) {
@@ -172,6 +166,38 @@ class AppwriteAuthenticationAPI {
         SnackbarUtility.showSnackbar(
             context: context, message: "Session expired. Login one more time.");
       }
+    }
+  }
+
+  //! Google login
+  Future googleLogin({required BuildContext context}) async {
+    try {
+      // //! Alternative method
+      // GoogleSignIn _googleSignIn = GoogleSignIn(
+      //   hostedDomain: "afro-com.com",
+      //   signInOption: SignInOption.standard,
+      //   clientId:
+      //       '814923650397-qfoarf7agfd13hg2j8dcm2mitoc0lrfu.apps.googleusercontent.com',
+      //   scopes: <String>[
+      //     'email',
+      //   ],
+      // );
+      // var response = await _googleSignIn.signIn();
+      // print(response);
+      // //! Appwrite method
+      Client _googleAppwriteclient =
+          Client(endPoint: AppwriteCredentials.AppwriteHostedEndpoint)
+              .setProject(AppwriteCredentials.AppwriteHostedProjectID);
+      Account _googleAppwriteclientAccount = Account(_googleAppwriteclient);
+      var res = await _googleAppwriteclientAccount.createOAuth2Session(
+          provider: 'google');
+      print(res);
+    } on AppwriteException catch (error) {
+      _logger.i(error.message);
+      var responseCode = error.code;
+      if (responseCode == 401) {}
+    } catch (error) {
+      print(error);
     }
   }
 }
