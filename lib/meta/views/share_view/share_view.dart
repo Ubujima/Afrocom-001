@@ -7,9 +7,6 @@ import 'package:provider/provider.dart';
 class ShareView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authenticationNotifier =
-        Provider.of<AuthenticationNotifier>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(Provider.of<AuthenticationNotifier>(context, listen: true)
