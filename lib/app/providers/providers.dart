@@ -12,7 +12,6 @@ class AppProviders {
   static List<SingleChildWidget> providers = [
     ChangeNotifierProvider(create: (_) => AuthenticationNotifier()),
     ChangeNotifierProvider(create: (_) => DatabaseNotifier()),
-    ChangeNotifierProvider(create: (_) => StorageNotifier()),
     ChangeNotifierProvider(create: (_) => UtilityNotifier()),
     ChangeNotifierProvider(create: (_) => ProfileSetupNotifier()),
     ChangeNotifierProvider(create: (_) => CacheNotifier()),
