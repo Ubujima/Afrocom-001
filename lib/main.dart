@@ -4,6 +4,7 @@ import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -29,7 +30,7 @@ class Lava extends StatelessWidget {
       theme: ThemeData(
           accentColor: KConstantColors.greenColor,
           primaryColor: KConstantColors.yellowColor,
-          fontFamily: KConstantFonts.Monteserrat),
+          fontFamily: KConstantFonts.PoppinsMedium),
     );
   }
 }

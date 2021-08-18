@@ -1,82 +1,54 @@
-// To parse this JSON data, do
-//
-//     final post = postFromJson(jsonString);
-
 import 'dart:convert';
 
-List<Post> postFromJson(String str) =>
-    List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
+import 'package:latlong2/latlong.dart';
 
-String postToJson(List<Post> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+Post postFromJson(String str) => Post.fromJson(json.decode(str));
+
+String postToJson(Post data) => json.encode(data.toJson());
 
 class Post {
-  String postcaption;
-  String postusername;
-  String postimage;
-  String postdate;
-  String postlocation;
-  String? id;
-  String? collection;
-  Permissions? permissions;
-  int? postlikes;
-  String? postcomments;
   Post(
-    this.postcaption,
+    this.postcategory,
     this.postusername,
-    this.postimage,
-    this.postdate,
-    this.postlocation, [
-    this.id,
-    this.collection,
-    this.permissions,
-    this.postlikes,
-    this.postcomments,
-  ]);
+    this.postusermood,
+    this.postuserimage,
+    this.postusercaption,
+    this.postuseraddress,
+    this.postuserlocationcords,
+    this.posttime,
+    this.postuserid,
+  );
+  String postcategory;
+  String postusername;
+  String postusermood;
+  List<String> postuserimage;
+  String postusercaption;
+  String postuseraddress;
+  String postuserlocationcords;
+  String posttime;
+  String postuserid;
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
-        json["postcaption"],
+        json["postcategory"],
         json["postusername"],
-        json["postimage"],
-        json["postdate"],
-        json["postlocation"],
-        json["\$id"],
-        json["\$collection"],
-        Permissions.fromJson(json["\$permissions"]),
-        json["postlikes"],
-        json["postcomments"],
+        json["postusermood"],
+        List<String>.from(json["postuserimage"].map((x) => x)),
+        json["postusercaption"],
+        json["postuseraddress"],
+        json["postuserlocationcords"],
+        json["posttime"],
+        json["postuserid"],
       );
 
   Map<String, dynamic> toJson() => {
-        "\$id": id,
-        "\$collection": collection,
-        "\permissions": permissions!.toJson(),
-        "postcaption": postcaption,
+        "postcategory": postcategory,
         "postusername": postusername,
-        "postimage": postimage,
-        "postlikes": postlikes,
-        "postcomments": postcomments,
-        "postdate": postdate,
-        "postlocation": postlocation,
-      };
-}
-
-class Permissions {
-  Permissions(
-    this.read,
-    this.write,
-  );
-
-  List<dynamic> read;
-  List<dynamic> write;
-
-  factory Permissions.fromJson(Map<String, dynamic> json) => Permissions(
-        List<dynamic>.from(json["read"].map((x) => x)),
-        List<dynamic>.from(json["write"].map((x) => x)),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "read": List<dynamic>.from(read.map((x) => x)),
-        "write": List<dynamic>.from(write.map((x) => x)),
+        "postusermood": postusermood,
+        "postuserimage": List<dynamic>.from(postuserimage.map((x) => x)),
+        "postusercaption": postusercaption,
+        "postuseraddress": postuseraddress,
+        "postuserlocationcords": postuserlocationcords,
+        "posttime": posttime,
+        "postuserid": postuserid,
       };
 }

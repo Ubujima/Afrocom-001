@@ -8,4 +8,5 @@ class KConstantColors {
   static const greenColor = Color.fromRGBO(39, 194, 163, 1);
   static const yellowColor = Color.fromRGBO(254, 228, 64, 1);
   static const textColor = Color.fromRGBO(154, 154, 154, 1);
+  static const blueColor = Colors.blueAccent;
 }

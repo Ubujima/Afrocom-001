@@ -20,4 +20,29 @@ class KConstantTextStyles {
         fontWeight: FontWeight.w800,
         fontSize: fontSize);
   }
+
+  // ignore: non_constant_identifier_names
+  static TextStyle BoldText({required double fontSize}) {
+    return TextStyle(
+        fontFamily: KConstantFonts.PoppinsBold,
+        color: KConstantColors.whiteColor,
+        fontWeight: FontWeight.bold,
+        fontSize: fontSize);
+  }
+
+  // ignore: non_constant_identifier_names
+  static TextStyle RegularText({required double fontSize}) {
+    return TextStyle(
+        fontFamily: KConstantFonts.Poppins,
+        color: KConstantColors.whiteColor,
+        fontSize: fontSize);
+  }
+
+  // ignore: non_constant_identifier_names
+  static TextStyle MediumText({required double fontSize}) {
+    return TextStyle(
+        fontFamily: KConstantFonts.PoppinsMedium,
+        color: KConstantColors.whiteColor,
+        fontSize: fontSize);
+  }
 }

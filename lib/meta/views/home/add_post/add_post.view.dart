@@ -1,169 +1,99 @@
-// import 'dart:convert';
-// import 'package:afrocom/app/constants/images.tag.dart';
-// import 'package:afrocom/core/models/post.model.dart';
-// import 'package:afrocom/core/notifier/authentication.notifier.dart';
-// import 'package:afrocom/core/notifier/database.notifier.dart';
-// import 'package:afrocom/core/notifier/storage.notifier.dart';
-// import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
-// import 'package:afrocom/meta/widgets/custom_button.dart';
-// import 'package:provider/provider.dart';
+import 'package:afrocom/app/shared/colors.dart';
+import 'package:afrocom/core/notifier/posting.notifier.dart';
+import 'package:afrocom/core/services/storage.service.dart';
+import 'package:afrocom/meta/views/authentication/signup/signup.exports.dart';
+import 'package:afrocom/meta/widgets/back_button.dart';
+import 'package:provider/provider.dart';
+import 'components/add_post_components.dart';
 
-// class AddPost extends StatefulWidget {
-//   @override
-//   _AddPostState createState() => _AddPostState();
-// }
+class AddPostView extends StatefulWidget {
+  @override
+  _AddPostViewState createState() => _AddPostViewState();
+}
 
-// class _AddPostState extends State<AddPost> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final databaseNotifier =
-//         Provider.of<DatabaseNotifier>(context, listen: false);
-//     final storageNotifier =
-//         Provider.of<StorageNotifier>(context, listen: false);
-//     final authenticationNotifier =
-//         Provider.of<AuthenticationNotifier>(context, listen: false);
-//     var currentDate = DateTime.now();
-//     final captionController = TextEditingController();
-//     return Scaffold(
-//       backgroundColor: KConstantColors.bgColor,
-//       body: Container(
-//         child: SingleChildScrollView(
-//           child: Column(
-//             children: [
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Container(
-//                   child: TextField(
-//                     controller: captionController,
-//                     decoration: new InputDecoration(
-//                         filled: true,
-//                         hintText: "Write something...",
-//                         hintStyle: new TextStyle(
-//                             color: KConstantColors.textColor, fontSize: 16.0),
-//                         fillColor: KConstantColors.darkColor,
-//                         border: new OutlineInputBorder(
-//                             borderSide: BorderSide.none,
-//                             borderRadius:
-//                                 BorderRadius.all(const Radius.circular(10.0)))),
-//                     style: KConstantTextStyles.MBody1(fontSize: 18),
-//                     minLines: 5,
-//                     maxLines: 10,
-//                   ),
-//                 ),
-//               ),
-//               vSizedBox3,
-//               Container(
-//                 width: 400,
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                   children: [
-//                     CustomButton(
-//                       iconData: Icons.camera,
-//                       height: 50,
-//                       buttonColor: KConstantColors.bgColorFaint,
-//                       width: 180,
-//                       tag: "Camera",
-//                       onPressed: () {},
-//                     ),
-//                     CustomButton(
-//                       iconData: Icons.camera,
-//                       height: 50,
-//                       width: 180,
-//                       buttonColor: KConstantColors.bgColorFaint,
-//                       tag: "Gallery",
-//                       onPressed: () async {
-//                         // await storageNotifier.uploadFile(context: context);
-//                       },
-//                     )
-//                   ],
-//                 ),
-//               ),
-//               vSizedBox1,
-//               CustomButton(
-//                 buttonColor: KConstantColors.bgColorFaint,
-//                 iconData: Icons.document_scanner,
-//                 height: 50,
-//                 width: 380,
-//                 tag: "Attach a document",
-//                 onPressed: () {},
-//               ),
-//               vSizedBox3,
-//               Container(
-//                 width: 400,
-//                 child: Column(
-//                   children: [
-//                     vSizedBox1,
-//                     Text(
-//                       "What's your mood?",
-//                       style: KConstantTextStyles.MBody1(fontSize: 16),
-//                     ),
-//                     vSizedBox1,
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                       children: [
-//                         CircleAvatar(
-//                           radius: 25,
-//                           backgroundColor: Colors.transparent,
-//                           backgroundImage: AssetImage(ImageTags.HappyFace),
-//                         ),
-//                         CircleAvatar(
-//                           radius: 25,
-//                           backgroundColor: Colors.transparent,
-//                           backgroundImage: AssetImage(ImageTags.AngryFace),
-//                         ),
-//                         CircleAvatar(
-//                           radius: 25,
-//                           backgroundColor: Colors.transparent,
-//                           backgroundImage: AssetImage(ImageTags.ArrogantFace),
-//                         ),
-//                         CircleAvatar(
-//                           radius: 25,
-//                           backgroundColor: Colors.transparent,
-//                           backgroundImage: AssetImage(ImageTags.ShockFace),
-//                         )
-//                       ],
-//                     ),
-//                     vSizedBox1
-//                   ],
-//                 ),
-//                 decoration: BoxDecoration(
-//                     color: KConstantColors.darkColor,
-//                     borderRadius: BorderRadius.circular(5)),
-//               ),
-//               vSizedBox4,
-//               GestureDetector(
-//                 onTap: () async {
-//                       context: context);
-//                   // Future.delayed(Duration(seconds: 2)).whenComplete(() async {
-//                   //   await databaseNotifier.createPost(
-//                   //       context: context,
-//                   //       post: Post(
-//                   //           postcaption,
-//                   //           postuser ?? "",
-//                   //           currentDate.toString(),
-//                   //           "India",
-//                   //           postImage ?? "",
-//                   //           "",
-//                   //           ""));
-//                   // });
-//                 },
-//                 child: Container(
-//                   height: 50,
-//                   width: 200,
-//                   child: Center(
-//                       child: Text(
-//                     "Post",
-//                     style: KConstantTextStyles.BHeading1(fontSize: 20),
-//                   )),
-//                   decoration: BoxDecoration(
-//                       color: KConstantColors.greenColor,
-//                       borderRadius: BorderRadius.circular(5)),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class _AddPostViewState extends State<AddPostView> {
+  TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    descriptionController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    PostingNotifier _postingNotifier({required bool renderUI}) =>
+        Provider.of<PostingNotifier>(context, listen: renderUI);
+    _customTextField() {
+      return Container(
+          child: Center(
+        child: TextField(
+          onChanged: (val) {
+            _postingNotifier(renderUI: false).checkIfDescriptionFilled(
+                textEditingController: descriptionController);
+          },
+          minLines: 5,
+          maxLines: 6,
+          style: TextStyle(color: KConstantColors.whiteColor, fontSize: 16.0),
+          controller: descriptionController,
+          decoration: new InputDecoration(
+              filled: true,
+              hintText: "Enter caption...",
+              hintStyle: new TextStyle(
+                  color: KConstantColors.textColor, fontSize: 16.0),
+              fillColor: KConstantColors.bgColorFaint,
+              border: new OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.all(const Radius.circular(5.0)))),
+        ),
+      ));
+    }
+
+    return Scaffold(
+      backgroundColor: KConstantColors.darkColor,
+      body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  KConstantColors.darkColor,
+                  KConstantColors.bgColor,
+                ],
+                begin: const FractionalOffset(0.0, 0.1),
+                end: const FractionalOffset(0.9, 0.0),
+                stops: [0.5, 1.0]),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                vSizedBox3,
+                vSizedBox1,
+                CustomBackButton(
+                    backPressed: () =>
+                        Navigator.of(context).pushNamed(HomeRoute),
+                    title:
+                        "Post as ${_postingNotifier(renderUI: true).selectedPostType}"),
+                _customTextField(),
+                vSizedBox2,
+                AddPostComponents.moodSelection(context: context),
+                vSizedBox2,
+                AddPostComponents.selectImageSection(context: context),
+                vSizedBox2,
+                AddPostComponents.addLocation(context: context),
+                vSizedBox2,
+                AddPostComponents.uploadPostButton(
+                    textEditingController: descriptionController,
+                    context: context),
+                vSizedBox3,
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

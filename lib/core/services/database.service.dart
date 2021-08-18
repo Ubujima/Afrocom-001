@@ -1,8 +1,14 @@
 import 'dart:io';
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
+import 'package:afrocom/app/constants/database.credentials.dart';
+import 'package:afrocom/core/models/fetch_posts.dart';
+import 'package:afrocom/core/models/post.model.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
+import 'package:afrocom/core/services/storage.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
+import 'package:afrocom/meta/views/home/add_post/components/add_post_components.dart';
+import 'package:afrocom/meta/views/home/feed/components/feed.widgets.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:logger/logger.dart';
 
@@ -43,6 +49,7 @@ class DatabaseService {
     }
   }
 
+//! <--------------------------------------------------SUBMIT USER DATA------------------------------------------------------------>
   Future submitUserData(
       {required BuildContext context, required SignedUser signedUser}) async {
     var userDocumentId;
@@ -85,6 +92,7 @@ class DatabaseService {
     }
   }
 
+//! <--------------------------------------------------UPDATE DATA------------------------------------------------------------>
   Future updateData(
       {required String collectionId,
       required String documentId,
@@ -113,5 +121,75 @@ class DatabaseService {
     } catch (e) {
       print("🔦 = $e");
     }
+  }
+
+//! <--------------------------------------------------UPLOAD POSTS------------------------------------------------------------>
+  Future uploadPost({required Post post, required BuildContext context}) async {
+    try {
+      var _response = await _database.createDocument(
+          write: ['*'],
+          read: ['*'],
+          collectionId: DatabaseCredentials.PostCollectionID,
+          data: post.toJson());
+      var _resStatusCode = _response.statusCode;
+      switch (_resStatusCode) {
+        case 201:
+          {
+            AddPostComponents.showProgressIndicator(context: context);
+            Future.delayed(Duration(seconds: 12)).whenComplete(() {
+              Navigator.of(context).pushNamed(FeedRoute);
+            });
+          }
+      }
+    } on AppwriteException catch (exception) {
+      var exceptionMessage = exception.message;
+      SnackbarUtility.showSnackbar(
+          context: context, message: exceptionMessage!);
+    } catch (e) {
+      SnackbarUtility.showSnackbar(context: context, message: e.toString());
+    }
+  }
+
+//! <--------------------------------------------------FETCH POSTS------------------------------------------------------------>
+  fetchPosts({required BuildContext context}) async {
+    try {
+      var response = await _database.listDocuments(
+          collectionId: DatabaseCredentials.PostCollectionID);
+      if (response.data != null) {
+        var responseData = response.data;
+        return responseData;
+      }
+    } on AppwriteException catch (exception) {
+      var exceptionMessage = exception.message;
+      SnackbarUtility.showSnackbar(
+          context: context, message: exceptionMessage!);
+    } catch (e) {
+      SnackbarUtility.showSnackbar(context: context, message: e.toString());
+    }
+  }
+
+  //! <------------------------------------------DELETE POSTS--------------------------------------------------->
+  deletePost(
+      {required dynamic imageId,
+      required BuildContext context,
+      required dynamic postId}) async {
+    try {
+      var response = await _database.deleteDocument(
+          collectionId: DatabaseCredentials.PostCollectionID,
+          documentId: postId);
+      var resStatusCode = response.statusCode;
+      if (resStatusCode == 204) {
+        await StorageService.createInstance
+            .deletePostImage(postId: imageId, context: context);
+        FeedWidgets.deletePostLoader(context: context);
+        Future.delayed(Duration(seconds: 6)).whenComplete(() {
+          Navigator.of(context).pushNamed(FeedRoute);
+        });
+      }
+    } on AppwriteException catch (exception) {
+      var exceptionMessage = exception.message;
+      SnackbarUtility.showSnackbar(
+          context: context, message: exceptionMessage!);
+    } catch (e) {}
   }
 }

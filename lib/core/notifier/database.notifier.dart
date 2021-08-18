@@ -1,3 +1,4 @@
+import 'package:afrocom/core/models/fetch_posts.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
@@ -35,5 +36,16 @@ class DatabaseNotifier extends ChangeNotifier {
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong.");
     }
+  }
+
+  //! <---------------------------------------------FETCH CORDS------------------------------------------------>
+
+  Future fetchCoordinates({required BuildContext context}) async {
+    try {
+      var response =
+          await DatabaseService.createInstance.fetchPosts(context: context);
+      var modelledData = FetchPosts.fromJson(response);
+      return modelledData.documents;
+    } catch (e) {}
   }
 }

@@ -7,9 +7,9 @@ class SnackbarUtility {
     return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(seconds: 3),
-        backgroundColor: KConstantColors.darkColor,
+        backgroundColor: KConstantColors.blueColor,
         content:
-            Text(message, style: KConstantTextStyles.MBody1(fontSize: 16))));
+            Text(message, style: KConstantTextStyles.BoldText(fontSize: 14))));
   }
 
   static showLoadingSnackbar(

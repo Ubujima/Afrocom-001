@@ -164,4 +164,18 @@ class AuthenticationNotifier extends ChangeNotifier {
           context: context, message: "Something went wrong, try again");
     }
   }
+
+//!<------------------------------------CHECK IF USER LOGGED IN--------------------------------------->
+
+  bool _isUserLogged = false;
+  bool get isUserLogged => _isUserLogged;
+
+  checkUserIsLogged({required BuildContext context}) async {
+    var user = await AppwriteAuthenticationAPI.createInstance
+        .getCurrentUserSession(context: context);
+    if (user != null) {
+      _isUserLogged = true;
+      notifyListeners();
+    }
+  }
 }
