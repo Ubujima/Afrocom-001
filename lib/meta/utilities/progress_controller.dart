@@ -21,9 +21,7 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator>
         duration: Duration(seconds: widget.seconds), vsync: this);
     animation = Tween(begin: 0.0, end: 1.0).animate(controller)
       ..addListener(() {
-        setState(() {
-          // the state that has changed here is the animation object’s value
-        });
+        setState(() {});
       });
     controller.forward();
     if (controller.isCompleted) {

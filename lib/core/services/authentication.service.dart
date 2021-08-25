@@ -1,14 +1,11 @@
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/app/routes/app.routes.dart';
-import 'package:afrocom/core/models/signeduser.model.dart';
-import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/meta/utilities/navigation.utility.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 
 class AppwriteAuthenticationAPI {
   final _logger = Logger();
@@ -33,29 +30,23 @@ class AppwriteAuthenticationAPI {
   //! Create new account and submit the data in database
   Future signUp(
       {required BuildContext context,
-      required SignedUser signedUser,
-      required String userfullname,
       required String username,
       required String useremail,
       required String userpassword}) async {
     try {
-      print("Executing sign up process...");
-      final databaseNotifier =
-          Provider.of<DatabaseNotifier>(context, listen: false);
       var response = await _account.create(
           name: username, email: useremail, password: userpassword);
       if (response.data != null) {
         var responseStatusCode = response.statusCode;
-        print("Signing process status code : $responseStatusCode");
-        print("Signing process response : ${response.data}");
         if (responseStatusCode == 201) {
+          await _account.createSession(
+              email: useremail, password: userpassword);
           SnackbarUtility.showLoadingSnackbar(
               time: 6,
               title: "Creating new account, Please wait",
               context: context);
           Future.delayed(Duration(seconds: 8)).whenComplete(() async {
-            await databaseNotifier.submitUserData(
-                context: context, signedUser: signedUser);
+            Navigator.of(context).pushNamed(ShareRoute);
           });
         }
       }
@@ -149,6 +140,7 @@ class AppwriteAuthenticationAPI {
   //! Log out/Remove current session
   Future logOut({required BuildContext context}) async {
     try {
+      await _account.deleteSessions();
       var response = await _account.deleteSession(sessionId: "current");
       var responseCode = response.statusCode;
       if (responseCode == 204) {

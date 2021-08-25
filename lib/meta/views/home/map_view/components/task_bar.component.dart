@@ -72,11 +72,6 @@ class SubTaskBar extends StatelessWidget {
       top: SizeConfig.setHeight(context: context, factor: 0.78),
       left: SizeConfig.setWidth(context: context, factor: 0.02),
       child: GestureDetector(
-        // onPanDown: (details) {
-        //   MapNotifier mapNotifier({required bool renderUI}) =>
-        //       Provider.of<MapNotifier>(context, listen: renderUI);
-        //   mapNotifier(renderUI: false).toggleShowSubTaskBar();
-        // },
         child: AnimatedContainer(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -100,7 +95,11 @@ class SubTaskBar extends StatelessWidget {
                     }
                   }),
               subTaskBarOptions(icon: FontAwesomeIcons.bell, onTap: () {}),
-              subTaskBarOptions(icon: FontAwesomeIcons.commentAlt, onTap: () {})
+              subTaskBarOptions(
+                  icon: FontAwesomeIcons.user,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ProfileRoute);
+                  })
             ],
           ),
           duration: Duration(seconds: 2),

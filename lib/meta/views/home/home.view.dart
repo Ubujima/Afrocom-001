@@ -12,11 +12,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeViewWidgets.homeAppBar(context: context),
-      body: PageView(
-        children: [
-          MapView(),
-        ],
-      ),
+      body: MapView(),
       backgroundColor: KConstantColors.bgColor,
     );
   }

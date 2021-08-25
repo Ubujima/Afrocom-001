@@ -1,7 +1,7 @@
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
-import 'package:afrocom/core/notifier/cache.notifier.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/core/notifier/feed.notifier.dart';
+import 'package:afrocom/core/notifier/filter.notifier.dart';
 import 'package:afrocom/core/notifier/map.notifier.dart';
 import 'package:afrocom/core/notifier/posting.notifier.dart';
 import 'package:afrocom/core/notifier/profile_setup.notifier.dart';
@@ -17,9 +17,9 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => StorageNotifier()),
     ChangeNotifierProvider(create: (_) => UtilityNotifier()),
     ChangeNotifierProvider(create: (_) => ProfileSetupNotifier()),
-    ChangeNotifierProvider(create: (_) => CacheNotifier()),
     ChangeNotifierProvider(create: (_) => MapNotifier()),
     ChangeNotifierProvider(create: (_) => PostingNotifier()),
     ChangeNotifierProvider(create: (_) => FeedNotifier()),
+    ChangeNotifierProvider(create: (_) => FilterNotifier()),
   ];
 }

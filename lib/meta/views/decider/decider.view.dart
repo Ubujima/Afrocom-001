@@ -12,34 +12,37 @@ class SessionDecider extends StatefulWidget {
 }
 
 class _SessionDeciderState extends State<SessionDecider> {
+  authenticationNotifier({required BuildContext context}) =>
+      Provider.of<AuthenticationNotifier>(context, listen: false);
+  Future readAllCache({required BuildContext context}) async {
+    var cache;
+    var _facebookCache = await CacheService.readCache(key: "facebookuser");
+    if (_facebookCache != null) {
+      cache = _facebookCache;
+    }
+    var _googleCache = await CacheService.readCache(key: "googleuser");
+    if (_googleCache != null) {
+      cache = _googleCache;
+    }
+    var _emailCache = await authenticationNotifier(context: context)
+        .getCurrentUserSession(context: context);
+    if (_emailCache != null) {
+      cache = _emailCache;
+    }
+    return cache;
+  }
+
+  late Future _readCache;
+  @override
+  void initState() {
+    _readCache = readAllCache(context: context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final authenticationNotifier =
-        Provider.of<AuthenticationNotifier>(context, listen: false);
-    final cacheNotifier = Provider.of<CacheNotifier>(context, listen: false);
-    Future readAllCache() async {
-      var cache;
-      var _facebookCache = await cacheNotifier.readCache(key: "facebookuser");
-      print("👽Facebook Cache => $_facebookCache");
-      if (_facebookCache != null) {
-        cache = _facebookCache;
-      }
-      var _googleCache = await cacheNotifier.readCache(key: "googleuser");
-      print("Google Cache => $_googleCache");
-      if (_googleCache != null) {
-        cache = _googleCache;
-      }
-      var _emailCache =
-          await authenticationNotifier.getCurrentUserSession(context: context);
-      print("Email Cache => $_emailCache");
-      if (_emailCache != null) {
-        cache = _emailCache;
-      }
-      return cache;
-    }
-
     return FutureBuilder(
-      future: readAllCache(),
+      future: _readCache,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SplashView();

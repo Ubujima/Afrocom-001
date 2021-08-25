@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/app/constants/database.credentials.dart';
-import 'package:afrocom/core/models/fetch_posts.dart';
 import 'package:afrocom/core/models/post.model.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/services/storage.service.dart';
+import 'package:afrocom/meta/utilities/post_progress_indicator.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
-import 'package:afrocom/meta/views/home/add_post/components/add_post_components.dart';
 import 'package:afrocom/meta/views/home/feed/components/feed.widgets.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:logger/logger.dart';
@@ -16,6 +15,7 @@ class DatabaseService {
   final _logger = Logger();
   static DatabaseService? _instance;
   late Client _client;
+  Logger logger = new Logger();
   late Database _database;
 
   DatabaseService._initialize() {
@@ -55,22 +55,65 @@ class DatabaseService {
     var userDocumentId;
     try {
       var response = await _database.createDocument(
-          collectionId: "610d7c664edbe",
+          collectionId: DatabaseCredentials.UserCollectionID,
           data: signedUser.toJson(),
-          read: ["*"],
-          write: ["*"]);
+          read: ['*'], //=> WORKING
+          write: ['*']);
       var _userDocumentId = response.data['\$id'];
       var resStatusCode = response.statusCode;
-      print("Database status : $resStatusCode");
       if (resStatusCode == 201) {
         userDocumentId = _userDocumentId;
         SnackbarUtility.showSnackbar(
             context: context, message: "Account data added!");
-        Navigator.of(context).pushNamed(ShareRoute);
+        Navigator.of(context).pushNamed(HomeRoute);
       }
       return userDocumentId;
     } on SocketException catch (error) {
       _logger.i(error.message);
+    } on AppwriteException catch (error) {
+      _logger.i(error.response);
+      _logger.i(error.code);
+      _logger.i(error.message);
+      var errorCode = error.code;
+      var errorMesage = error.message;
+      switch (errorCode) {
+        case 429:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Server error, Try again!");
+          break;
+        case 400:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Something went wrong, Try again");
+          break;
+        default:
+          {
+            SnackbarUtility.showSnackbar(
+                context: context, message: errorMesage!);
+          }
+      }
+    } catch (error) {
+      _logger.i(error);
+      SnackbarUtility.showSnackbar(
+          context: context, message: "Something went wrong, Try again");
+    }
+  }
+
+  //!<---------------------------- FIND USER DATA BASED ON LOGGED ID--------------------------------->
+
+  Future findUserData(
+      {required BuildContext context, required dynamic documentId}) async {
+    try {
+      var userData = await _database.getDocument(
+          collectionId: DatabaseCredentials.UserCollectionID,
+          documentId: documentId);
+      var userStatusCode = userData.statusCode;
+      var data = userData.data;
+      switch (userStatusCode) {
+        case 200:
+          {
+            return data;
+          }
+      }
     } on AppwriteException catch (error) {
       _logger.i(error.response);
       _logger.i(error.code);
@@ -85,11 +128,40 @@ class DatabaseService {
           SnackbarUtility.showSnackbar(
               context: context, message: "Something went wrong, Try again");
       }
-    } catch (error) {
-      _logger.i(error);
-      SnackbarUtility.showSnackbar(
-          context: context, message: "Something went wrong, Try again");
-    }
+    } catch (e) {}
+  }
+
+  //!<--------------------------------------------SEARCH USER DATA------------------------------------->
+
+  Future searchUserData(
+      {required BuildContext context, required dynamic query}) async {
+    try {
+      var response = await _database.listDocuments(
+          collectionId: DatabaseCredentials.UserCollectionID, search: query);
+      var resData = response.data;
+      return resData;
+    } on AppwriteException catch (error) {
+      _logger.i(error.response);
+      _logger.i(error.code);
+      _logger.i(error.message);
+      var errorMessage = error.message;
+      var errorCode = error.code;
+      switch (errorCode) {
+        case 429:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Server error, Try again!");
+          break;
+        case 400:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Something went wrong, Try again");
+          break;
+        default:
+          {
+            SnackbarUtility.showSnackbar(
+                context: context, message: errorMessage!);
+          }
+      }
+    } catch (e) {}
   }
 
 //! <--------------------------------------------------UPDATE DATA------------------------------------------------------------>
@@ -100,11 +172,12 @@ class DatabaseService {
       required BuildContext context}) async {
     try {
       var updatedData = await _database.updateDocument(
-          collectionId: collectionId,
-          documentId: documentId,
-          data: data,
-          read: ["*"],
-          write: ["*"]);
+        collectionId: collectionId,
+        documentId: documentId,
+        data: data,
+        read: ["*", "role:guest", "role:member"],
+        write: ["*", "role:guest", "role:member"],
+      );
 
       var statusCode = updatedData.statusCode;
       switch (statusCode) {
@@ -127,15 +200,16 @@ class DatabaseService {
   Future uploadPost({required Post post, required BuildContext context}) async {
     try {
       var _response = await _database.createDocument(
-          write: ['*'],
-          read: ['*'],
-          collectionId: DatabaseCredentials.PostCollectionID,
-          data: post.toJson());
+        collectionId: DatabaseCredentials.PostCollectionID,
+        data: post.toJson(),
+        read: ["*", "role:guest", "role:member"],
+        write: ["*", "role:guest", "role:member"],
+      );
       var _resStatusCode = _response.statusCode;
       switch (_resStatusCode) {
         case 201:
           {
-            AddPostComponents.showProgressIndicator(context: context);
+            showProgressIndicator(context: context);
             Future.delayed(Duration(seconds: 12)).whenComplete(() {
               Navigator.of(context).pushNamed(FeedRoute);
             });
@@ -191,5 +265,26 @@ class DatabaseService {
       SnackbarUtility.showSnackbar(
           context: context, message: exceptionMessage!);
     } catch (e) {}
+  }
+
+  //!<-------------------------------------------------FILTER MARKERS------------------------------------------>
+  Future filteredMarkersPosts(
+      {required String subCategory, required BuildContext context}) async {
+    try {
+      var response = await _database.listDocuments(
+          filters: ['postusermood=$subCategory'],
+          collectionId: DatabaseCredentials.PostCollectionID);
+      if (response.data != null) {
+        var responseData = response.data;
+        return responseData;
+      }
+    } on AppwriteException catch (exception) {
+      var exceptionMessage = exception.message;
+      print(exceptionMessage);
+      SnackbarUtility.showSnackbar(
+          context: context, message: exceptionMessage!);
+    } catch (e) {
+      SnackbarUtility.showSnackbar(context: context, message: e.toString());
+    }
   }
 }

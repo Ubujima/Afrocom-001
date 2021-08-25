@@ -1,6 +1,6 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/core/notifier/posting.notifier.dart';
-import 'package:afrocom/core/services/storage.service.dart';
+import 'package:afrocom/meta/utilities/sub_category.view.dart';
 import 'package:afrocom/meta/views/authentication/signup/signup.exports.dart';
 import 'package:afrocom/meta/widgets/back_button.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +28,6 @@ class _AddPostViewState extends State<AddPostView> {
       return Container(
           child: Center(
         child: TextField(
-          onChanged: (val) {
-            _postingNotifier(renderUI: false).checkIfDescriptionFilled(
-                textEditingController: descriptionController);
-          },
           minLines: 5,
           maxLines: 6,
           style: TextStyle(color: KConstantColors.whiteColor, fontSize: 16.0),
@@ -79,7 +75,9 @@ class _AddPostViewState extends State<AddPostView> {
                         "Post as ${_postingNotifier(renderUI: true).selectedPostType}"),
                 _customTextField(),
                 vSizedBox2,
-                AddPostComponents.moodSelection(context: context),
+                ShowSubCategories(
+                    parentCategory:
+                        _postingNotifier(renderUI: false).selectedPostType!),
                 vSizedBox2,
                 AddPostComponents.selectImageSection(context: context),
                 vSizedBox2,

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:afrocom/app/constants/images.tag.dart';
 import 'package:afrocom/core/models/fetch_posts.dart';
@@ -6,12 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostingNotifier extends ChangeNotifier {
+  String? _pickedVideoPath;
+  String? get pickedVideoPath => _pickedVideoPath;
+
+  XFile? _pickedVideoFile;
+  XFile? get pickedVideoFile => _pickedVideoFile;
+
   String? _selectedPostType = "Campaign";
   String? get selectedPostType => _selectedPostType;
 
   assignSelectedPostTyle({required String candidatePostType}) {
     _selectedPostType = candidatePostType;
-    print(_selectedPostType);
     notifyListeners();
   }
 
@@ -52,35 +58,37 @@ class PostingNotifier extends ChangeNotifier {
   File? _selectedImage;
   File? get selectedImage => _selectedImage;
 
-  pickAndShowImages({required ImageSource source}) async {
+  void pickImages({required ImageSource source}) async {
     final picker = ImagePicker();
     var _pickedImage = await picker.pickImage(source: source);
     _selectedImage = File(_pickedImage!.path);
+    if (_pickedImage.path.isNotEmpty) {
+      _pickedVideoPath = null;
+    }
     notifyListeners();
   }
 
-  pickAndShowVideos() async {
+  Future<String> pickVideos() async {
     final picker = ImagePicker();
-    var _pickedVideo = await picker.pickVideo(source: ImageSource.gallery);
-    return _pickedVideo;
+    var video = await picker.pickVideo(source: ImageSource.gallery);
+    if (video != null) {
+      _pickedVideoFile = video;
+      _pickedVideoPath = video.path;
+      _selectedImage = null;
+      notifyListeners();
+    }
+    return _pickedVideoPath!;
   }
 
-  clearImages() {
+  void clearImages() {
     _selectedImage = null;
     notifyListeners();
   }
 
-  //! Upload post button
-
-  bool? _isDescriptionFilled = false;
-  bool? get isDescriptionFilled => _isDescriptionFilled;
-
-  checkIfDescriptionFilled(
-      {required TextEditingController textEditingController}) {
-    if (textEditingController.text.isNotEmpty) {
-      _isDescriptionFilled = true;
-      notifyListeners();
-    }
+  void clearVideo() {
+    _pickedVideoPath = null;
+    _pickedVideoFile = null;
+    notifyListeners();
   }
 
   //!<---------------------------------------- FETCH POSTS---------------------------------------------------->

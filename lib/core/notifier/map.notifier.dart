@@ -3,12 +3,10 @@ import 'package:afrocom/core/models/fetch_posts.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoding/geocoding.dart' as GeoCoding;
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
-
 import 'database.notifier.dart';
 
 class MapNotifier extends ChangeNotifier {
@@ -38,7 +36,6 @@ class MapNotifier extends ChangeNotifier {
     final List<GeoCoding.Placemark> placemark =
         await GeoCoding.placemarkFromCoordinates(
             latLng.latitude, latLng.longitude);
-    print(placemark);
     SnackbarUtility.showSnackbar(
         context: context,
         message:
@@ -149,6 +146,9 @@ class MapNotifier extends ChangeNotifier {
   List<Marker> _markers = [];
   List<Marker> get markers => _markers;
 
+  bool _isMarkerFiltered = false;
+  bool get isMarkerFiltered => _isMarkerFiltered;
+
   initiateMarkers({required BuildContext context}) async {
     double postlatitude({required dynamic candidateString}) {
       var _data = candidateString.toString().split(",")[0];
@@ -167,8 +167,83 @@ class MapNotifier extends ChangeNotifier {
     var data =
         await databaseNotifier.fetchCoordinates(context: context) as List;
     var _snapshot = data;
+    if (!_isMarkerFiltered) {
+      _snapshot.forEach((postData) {
+        FetchedPostData fetchPostsData = postData;
+        String markerImage = ImageTags.AngryFace;
+        var userMood = fetchPostsData.postusermood;
+        switch (userMood) {
+          case "Happy":
+            {
+              markerImage = ImageTags.HappyFace;
+            }
+            break;
+          case "Arrogant":
+            {
+              markerImage = ImageTags.ArrogantFace;
+            }
+            break;
+          case "Angry":
+            {
+              markerImage = ImageTags.AngryFace;
+            }
+            break;
+          case "Shock":
+            {
+              markerImage = ImageTags.ShockFace;
+            }
+            notifyListeners();
+        }
+        double addLatitude =
+            postlatitude(candidateString: fetchPostsData.postuserlocationcords);
+        double addLongitude = postlongitude(
+            candidateString: fetchPostsData.postuserlocationcords);
+        Marker marker = Marker(
+            point: LatLng(addLatitude, addLongitude),
+            builder: (context) => new CircleAvatar(
+                  radius: 30.0,
+                  backgroundImage: AssetImage(markerImage),
+                  backgroundColor: Colors.transparent,
+                ));
+        _markers.add(marker);
+        notifyListeners();
+      });
+    }
+  }
+
+  //!<-------------------------------------------------------FILTER MARKERS------------------------------------------------->
+
+  List<Marker> _filteredMarkers = [];
+  List<Marker> get filteredMarkers => _filteredMarkers;
+
+  Future filterMarkers(
+      {required BuildContext context, required String subCategory}) async {
+    _isMarkerFiltered = true;
+    notifyListeners();
+    _filteredMarkers.clear();
+    double postlatitude({required dynamic candidateString}) {
+      var _data = candidateString.toString().split(",")[0];
+      var renderedDouble = double.parse(_data);
+      return renderedDouble;
+    }
+
+    double postlongitude({required dynamic candidateString}) {
+      var _data = candidateString.toString().split(",")[1];
+      var renderedDouble = double.parse(_data);
+      return renderedDouble;
+    }
+
+    final databaseNotifier =
+        Provider.of<DatabaseNotifier>(context, listen: false);
+    var data = await databaseNotifier.filteredMarkersPosts(
+        subCategory: subCategory, context: context) as List;
+    var _snapshot = data;
+    if (_snapshot.length == 0) {
+      SnackbarUtility.showSnackbar(
+          context: context, message: "No posts available");
+    }
     _snapshot.forEach((postData) {
-      FetchPostsData fetchPostsData = postData;
+      FetchedPostData fetchPostsData = postData;
       String markerImage = ImageTags.AngryFace;
       var userMood = fetchPostsData.postusermood;
       switch (userMood) {
@@ -200,12 +275,17 @@ class MapNotifier extends ChangeNotifier {
       Marker marker = Marker(
           point: LatLng(addLatitude, addLongitude),
           builder: (context) => new CircleAvatar(
-                radius: 30.0,
-                backgroundImage: AssetImage(markerImage),
-                backgroundColor: Colors.transparent,
-              ));
-      _markers.add(marker);
+              radius: 30.0,
+              backgroundImage: AssetImage(markerImage),
+              backgroundColor: Colors.transparent));
+      _filteredMarkers.add(marker);
       notifyListeners();
     });
+  }
+
+  //!<------------------------------------------REMOVE FILTERED MARKERS OF POSTS--------------------------------------->
+  removeMarkerFilter() {
+    _isMarkerFiltered = false;
+    notifyListeners();
   }
 }

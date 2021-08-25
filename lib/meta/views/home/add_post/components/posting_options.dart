@@ -8,7 +8,7 @@ PostingNotifier _postingNotifier(
 
 showPostingOptions({required BuildContext context}) {
   var _postCategory = [
-    "Campaigns",
+    "Mood",
     "Blog",
     "Project",
     "Product",

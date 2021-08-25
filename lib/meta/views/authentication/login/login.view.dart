@@ -1,4 +1,5 @@
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:provider/provider.dart';
 import 'login.exports.dart';

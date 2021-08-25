@@ -1,4 +1,5 @@
 import 'package:afrocom/app/constants/database.credentials.dart';
+import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/core/notifier/profile_setup.notifier.dart';
@@ -16,16 +17,22 @@ class ProfileSetupView extends StatefulWidget {
 
 class _ProfileSetupViewState extends State<ProfileSetupView> {
   TextEditingController userPhoneNumberController = TextEditingController();
+  TextEditingController userFirstNameController = TextEditingController();
+  TextEditingController userLastnameNameController = TextEditingController();
   TextEditingController originController = TextEditingController();
   @override
   void initState() {
     userPhoneNumberController = TextEditingController();
     originController = TextEditingController();
+    userFirstNameController = TextEditingController();
+    userLastnameNameController = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final utilityNotifier =
+        Provider.of<UtilityNotifier>(context, listen: false);
     final _authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
     final _utilityNotifier =
@@ -63,7 +70,7 @@ class _ProfileSetupViewState extends State<ProfileSetupView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizeConfig.verticalSizedBox(context: context, factor: 0.1),
+          SizeConfig.verticalSizedBox(context: context, factor: 0.05),
           Container(
               child: Text("Finish setting profile",
                   style: KConstantTextStyles.BHeading1(fontSize: 20))),
@@ -111,14 +118,116 @@ class _ProfileSetupViewState extends State<ProfileSetupView> {
               context,
               "Enter phone number",
               userPhoneNumberController),
-          SizeConfig.verticalSizedBox(context: context, factor: 0.07),
+          SizeConfig.verticalSizedBox(context: context, factor: 0.01),
+          Container(
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              CustomTextField.stylishTextField(
+                  0.4, context, "First Name*", userFirstNameController),
+              hSizedBox1,
+              CustomTextField.stylishTextField(
+                  0.4, context, "Last Name*", userLastnameNameController),
+            ]),
+          ),
+          vSizedBox2,
+          Row(
+            children: [
+              Text("Optional", style: KConstantTextStyles.MBody1(fontSize: 16)),
+            ],
+          ),
+          vSizedBox1,
+          Container(
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Column(
+              children: [
+                optionButton(
+                    context: context,
+                    onTap: () {
+                      utilityNotifier.selectUserDOB(context);
+                    },
+                    title: "DOB"),
+                vSizedBox1,
+                Text(
+                  Provider.of<UtilityNotifier>(context, listen: true)
+                      .pickedUserDOB!
+                      .toLocal()
+                      .toString()
+                      .split(" ")[0],
+                  style: KConstantTextStyles.MBody1(fontSize: 16),
+                )
+              ],
+            ),
+            hSizedBox1,
+            Column(
+              children: [
+                optionButton(
+                    context: context,
+                    onTap: () {
+                      utilityNotifier.selectUserSex(context: context);
+                    },
+                    title: "Sex"),
+                vSizedBox1,
+                Text(
+                  Provider.of<UtilityNotifier>(context, listen: true).userSex,
+                  style: KConstantTextStyles.MBody1(fontSize: 16),
+                )
+              ],
+            ),
+            hSizedBox1,
+            Column(
+              children: [
+                optionButton(
+                    context: context,
+                    onTap: () {
+                      utilityNotifier.selectUserOrigin(context: context);
+                    },
+                    title: "Origin"),
+                vSizedBox1,
+                Text(
+                  Provider.of<UtilityNotifier>(context, listen: true)
+                      .userOrigin,
+                  style: KConstantTextStyles.MBody1(fontSize: 16),
+                )
+              ],
+            )
+          ])),
+          vSizedBox3,
           CustomButton(
               iconData: Icons.save,
               tag: "Save",
               buttonColor: KConstantColors.greenColor,
               height: SizeConfig.setHeight(context: context, factor: 0.05),
-              onPressed: () {
-                profileSetupNotifier.uploadProfilePicture(context: context);
+              onPressed: () async {
+                // profileSetupNotifier.uploadProfilePicture(context: context);
+                var userData = await _authenticationNotifier
+                    .getCurrentUserSession(context: context);
+                var username = userData['name'];
+                var userid = userData['\$id'];
+                var useremail = userData['email'];
+                var userfirstname = userFirstNameController.text;
+                var userlastname = userLastnameNameController.text;
+                bool isOAuth = false;
+                var userphonenumber = userPhoneNumberController.text;
+                var userimage = "";
+                var usersex = _utilityNotifier.userSex;
+                var userorigin = _utilityNotifier.userOrigin;
+                var userdob = _utilityNotifier.pickedUserDOB!
+                    .toLocal()
+                    .toString()
+                    .split(" ")[0];
+                await _databaseNotifier.submitUserData(
+                    context: context,
+                    signedUser: SignedUser(
+                        userid,
+                        username,
+                        useremail,
+                        userfirstname,
+                        userlastname,
+                        isOAuth,
+                        userphonenumber,
+                        userimage,
+                        userdob,
+                        usersex,
+                        userorigin));
               },
               width: SizeConfig.setWidth(context: context, factor: 0.4)),
         ],
@@ -246,10 +355,11 @@ class _ProfileSetupViewState extends State<ProfileSetupView> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: KConstantColors.darkColor,
-      appBar: AppBar(
-        title: Text(Provider.of<AuthenticationNotifier>(context, listen: true)
-            .currentUserDocumentId
-            .toString()),
+      appBar: AppBar(title: Text("Add information")),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          _authenticationNotifier.getCurrentUserSession(context: context);
+        },
       ),
       body: Container(
         child: SingleChildScrollView(

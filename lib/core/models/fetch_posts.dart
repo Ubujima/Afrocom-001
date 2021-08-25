@@ -2,7 +2,6 @@ import 'dart:convert';
 
 FetchPosts fetchPostsFromJson(String str) =>
     FetchPosts.fromJson(json.decode(str));
-
 String fetchPostsToJson(FetchPosts data) => json.encode(data.toJson());
 
 class FetchPosts {
@@ -12,12 +11,12 @@ class FetchPosts {
   );
 
   int sum;
-  List<FetchPostsData> documents;
+  List<FetchedPostData> documents;
 
   factory FetchPosts.fromJson(Map<String, dynamic> json) => FetchPosts(
         json["sum"],
-        List<FetchPostsData>.from(
-            json["documents"].map((x) => FetchPostsData.fromJson(x))),
+        List<FetchedPostData>.from(
+            json["documents"].map((x) => FetchedPostData.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,63 +25,54 @@ class FetchPosts {
       };
 }
 
-class FetchPostsData {
-  FetchPostsData(
-    this.id,
-    this.collection,
-    this.permissions,
-    this.postcategory,
-    this.postusername,
-    this.postusermood,
-    this.postuserimage,
-    this.postusercaption,
-    this.postuseraddress,
-    this.postuserlocationcords,
-    this.posttime,
-    this.postuserid,
-  );
-
-  String id;
-  String collection;
-  Permissions permissions;
+class FetchedPostData {
+  FetchedPostData(
+      this.postcategory,
+      this.postusername,
+      this.postusermood,
+      this.postasset,
+      this.postusercaption,
+      this.postuseraddress,
+      this.postuserlocationcords,
+      this.posttime,
+      this.postuserid,
+      this.isVideo);
   String postcategory;
   String postusername;
   String postusermood;
-  List<String> postuserimage;
+  List<String> postasset;
   String postusercaption;
   String postuseraddress;
   String postuserlocationcords;
-  DateTime posttime;
+  dynamic posttime;
   String postuserid;
+  bool isVideo;
 
-  factory FetchPostsData.fromJson(Map<String, dynamic> json) => FetchPostsData(
-        json["\u0024id"],
-        json["\u0024collection"],
-        Permissions.fromJson(json["\u0024permissions"]),
+  factory FetchedPostData.fromJson(Map<String, dynamic> json) =>
+      FetchedPostData(
         json["postcategory"],
         json["postusername"],
         json["postusermood"],
-        List<String>.from(json["postuserimage"].map((x) => x)),
+        List<String>.from(json["postasset"].map((x) => x)),
         json["postusercaption"],
         json["postuseraddress"],
         json["postuserlocationcords"],
-        DateTime.parse(json["posttime"]),
+        json["posttime"],
         json["postuserid"],
+        json["isVideo"],
       );
 
   Map<String, dynamic> toJson() => {
-        "\u0024id": id,
-        "\u0024collection": collection,
-        "\u0024permissions": permissions.toJson(),
         "postcategory": postcategory,
         "postusername": postusername,
         "postusermood": postusermood,
-        "postuserimage": List<dynamic>.from(postuserimage.map((x) => x)),
+        "postasset": List<dynamic>.from(postasset.map((x) => x)),
         "postusercaption": postusercaption,
         "postuseraddress": postuseraddress,
         "postuserlocationcords": postuserlocationcords,
-        "posttime": posttime.toIso8601String(),
+        "posttime": posttime,
         "postuserid": postuserid,
+        "isVideo": isVideo,
       };
 }
 

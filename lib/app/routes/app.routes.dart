@@ -6,6 +6,8 @@ import 'package:afrocom/meta/views/home/feed/feed.view.dart';
 import 'package:afrocom/meta/views/home/home.view.dart';
 import 'package:afrocom/meta/views/onboarding/onboarding.view.dart';
 import 'package:afrocom/meta/views/profile_setup/profile_setup.view.dart';
+import 'package:afrocom/meta/views/profile_view/profile.view.dart';
+import 'package:afrocom/meta/views/settings_view/setting.view.dart';
 import 'package:afrocom/meta/views/share_view/share_view.dart';
 
 const String DeciderRoute = "/decider";
@@ -17,6 +19,9 @@ const String ProfileSetupRoute = "/profile-setup";
 const String HomeRoute = "/home";
 const String AddPostRoute = "/add-post";
 const String FeedRoute = "/feed";
+const String ProfileRoute = "/profile";
+const String SettingRoute = "/setting";
+
 final routes = {
   DeciderRoute: (context) => SessionDecider(),
   OnBoardingRoute: (context) => OnBoardingView(),
@@ -26,5 +31,7 @@ final routes = {
   ProfileSetupRoute: (context) => ProfileSetupView(),
   HomeRoute: (context) => HomeView(),
   AddPostRoute: (context) => AddPostView(),
-  FeedRoute: (context) => FeedView()
+  FeedRoute: (context) => FeedView(),
+  ProfileRoute: (context) => ProfileView(),
+  SettingRoute: (context) => SettingView()
 };

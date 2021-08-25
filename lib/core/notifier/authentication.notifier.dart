@@ -1,15 +1,12 @@
 import 'package:afrocom/app/constants/database.credentials.dart';
 import 'package:afrocom/core/models/oAuth/facebook_user.model.dart';
-import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/notifier/cache.notifier.dart';
-import 'package:afrocom/core/notifier/database.notifier.dart';
 import 'package:afrocom/core/services/OAuth2.service.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/signup/signup.exports.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 enum UserLoggedType { EmailUser, OAuthUser }
 
@@ -35,8 +32,6 @@ class AuthenticationNotifier extends ChangeNotifier {
   String? get currentUserImage => _currentUserImage;
 
   Future loginWithFacebook({required BuildContext context}) async {
-    final cacheNotifier = Provider.of<CacheNotifier>(context, listen: false);
-
     try {
       var _facebookData =
           await OAUthService.createInstance.facebookLogin(context: context);
@@ -44,7 +39,7 @@ class AuthenticationNotifier extends ChangeNotifier {
       if (response.email.isNotEmpty &&
           response.name.isNotEmpty &&
           response.picture.data.url.isNotEmpty) {
-        await cacheNotifier.writeCache(
+        await CacheService.writeCache(
             key: "facebookuser", value: response.email);
         _currentUserImage = response.picture.data.url;
         notifyListeners();
@@ -52,8 +47,6 @@ class AuthenticationNotifier extends ChangeNotifier {
         notifyListeners();
         SnackbarUtility.showSnackbar(
             context: context, message: "${response.name} has logged in!");
-        final databaseNotifier =
-            Provider.of<DatabaseNotifier>(context, listen: false);
         final useremail = response.email;
         var isUserExists = await DatabaseService.createInstance.checkIfExists(
             dataKey: "useremail",
@@ -61,14 +54,6 @@ class AuthenticationNotifier extends ChangeNotifier {
             collectionId: DatabaseCredentials.UserCollectionID);
         if (!isUserExists) {
           Future.delayed(Duration(seconds: 8)).whenComplete(() async {
-            final username = response.name;
-            final userfirstname = response.name.split(" ")[0];
-            final userlastname = response.name.split(" ")[1];
-            var userDocumentId = await databaseNotifier.submitUserData(
-                context: context,
-                signedUser: SignedUser(
-                    username, useremail, userfirstname, userlastname));
-            _currentUserDocumentId = userDocumentId;
             notifyListeners();
           });
         } else {
@@ -98,22 +83,17 @@ class AuthenticationNotifier extends ChangeNotifier {
 
   Future signUp(
       {required BuildContext context,
-      required String userfullname,
-      required SignedUser signedUser,
       required String username,
       required String useremail,
       required String userpassword}) async {
     try {
-      if (userfullname.isNotEmpty &&
-          username.isNotEmpty &&
+      if (username.isNotEmpty &&
           useremail.isNotEmpty &&
           userpassword.isNotEmpty) {
         await AppwriteAuthenticationAPI.createInstance.signUp(
-            signedUser: signedUser,
             context: context,
             username: username,
             useremail: useremail,
-            userfullname: userfullname,
             userpassword: userpassword);
       } else {
         SnackbarUtility.showSnackbar(

@@ -1,9 +1,6 @@
-import 'package:afrocom/core/notifier/authentication.notifier.dart';
-import 'package:afrocom/core/notifier/cache.notifier.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
-import 'package:provider/provider.dart';
 
 class HomeViewWidgets {
   static AppBar homeAppBar({required BuildContext context}) => AppBar(

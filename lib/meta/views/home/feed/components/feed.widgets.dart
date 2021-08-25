@@ -5,6 +5,7 @@ import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/core/notifier/feed.notifier.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/core/services/storage.service.dart';
+import 'package:afrocom/core/services/video.service.dart';
 import 'package:afrocom/meta/utilities/progress_controller.dart';
 import 'package:afrocom/meta/views/authentication/signup/signup.exports.dart';
 import 'package:afrocom/meta/views/home/feed/components/post_on_map.dart';
@@ -16,6 +17,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:video_player/video_player.dart';
 
 class FeedWidgets {
   static deletePostLoader({required BuildContext context}) {
@@ -92,7 +94,7 @@ class FeedWidgets {
   }
 
   static postBlock(
-      {required BuildContext context, required FetchPostsData post}) {
+      {required BuildContext context, required FetchedPostData post}) {
     FeedNotifier feedNotifier({required bool renderUI}) =>
         Provider.of<FeedNotifier>(context, listen: renderUI);
     postActionBlock(
@@ -105,27 +107,26 @@ class FeedWidgets {
         children: [
           IconButton(
               onPressed: onTap, icon: Icon(iconData, size: 20, color: color)),
-          // Text(title, style: KConstantTextStyles.BoldText(fontSize: 16))
         ],
       );
     }
 
-    renderImage({required dynamic fileId}) {
+    renderAsset({required bool isVideo, required dynamic fileId}) {
       return FutureBuilder(
-          future: StorageService.createInstance
-              .fetchPostImage(context: context, fileId: fileId),
+          future: StorageService.createInstance.fetchPostAsset(
+              isVideo: isVideo, context: context, fileId: fileId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else {
-              var _snapshot = snapshot.data as Uint8List;
               return Container(
-                  height: 400,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.contain, image: MemoryImage(_snapshot)),
-                  ));
+                  child: isVideo
+                      ? Container()
+                      : Container(
+                          height: 400,
+                          width: 400,
+                          child: Image.memory(snapshot.data as Uint8List),
+                        ));
             }
           });
     }
@@ -196,8 +197,8 @@ class FeedWidgets {
                 return IconButton(
                     onPressed: () {
                       deletePostMenu(
-                          imageId: post.postuserimage[0],
-                          postId: post.id,
+                          imageId: post.postasset,
+                          postId: post.isVideo,
                           context: context);
                     },
                     icon: Icon(EvaIcons.moreVertical,
@@ -241,20 +242,20 @@ class FeedWidgets {
                     ),
                   ),
                   Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        deletePostMenu(
-                            imageId: post.postuserimage[0],
-                            postId: post.id,
-                            context: context);
-                      },
-                      icon: Icon(EvaIcons.moreVertical,
-                          size: 16, color: KConstantColors.whiteColor))
+                  // IconButton(
+                  //     onPressed: () {
+                  //       deletePostMenu(
+                  //           imageId: post.
+                  //           postId: post.id,
+                  //           context: context);
+                  //     },
+                  //     icon: Icon(EvaIcons.moreVertical,
+                  //         size: 16, color: KConstantColors.whiteColor))
                 ],
               ),
             ),
             vSizedBox1,
-            renderImage(fileId: post.postuserimage[0]),
+            renderAsset(isVideo: post.isVideo, fileId: post.postasset[0]),
             vSizedBox1,
             feedNotifier(renderUI: true).showLocation
                 ? showMapLocation(
@@ -269,14 +270,14 @@ class FeedWidgets {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  postActionBlock(
-                      onTap: () async {
-                        await StorageService.createInstance.fetchPostImage(
-                            context: context, fileId: post.postuserimage[0]);
-                      },
-                      color: KConstantColors.whiteColor,
-                      iconData: FontAwesomeIcons.heart,
-                      title: "0"),
+                  // postActionBlock(
+                  //     onTap: () async {
+                  //       await StorageService.createInstance.fetchPostImage(
+                  //           context: context, fileId: post.postuserimage[0]);
+                  //     },
+                  //     color: KConstantColors.whiteColor,
+                  //     iconData: FontAwesomeIcons.heart,
+                  //     title: "0"),
                   postActionBlock(
                       onTap: () {
                         // getUserId();
@@ -296,9 +297,7 @@ class FeedWidgets {
                         //             candidateString:
                         //                 post.postuserlocationcords)));
                       },
-                      color: feedNotifier(renderUI: true).showLocation
-                          ? KConstantColors.greenColor
-                          : KConstantColors.whiteColor,
+                      color: KConstantColors.whiteColor,
                       iconData: FontAwesomeIcons.mapPin,
                       title: "0"),
                   feedNotifier(renderUI: true).showLocation
@@ -335,9 +334,13 @@ class FeedWidgets {
                     overflow: TextOverflow.ellipsis,
                     style: KConstantTextStyles.BoldText(fontSize: 14)),
                 SizedBox(width: 6),
-                Text(post.postusercaption,
-                    overflow: TextOverflow.ellipsis,
-                    style: KConstantTextStyles.MediumText(fontSize: 14)),
+                Container(
+                  child: Center(
+                    child: Text(post.postusercaption,
+                        overflow: TextOverflow.ellipsis,
+                        style: KConstantTextStyles.MediumText(fontSize: 14)),
+                  ),
+                ),
               ],
             )),
             SizedBox(height: 4),
@@ -348,10 +351,10 @@ class FeedWidgets {
             ),
             SizedBox(height: 4),
             Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(calculateTime(datetime: post.posttime),
-                  style: KConstantTextStyles.MediumText(fontSize: 10)),
-            )
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                    calculateTime(datetime: DateTime.parse(post.posttime)),
+                    style: KConstantTextStyles.MediumText(fontSize: 10)))
           ],
         ),
         decoration: BoxDecoration(
@@ -366,7 +369,7 @@ class FeedWidgets {
       physics: ClampingScrollPhysics(),
       itemCount: snapshot.length,
       itemBuilder: (BuildContext context, int index) {
-        FetchPostsData post = snapshot[index];
+        FetchedPostData post = snapshot[index];
         return postBlock(context: context, post: post);
       },
     );
