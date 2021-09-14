@@ -12,7 +12,7 @@ class AppDarkButton extends StatelessWidget {
     return Container(
       width: Booster.screenWidth(context),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4), color: Color(0xff306AFF)),
+          borderRadius: BorderRadius.circular(4), color: Color(0xff000000)),
       child: Booster.paddedWidget(
           top: 17,
           bottom: 15,

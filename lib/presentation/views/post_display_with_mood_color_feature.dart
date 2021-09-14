@@ -73,8 +73,9 @@ class PostDisplayWithMoodColorFeature extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: Image.asset(
-                                    'assets/images/post_1.png',
+                                    'assets/images/post_dp.png',
                                     height: 197,
+                                    fit: BoxFit.fill,
                                   ),
                                 ),
                                 Booster.verticalSpace(10),

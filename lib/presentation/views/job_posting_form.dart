@@ -46,7 +46,7 @@ class JobPostingForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
             SingleChildScrollView(
               child: Column(
@@ -137,6 +137,15 @@ class JobPostingForm extends StatelessWidget {
                         label: "Experience Level",
                       ),
                     ),
+                  ),
+                  Booster.verticalSpace(14),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Booster.dynamicFontSize(
+                        label: 'Add Media',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
                   ),
                   Booster.verticalSpace(14),
                   Padding(

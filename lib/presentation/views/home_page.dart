@@ -1,12 +1,10 @@
 import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:newuiproject/presentation/elements/app_button_blue_short.dart';
-import 'package:newuiproject/presentation/elements/app_button_green_short.dart';
-import 'package:newuiproject/presentation/elements/app_button_red_round_1.dart';
 import 'package:newuiproject/presentation/views/blog_posting_form.dart';
 import 'package:newuiproject/presentation/views/event_posting_form.dart';
 import 'package:newuiproject/presentation/views/job_posting_form.dart';
+import 'package:newuiproject/presentation/views/market_place_post_form.dart';
 import 'package:newuiproject/presentation/views/place_posting_form.dart';
 import 'package:newuiproject/presentation/views/post_display_with_mood_color_feature.dart';
 import 'package:newuiproject/presentation/views/profile_screen.dart';
@@ -56,7 +54,7 @@ class _HomePageViewState extends State<HomePageView> {
         }
         showBottomSheet = false;
         showFab = false;
-        showLocation = false;
+
         setState(() {});
       },
       child: Scaffold(
@@ -219,6 +217,12 @@ class _HomePageViewState extends State<HomePageView> {
                                   height: 27,
                                   width: 27,
                                 ),
+                                Image.asset(
+                                  'assets/images/heart.png',
+                                  height: 27,
+                                  width: 27,
+                                ),
+                                Booster.verticalSpace(1),
                                 Container(
                                   height: 10,
                                   width: double.infinity,
@@ -357,8 +361,7 @@ class _HomePageViewState extends State<HomePageView> {
                                 },
                                 child: Image.asset(
                                   'assets/images/slider.png',
-                                  height: 204,
-                                  width: 22,
+                                  height: 300,
                                 ),
                               ),
                             ],
@@ -394,17 +397,12 @@ class _HomePageViewState extends State<HomePageView> {
                                     width: 190,
                                     child: Center(
                                       child: Booster.dynamicFontSize(
-                                          label: "Search Afracom",
+                                          label: "Search Afrocom",
                                           fontSize: 14),
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Color(0xffE9E9E9),
-                                      border: Border(
-                                        bottom: BorderSide(color: Colors.black),
-                                        right: BorderSide(color: Colors.black),
-                                        left: BorderSide(color: Colors.black),
-                                      ),
-                                    ),
+                                        color: Color(0xafE9E9E9),
+                                        borderRadius: BorderRadius.circular(6)),
                                   ),
                                 ],
                               ),
@@ -468,7 +466,7 @@ class _HomePageViewState extends State<HomePageView> {
                                                     MoodPost()));
                                       },
                                       child: _getBoxes(
-                                          text: "Mood",
+                                          text: "Moments",
                                           image: 'assets/images/1.png'),
                                     ),
                                     InkWell(
@@ -518,9 +516,18 @@ class _HomePageViewState extends State<HomePageView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    _getBoxes(
-                                        text: "Market",
-                                        image: 'assets/images/5.png'),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    MarketPlacePostForm()));
+                                      },
+                                      child: _getBoxes(
+                                          text: "Market",
+                                          image: 'assets/images/5.png'),
+                                    ),
                                     InkWell(
                                       onTap: () {
                                         Navigator.push(
@@ -597,7 +604,7 @@ class _HomePageViewState extends State<HomePageView> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 405.34,
+                  height: 430.34,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40),
@@ -606,255 +613,376 @@ class _HomePageViewState extends State<HomePageView> {
                   ),
                   child: Column(
                     children: [
-                      Booster.verticalSpace(19.34),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 34),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppButtonGreenShort(
-                              text: "Add",
-                              onTap: () {},
-                            ),
-                            Image.asset(
-                              'assets/images/dp1.png',
-                              height: 78,
-                              width: 78,
-                            ),
-                            AppButtonBlueShort(
-                              text: "Follow",
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
-                      ),
-                      Booster.verticalSpace(20),
-                      Booster.dynamicFontSize(
-                        label: 'Micheal Jordon',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                      Booster.verticalSpace(10),
-                      Booster.dynamicFontSize(
-                        label: '24M',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                      Booster.verticalSpace(5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Stack(
+                        overflow: Overflow.visible,
                         children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Colors.white,
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(40),
+                                topLeft: Radius.circular(40)),
+                            child: Image.asset(
+                              'assets/images/bgDp.png',
+                              height: 350,
+                              width: Booster.screenWidth(context),
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
-                          Booster.dynamicFontSize(
-                            label: '2.5 miles',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
+                          Positioned.fill(
+                              top: 20,
+                              right: 20,
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Booster.horizontalSpace(10),
+                                    Image.asset(
+                                      'assets/images/mail.png',
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                    Booster.horizontalSpace(10),
+                                    Image.asset(
+                                      //
+                                      'assets/images/add.png',
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                    Booster.horizontalSpace(10),
+                                    InkWell(
+                                      onTap: () {
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) => EditProfileScreen()));
+                                      },
+                                      child: Image.asset(
+                                        //
+                                        'assets/images/reload.png',
+                                        height: 25,
+                                        width: 25,
+                                      ),
+                                    ),
+                                    Booster.horizontalSpace(10),
+                                    Image.asset(
+                                      //
+                                      'assets/images/heart_red.png',
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          Positioned(
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Booster.verticalSpace(200),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 22.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Booster.dynamicFontSize(
+                                                label: "Akua Addo Agyeman",
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
+                                            Booster.horizontalSpace(6),
+                                          ],
+                                        ),
+                                        Booster.dynamicFontSize(
+                                            label: "Mother & Nurse",
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                        Booster.verticalSpace(10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 37,
+                                              height: 25,
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/images/flag.png'))),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ProfileScreen()));
+                                                setState(() {});
+                                              },
+                                              child: Image.asset(
+                                                'assets/images/info.png',
+                                                height: 25,
+                                                width: 25,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Booster.verticalSpace(10),
+                                  Stack(
+                                    overflow: Overflow.visible,
+                                    children: [
+                                      Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(20),
+                                              topLeft: Radius.circular(20)),
+                                        ),
+                                        margin: EdgeInsets.zero,
+                                        elevation: 0,
+                                        child: Container(
+                                          height: 62,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Booster.dynamicFontSize(
+                                                      label: "78",
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  Booster.dynamicFontSize(
+                                                      label: "Community",
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ],
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Booster.dynamicFontSize(
+                                                      label: "178",
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  Booster.dynamicFontSize(
+                                                      label: "Followers",
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ],
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Booster.dynamicFontSize(
+                                                      label: "718",
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                  Booster.dynamicFontSize(
+                                                      label: "Following",
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 35,
+                                        left:
+                                            Booster.screenWidth(context) * 0.44,
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              InkWell(
+                                                onTap: () {
+                                                  showLocation = false;
+                                                  setState(() {});
+                                                },
+                                                child: Image.asset(
+                                                  'assets/images/location_cross.png',
+                                                  height: 52,
+                                                  width: 52,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
                         ],
-                      ),
-                      Booster.verticalSpace(30),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Booster.dynamicFontSize(
-                                  label: '450',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                                Booster.verticalSpace(7),
-                                Booster.dynamicFontSize(
-                                  label: 'Friends',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Booster.dynamicFontSize(
-                                  label: '15',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                                Booster.verticalSpace(7),
-                                Booster.dynamicFontSize(
-                                  label: 'Followers',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Booster.dynamicFontSize(
-                                  label: '300',
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                                Booster.verticalSpace(7),
-                                Booster.dynamicFontSize(
-                                  label: 'Following',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Booster.verticalSpace(20),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 34, right: 63),
-                        child: Booster.dynamicFontSize(
-                            label:
-                                'Lorem Ipsum is simply a dummy text of  the printing and tyresetting industry.\nLorem Ipsum has been the inductry’s standard.',
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                            isAlignCenter: false,
-                            lineHeight: 1.4),
-                      ),
-                      Booster.verticalSpace(20),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 34.5, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppButtonRedRound1(
-                              text: "Send Message",
-                              onTap: () {},
-                            ),
-                            Image.asset(
-                              'assets/images/Group 145.png',
-                              height: 42,
-                              width: 42,
-                            )
-                          ],
-                        ),
                       ),
                     ],
                   ),
                 ),
               ),
             if (showFilter)
-              Container(
-                height: Booster.screenHeight(context),
-                width: Booster.screenWidth(context),
-                color: Colors.black.withOpacity(0.7),
-                child: Column(
+              Align(
+                alignment: Alignment.center,
+                child: Stack(
                   children: [
-                    Booster.verticalSpace(40),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
+                    Container(
+                      height: Booster.screenHeight(context) * 0.8,
+                      width: Booster.screenWidth(context),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.black,
+                      ),
+                      child: Column(
+                        children: [
+                          Booster.verticalSpace(40),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                  left: Booster.screenWidth(context) * 0.23,
+                                  right: Booster.screenWidth(context) * 0.23),
+                              child: Container(
+                                height: Booster.screenHeight(context),
+                                child: ListView.builder(
+                                    physics: BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: filterList.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Expanded(
+                                              child: ExpansionTile(
+                                                expandedAlignment:
+                                                    Alignment.topLeft,
+                                                expandedCrossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                iconColor: Colors.white,
+                                                onExpansionChanged: (val) {
+                                                  selectedIndex.add(index);
+                                                  setState(() {});
+                                                },
+                                                title: Row(
+                                                  children: [
+                                                    !selectedIndex
+                                                            .contains(index)
+                                                        ? Icon(
+                                                            Icons
+                                                                .radio_button_off,
+                                                            color: Colors.white,
+                                                          )
+                                                        : Icon(
+                                                            Icons
+                                                                .radio_button_checked,
+                                                            color: Colors.blue,
+                                                          ),
+                                                    Booster.horizontalSpace(6),
+                                                    Text(
+                                                      filterList[index].label,
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ],
+                                                ),
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 48.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .check_box_outline_blank,
+                                                          color: Colors.white,
+                                                        ),
+                                                        Booster.horizontalSpace(
+                                                            6),
+                                                        Text(
+                                                          filterList[index]
+                                                              .value[0],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 14),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Booster.verticalSpace(3),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 48.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .check_box_outline_blank,
+                                                          color: Colors.white,
+                                                        ),
+                                                        Booster.horizontalSpace(
+                                                            6),
+                                                        Text(
+                                                          filterList[index]
+                                                              .value[1],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 14),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () {
                               showFilter = false;
                               setState(() {});
                             },
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.white,
-                            ))
-                      ],
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: Booster.screenWidth(context) * 0.4),
-                        child: Container(
-                          height: Booster.screenHeight(context),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: filterList.length,
-                              itemBuilder: (context, index) {
-                                return ExpansionTile(
-                                  expandedAlignment: Alignment.topLeft,
-                                  expandedCrossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  iconColor: Colors.white,
-                                  onExpansionChanged: (val) {
-                                    selectedIndex.add(index);
-                                    setState(() {});
-                                  },
-                                  title: Row(
-                                    children: [
-                                      !selectedIndex.contains(index)
-                                          ? Icon(
-                                              Icons.radio_button_off,
-                                              color: Colors.white,
-                                            )
-                                          : Icon(
-                                              Icons.radio_button_checked,
-                                              color: Colors.blue,
-                                            ),
-                                      Booster.horizontalSpace(6),
-                                      Text(
-                                        filterList[index].label,
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                  children: <Widget>[
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 48.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_box_outline_blank,
-                                            color: Colors.white,
-                                          ),
-                                          Booster.horizontalSpace(6),
-                                          Text(
-                                            filterList[index].value[0],
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Booster.verticalSpace(3),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 48.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.check_box_outline_blank,
-                                            color: Colors.white,
-                                          ),
-                                          Booster.horizontalSpace(6),
-                                          Text(
-                                            filterList[index].value[1],
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }),
-                        ),
-                      ),
+                            child: Image.asset(
+                              'assets/images/clear.png',
+                              height: 36,
+                              width: 36,
+                            ),
+                          )),
                     ),
                   ],
                 ),

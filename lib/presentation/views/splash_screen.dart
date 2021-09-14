@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:newuiproject/presentation/views/on_boarding_screens.dart';
+
+import 'on_boarding_screens.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,10 +13,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  List<String> logoList = [
+    'assets/images/logo.png',
+    'assets/images/onB1.png',
+    'assets/images/onB2.png',
+    'assets/images/onB3.png',
+    'assets/images/onB4.png',
+    'assets/images/onB5.png',
+  ];
+
+  int index = 0;
   @override
   void initState() {
     // TODO: implement initState
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(milliseconds: 15000), () {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => OnBoardingScreens()));
     });
@@ -23,6 +35,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(milliseconds: 3000), () {
+      if (index < 6) {
+        index++;
+        setState(() {});
+      }
+    });
+    print(index);
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -49,18 +68,39 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             Booster.verticalSpace(138),
             Image.asset(
-              'assets/images/logo.png',
+              logoList[index],
               height: 187,
               width: 186.55,
             ),
             Booster.verticalSpace(62),
-            Booster.dynamicFontSize(
-                label: 'Afrocom\nAfrocentric & Afrothentic',
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                isAlignCenter: true,
-                color: Color(0xff010101),
-                lineHeight: 1.2),
+            AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText('Afrocom',
+                    speed: Duration(milliseconds: 100),
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff010101),
+                    )),
+              ],
+              onTap: () {
+                print("Tap Event");
+              },
+            ),
+            AnimatedTextKit(
+              animatedTexts: [
+                TypewriterAnimatedText('Afrocentric & Afrothentic',
+                    speed: Duration(milliseconds: 100),
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff010101),
+                    )),
+              ],
+              onTap: () {
+                print("Tap Event");
+              },
+            ),
             Booster.verticalSpace(100),
             Padding(
               padding: const EdgeInsets.only(right: 30, left: 30),

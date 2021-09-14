@@ -252,6 +252,34 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
               ),
+              Card(
+                elevation: 6,
+                shadowColor: Color(0x4D7A7878),
+                child: Container(
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Booster.dynamicFontSize(
+                            label: 'Current Location',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xff7A7878),
+                          ),
+                          Transform.scale(
+                              scale: 0.7,
+                              child: CupertinoSwitch(
+                                  value: true, onChanged: (val) {})),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               Booster.verticalSpace(44),
               Booster.dynamicFontSize(
                   label: "Theme or Appearance",
@@ -353,6 +381,75 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                         Booster.verticalSpace(15)
                       ],
+                    ),
+                  ),
+                ),
+              ),
+              Booster.verticalSpace(44),
+              Booster.dynamicFontSize(
+                  label: "Privacy",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black),
+              Booster.verticalSpace(10),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Card(
+                  elevation: 6,
+                  shadowColor: Color(0x4D7A7878),
+                  child: Container(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Booster.dynamicFontSize(
+                              label: 'Public Profile',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff7A7878),
+                            ),
+                            Transform.scale(
+                                scale: 0.7,
+                                child: CupertinoSwitch(
+                                    value: true, onChanged: (val) {})),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Card(
+                  elevation: 6,
+                  shadowColor: Color(0x4D7A7878),
+                  child: Container(
+                    height: 45,
+                    width: MediaQuery.of(context).size.width,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Booster.dynamicFontSize(
+                              label: 'Private',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xff7A7878),
+                            ),
+                            Transform.scale(
+                                scale: 0.7,
+                                child: CupertinoSwitch(
+                                    value: true, onChanged: (val) {})),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),

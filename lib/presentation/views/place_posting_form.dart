@@ -156,6 +156,15 @@ class _PlacePostingFormState extends State<PlacePostingForm> {
                   ),
                   Booster.verticalSpace(14),
                   Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Booster.dynamicFontSize(
+                        label: 'Add Media',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black),
+                  ),
+                  Booster.verticalSpace(14),
+                  Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

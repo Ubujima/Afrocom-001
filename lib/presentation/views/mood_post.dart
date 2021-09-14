@@ -45,10 +45,10 @@ class MoodPost extends StatelessWidget {
                     child: Booster.dynamicFontSize(
                         label: 'Post Media',
                         fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.black),
                   ),
-                  Booster.verticalSpace(18),
+                  Booster.verticalSpace(14),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Row(

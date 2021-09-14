@@ -2,7 +2,6 @@ import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:newuiproject/presentation/elements/app_button_black.dart';
-import 'package:newuiproject/presentation/elements/app_button_blue.dart';
 import 'package:newuiproject/presentation/elements/app_button_red.dart';
 import 'package:newuiproject/presentation/views/create_account.dart';
 import 'package:newuiproject/presentation/views/forgot_passward.dart';
@@ -119,9 +118,19 @@ class ConnectionOptions extends StatelessWidget {
                     ),
                     Booster.horizontalSpace(9),
                     Expanded(
-                      child: AppDarkButton(
-                        text: "Facebook",
-                        onTap: () {},
+                      child: Container(
+                        width: Booster.screenWidth(context),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Color(0xff306AFF)),
+                        child: Booster.paddedWidget(
+                            top: 17,
+                            bottom: 15,
+                            child: Booster.dynamicFontSize(
+                                label: "Facebook",
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
                       ),
                     )
                   ],

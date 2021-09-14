@@ -23,8 +23,9 @@ class OnBoardingScreens extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-              'assets/images/splash_screen.png',
-            ))),
+                      'assets/images/splash_screen.png',
+                    ),
+                    fit: BoxFit.fill)),
             child: PageView.builder(
                 itemCount: 5,
                 itemBuilder: (context, i) {
