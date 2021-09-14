@@ -2,6 +2,7 @@ import 'package:afrocom/app/constants/database.credentials.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/core/models/categories/place.model.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/core/notifier/subcategories/place.notifier.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/core/services/storage.service.dart';
@@ -9,6 +10,8 @@ import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 
 class PlaceWidgets {
   static chooseTime({required BuildContext context}) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     PlaceNotifier placeNotifier(bool renderUI) =>
         Provider.of<PlaceNotifier>(context, listen: renderUI);
     return Container(
@@ -24,7 +27,8 @@ class PlaceWidgets {
                     onPressed: () {
                       placeNotifier(false).selectTime(context);
                     },
-                    icon: Icon(EvaIcons.clock))
+                    icon: Icon(EvaIcons.clock,
+                        color: settingNotifier(true).currentColorTheme))
               ],
             ),
           ),
@@ -39,6 +43,8 @@ class PlaceWidgets {
       required TextEditingController placeAddressController,
       required TextEditingController placeWebsiteController,
       required BuildContext context}) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     var mapNotifier = Provider.of<MapNotifier>(context, listen: false);
     var authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
@@ -128,7 +134,7 @@ class PlaceWidgets {
             height: 50,
             width: 300,
             decoration: BoxDecoration(
-              color: KConstantColors.blueColor,
+              color: settingNotifier(true).currentColorTheme,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(

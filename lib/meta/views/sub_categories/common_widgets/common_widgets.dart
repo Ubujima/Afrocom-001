@@ -1,16 +1,20 @@
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 import 'package:latlong2/latlong.dart';
 
 class CommonWidgets {
   static backButton(BuildContext context, String title) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     return Row(
       children: [
         IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_new, size: 16)),
+            icon: Icon(Icons.arrow_back_ios_new,
+                color: settingNotifier(true).currentColorTheme, size: 16)),
         Text("Post as $title",
             style: KConstantTextStyles.BoldText(fontSize: 16)),
       ],

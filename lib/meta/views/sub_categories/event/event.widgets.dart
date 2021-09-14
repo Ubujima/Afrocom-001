@@ -2,6 +2,7 @@ import 'package:afrocom/app/constants/database.credentials.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/core/models/categories/event_category.model.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/core/notifier/subcategories/event.notifier.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/core/services/storage.service.dart';
@@ -61,6 +62,8 @@ class EventWidgets {
       required TextEditingController eventDescriptionController,
       required TextEditingController eventAddressController,
       required BuildContext context}) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     var mapNotifier = Provider.of<MapNotifier>(context, listen: false);
     var authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
@@ -150,7 +153,7 @@ class EventWidgets {
             height: 50,
             width: 300,
             decoration: BoxDecoration(
-              color: KConstantColors.blueColor,
+              color: settingNotifier(true).currentColorTheme,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Center(

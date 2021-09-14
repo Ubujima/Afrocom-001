@@ -4,6 +4,7 @@ import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:afrocom/meta/views/authentication/signup/terms_and_conditions.component.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
@@ -101,15 +102,16 @@ class SignupWidgets {
 
   static signupButton(
       {required BuildContext context, required dynamic onPressed}) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     return Center(
       child: GestureDetector(
-        onTap:
-            onPressed, //authenticationNotifier.checkedTandC! ? onPressed : () {},
+        onTap: onPressed,
         child: Container(
           width: SizeConfig.setWidth(context: context, factor: 0.85),
           height: SizeConfig.setHeight(context: context, factor: 0.06),
           decoration: BoxDecoration(
-              color: Colors.greenAccent,
+              color: settingNotifier(true).currentColorTheme,
               borderRadius: BorderRadius.circular(5.0)),
           child: Center(
             child: Text(

@@ -91,7 +91,8 @@ class MoodPostBlock extends StatelessWidget {
               ? Container(
                   child: AspectRatio(
                       aspectRatio: 16 / 9,
-                      child: BetterPlayer.network(postAssets[0],
+                      child: BetterPlayer.network(
+                          "https://res.cloudinary.com/slatecode/video/upload/v1631528498/afrocom/oqxsxesifj39n0jzszzt.mp4",
                           betterPlayerConfiguration: BetterPlayerConfiguration(
                             aspectRatio: 16 / 9,
                           ))))

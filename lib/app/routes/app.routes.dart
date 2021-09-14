@@ -8,7 +8,7 @@ import 'package:afrocom/meta/views/home/home.view.dart';
 import 'package:afrocom/meta/views/onboarding/onboarding.view.dart';
 import 'package:afrocom/meta/views/profile_setup/profile_setup.view.dart';
 import 'package:afrocom/meta/views/profile_view/profile.view.dart';
-import 'package:afrocom/meta/views/settings_view/setting.view.dart';
+import 'package:afrocom/meta/views/settings/settings.view.dart';
 import 'package:afrocom/meta/views/share_view/share_view.dart';
 import 'package:afrocom/meta/views/solo_post/solo_post.view.dart';
 import 'package:afrocom/meta/views/splash_view/splash.view.dart';
@@ -41,7 +41,7 @@ final routes = {
       ),
   FeedRoute: (context) => FeedView(),
   ProfileRoute: (context) => ProfileView(),
-  SettingRoute: (context) => SettingView(),
+  SettingRoute: (context) => SettingsView(),
   SoloPostRoute: (context) => SoloPost(
       soloPostArguments: ModalRoute.of(context)!.settings.arguments as dynamic)
 };

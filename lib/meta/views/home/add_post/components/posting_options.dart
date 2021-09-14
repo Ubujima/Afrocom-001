@@ -1,5 +1,6 @@
 import 'package:afrocom/core/notifier/filter.notifier.dart';
 import 'package:afrocom/core/notifier/posting.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/arguments/add_post.argument.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
@@ -8,6 +9,8 @@ import 'package:provider/provider.dart';
 PostingNotifier _postingNotifier(
         {required BuildContext context, required bool renderUI}) =>
     Provider.of<PostingNotifier>(context, listen: renderUI);
+SettingNotifier settingNotifier(BuildContext context, bool renderUI) =>
+    Provider.of<SettingNotifier>(context, listen: renderUI);
 
 showPostingOptions({required BuildContext context}) {
   List<String> _postCategory = [
@@ -34,11 +37,7 @@ showPostingOptions({required BuildContext context}) {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-              color: Provider.of<PostingNotifier>(context, listen: true)
-                          .selectedPostType ==
-                      postType
-                  ? KConstantColors.blueColor
-                  : KConstantColors.blueColor.withOpacity(0.3),
+              color: settingNotifier(context, true).currentColorTheme,
               border: Border.all(color: KConstantColors.darkColor),
               borderRadius: BorderRadius.circular(10)),
           child: Center(
@@ -49,7 +48,10 @@ showPostingOptions({required BuildContext context}) {
               Text(postType,
                   style: KConstantTextStyles.MediumText(fontSize: 12)),
               vSizedBox1,
-              CircleAvatar(radius: 15, child: Icon(Icons.add))
+              Icon(
+                Icons.add,
+                color: KConstantColors.whiteColor,
+              )
             ],
           )),
         ),
@@ -101,7 +103,8 @@ showPostingOptions({required BuildContext context}) {
 showFilterOptions({required BuildContext context}) {
   FilterNotifier filterNotifier(bool renderUI) =>
       Provider.of<FilterNotifier>(context, listen: renderUI);
-
+  SettingNotifier settingNotifier(bool renderUI) =>
+      Provider.of<SettingNotifier>(context, listen: renderUI);
   List<String> _postCategory = [
     "Mood",
     "Blog",
@@ -121,7 +124,7 @@ showFilterOptions({required BuildContext context}) {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           decoration: BoxDecoration(
-              color: KConstantColors.blueColor.withOpacity(0.3),
+              color: settingNotifier(true).currentColorTheme,
               border: Border.all(color: KConstantColors.darkColor),
               borderRadius: BorderRadius.circular(10)),
           child: Center(

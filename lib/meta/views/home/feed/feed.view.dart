@@ -1,4 +1,5 @@
 import 'package:afrocom/core/notifier/feed.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 
@@ -10,6 +11,8 @@ class FeedView extends StatefulWidget {
 class _FeedViewState extends State<FeedView> {
   @override
   Widget build(BuildContext context) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     FeedNotifier feedNotifier(bool renderUI) =>
         Provider.of<FeedNotifier>(context, listen: renderUI);
     List<String> _categories = [
@@ -30,8 +33,7 @@ class _FeedViewState extends State<FeedView> {
             },
           ),
           title: Text("${feedNotifier(true).currentCategory} Feed",
-              style: KConstantTextStyles.BoldText(fontSize: 16)),
-          backgroundColor: Colors.lightBlue),
+              style: KConstantTextStyles.BoldText(fontSize: 16))),
       endDrawer: Container(
           width: 150,
           child: Drawer(
@@ -40,23 +42,28 @@ class _FeedViewState extends State<FeedView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Text("Filter posts",
+                      style: KConstantTextStyles.MediumText(fontSize: 16)),
+                  vSizedBox1,
+                  Icon(FontAwesomeIcons.filter),
                   Container(
                     height: 400,
                     child: ListView.builder(
                         itemCount: _categories.length,
                         itemBuilder: (context, index) {
-                          return ElevatedButton(
+                          return MaterialButton(
+                              child: Text(_categories[index]),
+                              color: settingNotifier(true).currentColorTheme,
                               onPressed: () {
                                 feedNotifier(false).setCategory(
                                     candidateCategory: _categories[index]);
                                 Navigator.pop(context);
-                              },
-                              child: Text(_categories[index]));
+                              });
                         }),
                   )
                 ],
               ),
-              decoration: BoxDecoration(color: KConstantColors.bgColorFaint),
+              decoration: BoxDecoration(color: KConstantColors.whiteColor),
             ),
           )),
       body: feedNotifier(false).categoryView(),

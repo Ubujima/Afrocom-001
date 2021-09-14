@@ -5,6 +5,7 @@ import 'package:afrocom/core/notifier/filter.notifier.dart';
 import 'package:afrocom/core/notifier/map.notifier.dart';
 import 'package:afrocom/core/notifier/posting.notifier.dart';
 import 'package:afrocom/core/notifier/profile_setup.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/core/notifier/subcategories/campaign_and_project.notifier.dart';
 import 'package:afrocom/core/notifier/subcategories/event.notifier.dart';
 import 'package:afrocom/core/notifier/subcategories/job.notifier.dart';
@@ -25,6 +26,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => PostingNotifier()),
     ChangeNotifierProvider(create: (_) => FeedNotifier()),
     ChangeNotifierProvider(create: (_) => FilterNotifier()),
+    ChangeNotifierProvider(create: (_) => SettingNotifier()),
     ...categoryProviders
   ];
 

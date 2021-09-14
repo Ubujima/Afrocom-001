@@ -45,4 +45,12 @@ class KConstantTextStyles {
         color: KConstantColors.darkColor,
         fontSize: fontSize);
   }
+
+  static TextStyle MediumColoredText(
+      {required Color textColor, required double fontSize}) {
+    return TextStyle(
+        fontFamily: KConstantFonts.PoppinsMedium,
+        color: textColor,
+        fontSize: fontSize);
+  }
 }

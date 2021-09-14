@@ -4,6 +4,7 @@ import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
@@ -44,6 +45,8 @@ class LoginWidgets {
 
   static loginButton(
       {required BuildContext context, required dynamic onPressed}) {
+    SettingNotifier settingNotifier(bool renderUI) =>
+        Provider.of<SettingNotifier>(context, listen: renderUI);
     return Center(
       child: GestureDetector(
         onTap: onPressed,
@@ -51,7 +54,7 @@ class LoginWidgets {
           width: SizeConfig.setWidth(context: context, factor: 0.85),
           height: SizeConfig.setHeight(context: context, factor: 0.06),
           decoration: BoxDecoration(
-              color: Colors.greenAccent,
+              color: settingNotifier(true).currentColorTheme,
               borderRadius: BorderRadius.circular(5.0)),
           child: Center(
             child: Text(

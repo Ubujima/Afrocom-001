@@ -2,6 +2,7 @@ import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/core/notifier/filter.notifier.dart';
 import 'package:afrocom/core/notifier/map.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/views/home/add_post/components/posting_options.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 import 'package:flutter/material.dart';
@@ -44,21 +45,19 @@ class _MapViewState extends State<MapView> {
           children: [
             FloatingActionButton(
                 heroTag: "aaaaaa",
-                backgroundColor: KConstantColors.bgColorFaint,
                 child: Icon(FontAwesomeIcons.filter,
-                    color: KConstantColors.greenColor),
+                    color: KConstantColors.whiteColor),
                 onPressed: () {
                   showFilterOptions(context: context);
                 }),
             vSizedBox1,
             FloatingActionButton(
                 heroTag: "a",
-                backgroundColor: KConstantColors.whiteColor,
                 child: Icon(
                     mapNotifierTrue.showTaskBar == true
                         ? Icons.remove
                         : Icons.add,
-                    color: KConstantColors.darkColor),
+                    color: KConstantColors.whiteColor),
                 onPressed: () {
                   mapNotifier.toggleShowSubTaskBar();
                 }),

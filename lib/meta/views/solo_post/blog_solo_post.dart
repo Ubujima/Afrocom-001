@@ -23,7 +23,6 @@ class _BlogSoloPostState extends State<BlogSoloPost> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new),
             onPressed: () {

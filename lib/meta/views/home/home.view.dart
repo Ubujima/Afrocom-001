@@ -1,5 +1,6 @@
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:afrocom/core/notifier/setting.notifier.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 import 'map_view/map_view.view.dart';
@@ -18,12 +19,10 @@ class _HomeViewState extends State<HomeView> {
         Provider.of<AuthenticationNotifier>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        leading: CircleAvatar(
-          radius: 15,
-          backgroundImage: AssetImage(ImageTags.AppLogo),
-        ),
-        backgroundColor: Colors.lightBlueAccent,
+        // leading: CircleAvatar(
+        //   radius: 15,
+        //   backgroundImage: AssetImage(ImageTags.AppLogo),
+        // ),
         title: Container(
           width: 200,
           child: TextField(
@@ -90,9 +89,11 @@ class _HomeViewState extends State<HomeView> {
                         )),
                     vSizedBox1,
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(SettingRoute);
+                        },
                         icon: Icon(
-                          FontAwesomeIcons.peopleArrows,
+                          EvaIcons.settings,
                           color: KConstantColors.whiteColor,
                         )),
                     Divider(thickness: 4, color: KConstantColors.whiteColor),
