@@ -1,8 +1,9 @@
-import 'package:afrocom/core/models/profile_user.model.dart';
+import 'dart:typed_data';
+import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/core/notifier/database.notifier.dart';
+import 'package:afrocom/core/services/storage.service.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -10,27 +11,9 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  var userDocid;
-
-  initiateUserDocumentId() async {
-    DatabaseNotifier databaseNotifier =
-        Provider.of<DatabaseNotifier>(context, listen: false);
-    var userDocumentId =
-        await databaseNotifier.searchUserDocumentId(context: context);
-    setState(() {
-      userDocid = userDocumentId;
-    });
-  }
-
-  @override
-  void initState() {
-    initiateUserDocumentId();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    DatabaseNotifier databaseNotifier =
+    final DatabaseNotifier databaseNotifier =
         Provider.of<DatabaseNotifier>(context, listen: false);
     pBlock({required int stats, required String title}) => Container(
           width: 100,
@@ -48,84 +31,218 @@ class _ProfileViewState extends State<ProfileView> {
             )),
           ),
           decoration: BoxDecoration(
-              color: KConstantColors.bgColorFaint,
+              color: KConstantColors.whiteColor,
               borderRadius: BorderRadius.circular(5)),
         );
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
-      ),
-      backgroundColor: KConstantColors.bgColor,
       body: Container(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              vSizedBox3,
-              Row(
+            child: FutureBuilder(
+          future: databaseNotifier.searchUserDocumentId(context: context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasData) {
+              Map<String, dynamic> userData = Map<String, dynamic>.from(
+                  snapshot.data as Map<Object?, Object?>);
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back_ios_new,
-                        color: KConstantColors.whiteColor),
-                  ),
-                ],
-              ),
-              Container(
-                child: Center(
-                    child: FutureBuilder(
-                  future: databaseNotifier.findUserData(
-                      context: context, documentId: userDocid),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      var _snapshot = snapshot.data;
-                      ProfileUser profileUser = _snapshot as ProfileUser;
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(radius: 80),
-                          vSizedBox1,
-                          Text(profileUser.username,
-                              style:
-                                  KConstantTextStyles.BoldText(fontSize: 32)),
-                          Text(profileUser.useremail,
-                              style:
-                                  KConstantTextStyles.MediumText(fontSize: 18)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(FontAwesomeIcons.mapPin,
-                                  color: KConstantColors.greenColor),
-                              Text(profileUser.userorigin,
-                                  style: KConstantTextStyles.MediumText(
-                                      fontSize: 18))
-                            ],
+                  Container(
+                      child: Column(
+                    children: [
+                      Stack(children: [
+                        Container(height: 400),
+                        Container(
+                            child: FutureBuilder(
+                                future: StorageService.createInstance
+                                    .fetchPostAsset(
+                                        isVideo: false,
+                                        context: context,
+                                        fileId: userData['userimage']),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                  if (snapshot.hasData) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              stops: [0.4, 0.8, 0.9],
+                                              begin: Alignment.center,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                KConstantColors.darkColor
+                                                    .withOpacity(0.2),
+                                                KConstantColors.darkColor,
+                                                KConstantColors.darkColor
+                                              ]),
+                                          image: DecorationImage(
+                                              image: MemoryImage(
+                                                  snapshot.data as Uint8List))),
+                                      height: 350,
+                                      width: 500,
+                                    );
+                                  }
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                })),
+                        Positioned(
+                          top: 320,
+                          child: Container(
+                            width: 450,
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  pBlock(stats: 00, title: "Posts"),
+                                  pBlock(stats: 00, title: "Followers"),
+                                  pBlock(stats: 00, title: "Following")
+                                ]),
                           ),
-                          vSizedBox2,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              pBlock(stats: 00, title: "Posts"),
-                              pBlock(stats: 00, title: "Followers"),
-                              pBlock(stats: 00, title: "Following")
-                            ],
-                          )
-                        ],
-                      );
-                    }
-                  },
-                )),
-              ),
-              vSizedBox1,
-              Container(height: 350, color: KConstantColors.blueColor)
-            ],
-          ),
-        ),
+                        ),
+                        Positioned(
+                          top: 240,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
+                            child: Container(
+                              width: 400,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 300,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(userData['username'],
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    KConstantFonts.PoppinsBold,
+                                                color:
+                                                    KConstantColors.whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 22)),
+                                        Text(userData['userprofession'],
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    KConstantFonts.PoppinsBold,
+                                                color:
+                                                    KConstantColors.whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14)),
+                                        Text(userData['useraddress'],
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    KConstantFonts.PoppinsBold,
+                                                color:
+                                                    KConstantColors.whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ],
+                  )),
+                  Divider(thickness: 0.5),
+                  Container(
+                    height: 400,
+                    child: ListView(
+                      children: [
+                        Text("Shared",
+                            style:
+                                KConstantTextStyles.MediumText(fontSize: 12)),
+                        Column(
+                          children: [
+                            Text("Moments",
+                                style: KConstantTextStyles.MediumText(
+                                    fontSize: 12)),
+                            Container(
+                              height: 200,
+                              child: GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: 3,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
+                                          color: KConstantColors.yellowColor),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("Mood",
+                                style: KConstantTextStyles.MediumText(
+                                    fontSize: 12)),
+                            Container(
+                              height: 200,
+                              child: GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: 3,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
+                                          color: KConstantColors.yellowColor),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text("Events",
+                                style: KConstantTextStyles.MediumText(
+                                    fontSize: 12)),
+                            Container(
+                              height: 200,
+                              child: GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: 3,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
+                                          color: KConstantColors.yellowColor),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              );
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        )),
       ),
     );
   }

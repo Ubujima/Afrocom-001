@@ -51,13 +51,14 @@ class LoginWidgets {
           width: SizeConfig.setWidth(context: context, factor: 0.85),
           height: SizeConfig.setHeight(context: context, factor: 0.06),
           decoration: BoxDecoration(
-              color: Colors.white.withOpacity(1),
+              color: Colors.greenAccent,
               borderRadius: BorderRadius.circular(5.0)),
           child: Center(
             child: Text(
               "Login",
               style: TextStyle(
-                  fontSize: 16,
+                  color: KConstantColors.whiteColor,
+                  fontSize: 18,
                   fontWeight: FontWeight.w900,
                   fontFamily: KConstantFonts.MonteserratB),
             ),
@@ -112,7 +113,7 @@ class LoginWidgets {
           ),
         ),
         decoration: BoxDecoration(
-            color: KConstantColors.bgColorFaint,
+            color: KConstantColors.bgColorFaint.withOpacity(0.8),
             borderRadius: BorderRadius.circular(5)),
       ),
     );

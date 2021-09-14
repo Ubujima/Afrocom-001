@@ -3,7 +3,10 @@ import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/fonts.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
+import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
+import 'package:afrocom/meta/views/authentication/signup/terms_and_conditions.component.dart';
+import 'package:afrocom/meta/views/sub_categories/mood/mood.exports.dart';
 import 'package:afrocom/meta/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -68,31 +71,33 @@ class SignupWidgets {
     );
   }
 
-  // static termsAndConditions({required BuildContext context}) {
-  //   final authenticationNotifier =
-  //       Provider.of<AuthenticationNotifier>(context, listen: false);
-  //   return Container(
-  //     child: Row(
-  //       children: [
-  //         Checkbox(
-  //             checkColor: KConstantColors.whiteColor,
-  //             value: Provider.of<AuthenticationNotifier>(context, listen: true)
-  //                 .checkedTandC,
-  //             onChanged: (value) {
-  //               authenticationNotifier.toggleTermsAndConditionCheck();
-  //             }),
-  //         TextButton(
-  //             onPressed: () {
-  //               showTermsAndConditions(context: context);
-  //             },
-  //             child: Text(
-  //               "Terms and conditions",
-  //               style: KConstantTextStyles.MBody1(fontSize: 16),
-  //             ))
-  //       ],
-  //     ),
-  //   );
-  // }
+  static termsAndConditions({required BuildContext context}) {
+    final authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
+    return Container(
+      child: Row(
+        children: [
+          Checkbox(
+              checkColor: KConstantColors.whiteColor,
+              value: Provider.of<AuthenticationNotifier>(context, listen: true)
+                  .checkedTandC,
+              onChanged: (value) {
+                authenticationNotifier.toggleTermsAndConditionCheck();
+              }),
+          TextButton(
+              onPressed: () {
+                showTermsAndConditions(context: context);
+              },
+              child: Text(
+                "Terms and conditions",
+                style: TextStyle(
+                    fontFamily: KConstantFonts.PoppinsMedium,
+                    color: KConstantColors.darkColor),
+              ))
+        ],
+      ),
+    );
+  }
 
   static signupButton(
       {required BuildContext context, required dynamic onPressed}) {
@@ -104,10 +109,7 @@ class SignupWidgets {
           width: SizeConfig.setWidth(context: context, factor: 0.85),
           height: SizeConfig.setHeight(context: context, factor: 0.06),
           decoration: BoxDecoration(
-              color: KConstantColors.whiteColor,
-              // color: authenticationNotifier.checkedTandC!
-              //     ? Colors.white.withOpacity(1)
-              //     : KConstantColors.bgColorFaint,
+              color: Colors.greenAccent,
               borderRadius: BorderRadius.circular(5.0)),
           child: Center(
             child: Text(

@@ -1,6 +1,6 @@
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
-import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
+import 'package:afrocom/meta/views/sub_categories/common_widgets/common_widgets.dart';
 import 'package:provider/provider.dart';
 import 'login.exports.dart';
 
@@ -23,12 +23,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
-    List<TextEditingController> textEditingController = [
-      emailController,
-      passwordController
-    ];
     return Scaffold(
-      backgroundColor: KConstantColors.darkColor,
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
@@ -38,13 +33,19 @@ class _LoginViewState extends State<LoginView> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizeConfig.verticalSizedBox(context: context, factor: 0.06),
+                  SizeConfig.verticalSizedBox(context: context, factor: 0.1),
                   LoginWidgets.appLogo(),
                   SizeConfig.verticalSizedBox(context: context, factor: 0.15),
-                  LoginWidgets.loginSection(
-                      context: context,
-                      textEditingController: textEditingController),
-                  SizeConfig.verticalSizedBox(context: context, factor: 0.02),
+                  CommonWidgets.customTextField(
+                      minLines: 1,
+                      hintText: "Enter email address",
+                      descriptionController: emailController),
+                  SizeConfig.verticalSizedBox(context: context, factor: 0.01),
+                  CommonWidgets.customTextField(
+                      minLines: 1,
+                      hintText: "Enter password",
+                      descriptionController: passwordController),
+                  SizeConfig.verticalSizedBox(context: context, factor: 0.03),
                   LoginWidgets.loginButton(
                       context: context,
                       onPressed: () async {
@@ -69,13 +70,19 @@ class _LoginViewState extends State<LoginView> {
                         }
                       }),
                   SizeConfig.verticalSizedBox(context: context, factor: 0.01),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text("Forgot password",
-                        style: KConstantTextStyles.MBody1(
-                            fontSize: SizeConfig.sfontSize!)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          SnackbarUtility.featureYetToCome(context: context);
+                        },
+                        child: Text("Forgot password",
+                            style: TextStyle(color: KConstantColors.textColor)),
+                      ),
+                    ],
                   ),
-                  SizeConfig.verticalSizedBox(context: context, factor: 0.04),
+                  SizeConfig.verticalSizedBox(context: context, factor: 0.06),
                   LoginWidgets.thirdPartyLogin(context: context),
                   SizeConfig.verticalSizedBox(context: context, factor: 0.03),
                   LoginWidgets.signUpButton(

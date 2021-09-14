@@ -1,6 +1,7 @@
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
-import 'package:afrocom/core/notifier/cache.notifier.dart';
+import 'package:afrocom/core/services/cache.service.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
+import 'package:afrocom/meta/views/authentication/login/login.view.dart';
 import 'package:afrocom/meta/views/home/home.view.dart';
 import 'package:afrocom/meta/views/onboarding/onboarding.view.dart';
 import 'package:afrocom/meta/views/splash_view/splash.view.dart';
@@ -49,9 +50,11 @@ class _SessionDeciderState extends State<SessionDecider> {
         }
         if (!snapshot.hasData) {
           return OnBoardingView();
-        } else {
-          return HomeView();
         }
+        if (snapshot.data == null) {
+          return LoginView();
+        }
+        return HomeView();
       },
     );
   }

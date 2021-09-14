@@ -1,17 +1,10 @@
 import 'dart:io';
-
-import 'package:afrocom/app/constants/images.tag.dart';
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
-import 'package:afrocom/core/models/post.model.dart';
-import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/core/notifier/map.notifier.dart';
 import 'package:afrocom/core/notifier/posting.notifier.dart';
-import 'package:afrocom/core/services/database.service.dart';
-import 'package:afrocom/core/services/storage.service.dart';
 import 'package:afrocom/core/services/video.service.dart';
-import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -22,7 +15,8 @@ import 'package:video_player/video_player.dart';
 
 class AddPostComponents {
 //! <-----------------------------------------SELECT IMAGE SECTION ------------------------------------------------>
-  static selectImageSection({required BuildContext context}) {
+  static selectImageSection(
+      {required bool isVideoNeeded, required BuildContext context}) {
     PostingNotifier _postingNotifier({required bool renderUI}) =>
         Provider.of<PostingNotifier>(context, listen: renderUI);
     _selectImage(
@@ -139,23 +133,25 @@ class AddPostComponents {
                   _postNotifierFalse.pickImages(source: ImageSource.gallery);
                 },
                 title: "Image"),
-            _selectImage(
-                width: 180,
-                iconData: Icons.camera,
-                onTap: () async {
-                  await _postNotifierFalse.pickVideos();
-                },
-                title: "Video")
+            if (isVideoNeeded)
+              _selectImage(
+                  width: 180,
+                  iconData: Icons.camera,
+                  onTap: () async {
+                    await _postNotifierFalse.pickVideos();
+                  },
+                  title: "Video")
           ],
         ),
-        vSizedBox1,
-        Center(
-          child: _selectImage(
-              width: 350,
-              iconData: EvaIcons.imageOutline,
-              onTap: () {},
-              title: "Attach documents"),
-        ),
+        if (isVideoNeeded) vSizedBox1,
+        if (isVideoNeeded)
+          Center(
+            child: _selectImage(
+                width: 350,
+                iconData: EvaIcons.imageOutline,
+                onTap: () {},
+                title: "Attach documents"),
+          ),
       ],
     ));
   }
@@ -173,7 +169,7 @@ class AddPostComponents {
                 _mapNotifier(renderUI: false)
                     .renderTappedLocation(context: context, latLng: latlng);
               },
-              zoom: _mapNotifier(renderUI: false).initialZoomLevel,
+              zoom: 3,
               center: LatLng(4.7832, 16.5085),
             ),
             layers: [
@@ -215,70 +211,6 @@ class AddPostComponents {
                 style: KConstantTextStyles.BoldText(fontSize: 12)),
           ),
         ],
-      ),
-    );
-  }
-
-  //! <-----------------------------------------UPLOAD POST BUTTON------------------------------------------------>
-  static uploadPostButton(
-      {required TextEditingController textEditingController,
-      required BuildContext context}) {
-    var mapNotifier = Provider.of<MapNotifier>(context, listen: false);
-    var authenticationNotifier =
-        Provider.of<AuthenticationNotifier>(context, listen: false);
-    PostingNotifier _postingNotifier({required bool renderUI}) =>
-        Provider.of<PostingNotifier>(context, listen: renderUI);
-    return GestureDetector(
-      onTap: () async {
-        var userData = await authenticationNotifier.getCurrentUserSession(
-            context: context);
-        var postuserid = userData['\$id'];
-        var postusername = userData['name'];
-        var postusercaption = textEditingController.text;
-        var postuseraddress = mapNotifier.selectedLocation;
-        var postuserlocationcords =
-            "${mapNotifier.selectedLocationCords!.latitude.toString()},${mapNotifier.selectedLocationCords!.longitude.toString()}";
-        var posttime = DateTime.now().toLocal().toString();
-        var postcategory = _postingNotifier(renderUI: false).selectedPostType;
-        var postusermood = _postingNotifier(renderUI: false).moodLogoValue;
-        var postasset = await StorageService.createInstance.uploadPostAsset(
-            assetPath: _postingNotifier(renderUI: false).pickedVideoPath ??
-                _postingNotifier(renderUI: false).selectedImage!.path,
-            context: context);
-        if (postusercaption.isNotEmpty) {
-          bool isVideo = false;
-          if (_postingNotifier(renderUI: false).pickedVideoFile != null) {
-            isVideo = true;
-          }
-          await DatabaseService.createInstance.uploadPost(
-              post: Post(
-                  postcategory!,
-                  postusername,
-                  postusermood!,
-                  [postasset],
-                  postusercaption,
-                  postuseraddress!,
-                  postuserlocationcords,
-                  posttime,
-                  postuserid,
-                  isVideo),
-              context: context);
-        } else {
-          SnackbarUtility.showSnackbar(
-              context: context, message: "Enter caption");
-        }
-      },
-      child: Center(
-        child: Container(
-            height: 50,
-            width: 200,
-            decoration: BoxDecoration(
-              color: KConstantColors.bgColorFaint,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-                child: Text("Upload Post",
-                    style: KConstantTextStyles.BoldText(fontSize: 16)))),
       ),
     );
   }

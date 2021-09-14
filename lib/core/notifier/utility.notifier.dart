@@ -3,12 +3,9 @@ import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:afrocom/meta/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class UtilityNotifier extends ChangeNotifier {
-  final _logger = Logger();
-
   //! User data (Optional)
   DateTime? _pickedUserDOB = DateTime.now();
   DateTime? get pickedUserDOB => _pickedUserDOB;
@@ -29,7 +26,6 @@ class UtilityNotifier extends ChangeNotifier {
     if (_pickedUserDOB != selectedDate) {
       selectedDate = _pickedUserDOB!;
     }
-    _logger.i(_pickedUserDOB!.toLocal().toString().split(" ")[0]);
     notifyListeners();
   }
 

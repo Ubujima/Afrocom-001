@@ -1,21 +1,15 @@
 import 'dart:io';
 import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/app/constants/database.credentials.dart';
-import 'package:afrocom/core/models/post.model.dart';
 import 'package:afrocom/core/models/signeduser.model.dart';
 import 'package:afrocom/core/services/storage.service.dart';
-import 'package:afrocom/meta/utilities/post_progress_indicator.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
-import 'package:afrocom/meta/views/home/feed/components/feed.widgets.dart';
 import 'package:appwrite/appwrite.dart';
-import 'package:logger/logger.dart';
 
 class DatabaseService {
-  final _logger = Logger();
   static DatabaseService? _instance;
   late Client _client;
-  Logger logger = new Logger();
   late Database _database;
 
   DatabaseService._initialize() {
@@ -57,23 +51,20 @@ class DatabaseService {
       var response = await _database.createDocument(
           collectionId: DatabaseCredentials.UserCollectionID,
           data: signedUser.toJson(),
-          read: ['*'], //=> WORKING
+          read: ['*'],
           write: ['*']);
       var _userDocumentId = response.data['\$id'];
       var resStatusCode = response.statusCode;
       if (resStatusCode == 201) {
         userDocumentId = _userDocumentId;
         SnackbarUtility.showSnackbar(
-            context: context, message: "Account data added!");
+            context: context, message: "Information is saved!");
         Navigator.of(context).pushNamed(HomeRoute);
       }
       return userDocumentId;
     } on SocketException catch (error) {
-      _logger.i(error.message);
+      print(error);
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
-      _logger.i(error.code);
-      _logger.i(error.message);
       var errorCode = error.code;
       var errorMesage = error.message;
       switch (errorCode) {
@@ -92,7 +83,6 @@ class DatabaseService {
           }
       }
     } catch (error) {
-      _logger.i(error);
       SnackbarUtility.showSnackbar(
           context: context, message: "Something went wrong, Try again");
     }
@@ -115,9 +105,6 @@ class DatabaseService {
           }
       }
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
-      _logger.i(error.code);
-      _logger.i(error.message);
       var errorCode = error.code;
       switch (errorCode) {
         case 429: //! Too many requests
@@ -139,11 +126,40 @@ class DatabaseService {
       var response = await _database.listDocuments(
           collectionId: DatabaseCredentials.UserCollectionID, search: query);
       var resData = response.data;
-      return resData;
+      var info = resData['documents'][0];
+      return info;
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
-      _logger.i(error.code);
-      _logger.i(error.message);
+      var errorMessage = error.message;
+      var errorCode = error.code;
+      switch (errorCode) {
+        case 429:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Server error, Try again!");
+          break;
+        case 400:
+          SnackbarUtility.showSnackbar(
+              context: context, message: "Something went wrong, Try again");
+          break;
+        default:
+          {
+            SnackbarUtility.showSnackbar(
+                context: context, message: errorMessage!);
+          }
+      }
+    } catch (e) {}
+  }
+
+  Future searchPostData(
+      {required String collectionId,
+      required BuildContext context,
+      required dynamic query}) async {
+    try {
+      var response = await _database.listDocuments(
+          collectionId: collectionId, search: query);
+      var resData = response.data;
+      var info = resData['documents'][0];
+      return info;
+    } on AppwriteException catch (error) {
       var errorMessage = error.message;
       var errorCode = error.code;
       switch (errorCode) {
@@ -189,6 +205,7 @@ class DatabaseService {
       }
     } on AppwriteException catch (exception) {
       var exceptionMessage = exception.message;
+      print(exceptionMessage);
       SnackbarUtility.showSnackbar(
           context: context, message: exceptionMessage!);
     } catch (e) {
@@ -197,11 +214,14 @@ class DatabaseService {
   }
 
 //! <--------------------------------------------------UPLOAD POSTS------------------------------------------------------------>
-  Future uploadPost({required Post post, required BuildContext context}) async {
+  Future uploadPost(
+      {required String collectionId,
+      required dynamic data,
+      required BuildContext context}) async {
     try {
       var _response = await _database.createDocument(
-        collectionId: DatabaseCredentials.PostCollectionID,
-        data: post.toJson(),
+        collectionId: collectionId,
+        data: data,
         read: ["*", "role:guest", "role:member"],
         write: ["*", "role:guest", "role:member"],
       );
@@ -209,26 +229,27 @@ class DatabaseService {
       switch (_resStatusCode) {
         case 201:
           {
-            showProgressIndicator(context: context);
-            Future.delayed(Duration(seconds: 12)).whenComplete(() {
-              Navigator.of(context).pushNamed(FeedRoute);
-            });
+            SnackbarUtility.showSnackbar(
+                context: context, message: "Post uploaded successfully");
+            Navigator.of(context).pushNamed(HomeRoute);
           }
       }
     } on AppwriteException catch (exception) {
       var exceptionMessage = exception.message;
+      print(exceptionMessage);
       SnackbarUtility.showSnackbar(
           context: context, message: exceptionMessage!);
     } catch (e) {
+      print(e);
       SnackbarUtility.showSnackbar(context: context, message: e.toString());
     }
   }
 
 //! <--------------------------------------------------FETCH POSTS------------------------------------------------------------>
-  fetchPosts({required BuildContext context}) async {
+  fetchPosts(
+      {required dynamic collectionId, required BuildContext context}) async {
     try {
-      var response = await _database.listDocuments(
-          collectionId: DatabaseCredentials.PostCollectionID);
+      var response = await _database.listDocuments(collectionId: collectionId);
       if (response.data != null) {
         var responseData = response.data;
         return responseData;
@@ -255,7 +276,6 @@ class DatabaseService {
       if (resStatusCode == 204) {
         await StorageService.createInstance
             .deletePostImage(postId: imageId, context: context);
-        FeedWidgets.deletePostLoader(context: context);
         Future.delayed(Duration(seconds: 6)).whenComplete(() {
           Navigator.of(context).pushNamed(FeedRoute);
         });

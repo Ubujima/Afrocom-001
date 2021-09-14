@@ -5,11 +5,9 @@ import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/core/services/database.service.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class DatabaseNotifier extends ChangeNotifier {
-  late Logger logger;
   Future<String> submitUserData(
       {required BuildContext context, required SignedUser signedUser}) async {
     var userDocumentId;
@@ -53,23 +51,23 @@ class DatabaseNotifier extends ChangeNotifier {
       var userid = user['\$id'];
       var response = await DatabaseService.createInstance
           .searchUserData(context: context, query: userid);
-      var data = response['documents'][0];
-      var userDocumentId = data['\$id'];
-      return userDocumentId;
-    } catch (e) {
-      logger.i(e.toString());
-    }
+      var data = response;
+      return data;
+    } catch (e) {}
   }
 
   //! <---------------------------------------------FETCH CORDS------------------------------------------------>
 
-  Future fetchCoordinates({required BuildContext context}) async {
+  Future fetchCoordinates(
+      {required dynamic collectionId, required BuildContext context}) async {
     try {
-      var response =
-          await DatabaseService.createInstance.fetchPosts(context: context);
-      var modelledData = FetchPosts.fromJson(response);
-      return modelledData.documents;
-    } catch (e) {}
+      var response = await DatabaseService.createInstance
+          .fetchPosts(collectionId: collectionId, context: context);
+      var data = response['documents'];
+      return data;
+    } catch (e) {
+      print(e);
+    }
   }
 
   //! <------------------------------------------ FIND USER DATA BASED ON LOGGED ID------------------->

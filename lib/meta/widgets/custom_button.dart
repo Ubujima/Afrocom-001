@@ -1,7 +1,6 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/dimensions.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
-import 'package:afrocom/meta/utilities/font_size_config.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -22,8 +21,8 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: SizeConfig.setHeight(context: context, factor: 0.05),
-        width: SizeConfig.setWidth(context: context, factor: 0.4),
+        height: height,
+        width: width,
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

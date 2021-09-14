@@ -7,48 +7,48 @@ class Post {
   Post(
       this.postcategory,
       this.postusername,
-      this.postusermood,
+      this.postsubcategory,
       this.postasset,
-      this.postusercaption,
+      this.posttitle,
       this.postuseraddress,
       this.postuserlocationcords,
       this.posttime,
       this.postuserid,
-      this.isVideo);
+      this.isvideo);
   String postcategory;
   String postusername;
-  String postusermood;
+  String postsubcategory;
   List<String> postasset;
-  String postusercaption;
+  String posttitle;
   String postuseraddress;
   String postuserlocationcords;
   String posttime;
   String postuserid;
-  bool isVideo;
+  bool isvideo;
 
   factory Post.fromJson(Map<String, dynamic> json) => Post(
         json["postcategory"],
         json["postusername"],
-        json["postusermood"],
+        json["postsubcategory"],
         List<String>.from(json["postasset"].map((x) => x)),
-        json["postusercaption"],
+        json["posttitle"],
         json["postuseraddress"],
         json["postuserlocationcords"],
         json["posttime"],
         json["postuserid"],
-        json["isVideo"],
+        json["isvideo"],
       );
 
   Map<String, dynamic> toJson() => {
         "postcategory": postcategory,
         "postusername": postusername,
-        "postusermood": postusermood,
+        "postsubcategory": postsubcategory,
         "postasset": List<dynamic>.from(postasset.map((x) => x)),
-        "postusercaption": postusercaption,
+        "posttitle": posttitle,
         "postuseraddress": postuseraddress,
         "postuserlocationcords": postuserlocationcords,
         "posttime": posttime,
         "postuserid": postuserid,
-        "isVideo": isVideo,
+        "isvideo": isvideo,
       };
 }

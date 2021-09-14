@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:afrocom/app/constants/images.tag.dart';
-import 'package:afrocom/core/models/fetch_posts.dart';
-import 'package:afrocom/core/services/database.service.dart';
+import 'package:afrocom/app/constants/cloudinary.credentials.dart';
+import 'package:cloudinary_sdk/cloudinary_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +11,10 @@ class PostingNotifier extends ChangeNotifier {
   XFile? _pickedVideoFile;
   XFile? get pickedVideoFile => _pickedVideoFile;
 
-  String? _selectedPostType = "Campaign";
+  String _uploadedVideoURL = "";
+  String get uploadedVideoURL => _uploadedVideoURL;
+
+  String? _selectedPostType = "";
   String? get selectedPostType => _selectedPostType;
 
   assignSelectedPostTyle({required String candidatePostType}) {
@@ -21,36 +22,13 @@ class PostingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  String? _moodLogoValue = "Happy";
-  String? get moodLogoValue => _moodLogoValue;
-  String? _moodLogo = ImageTags.HappyFace;
-  String? get moodLogo => _moodLogo;
+  //!<-----------------------------------------------ADDING SUBCATEGORIES----------------------------------------------->
+  String _subCategory = "";
+  String get subCategory => _subCategory;
 
-  assignMoodLogo({required String candidateMoodLogo}) {
-    _moodLogo = candidateMoodLogo;
-    notifyListeners();
-    switch (candidateMoodLogo) {
-      case ImageTags.HappyFace:
-        {
-          _moodLogoValue = "Happy";
-        }
-        break;
-      case ImageTags.ArrogantFace:
-        {
-          _moodLogoValue = "Arrogant";
-        }
-        break;
-      case ImageTags.ShockFace:
-        {
-          _moodLogoValue = "Shock";
-        }
-        break;
-      case ImageTags.AngryFace:
-        {
-          _moodLogoValue = "Angry";
-          break;
-        }
-    }
+  assignSubcategory({required String candidateSubCategory}) {
+    _subCategory = candidateSubCategory;
+    print(_subCategory);
     notifyListeners();
   }
 
@@ -91,20 +69,26 @@ class PostingNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  //!<---------------------------------------- FETCH POSTS---------------------------------------------------->
-  Future fetchPosts({required BuildContext context}) async {
+  Future uploadPostVideo({required BuildContext context}) async {
+    final _cloudinary = Cloudinary(CloudinaryCredentials.APIKEY,
+        CloudinaryCredentials.APISecret, CloudinaryCredentials.CLOUDNAME);
     try {
-      var response =
-          await DatabaseService.createInstance.fetchPosts(context: context);
-      var modelledData = FetchPosts.fromJson(response);
-      var _data = modelledData.documents;
-      return _data;
+      await _cloudinary
+          .uploadFile(
+              filePath: _pickedVideoFile!.path,
+              resourceType: CloudinaryResourceType.video,
+              folder: "afrocom")
+          .then((value) {
+        _uploadedVideoURL = value.secureUrl!;
+        if (_uploadedVideoURL.isNotEmpty) {
+          print(
+              "=========VIDEO IS UPLOADED : $_uploadedVideoURL==============");
+        }
+        notifyListeners();
+        return _uploadedVideoURL;
+      });
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
-  }
-
-  Stream posts({required BuildContext context}) async* {
-    yield await fetchPosts(context: context);
   }
 }

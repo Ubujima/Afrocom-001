@@ -1,0 +1,16 @@
+export 'dart:io';
+export 'package:afrocom/app/constants/images.tag.dart';
+export 'package:afrocom/app/shared/colors.dart';
+export 'package:afrocom/app/shared/dimensions.dart';
+export 'package:afrocom/app/shared/textStyles.dart';
+export 'package:afrocom/core/notifier/map.notifier.dart';
+export 'package:afrocom/core/notifier/posting.notifier.dart';
+export 'package:afrocom/core/services/video.service.dart';
+export 'package:afrocom/meta/utilities/snackbar.utility.dart';
+export 'package:eva_icons_flutter/eva_icons_flutter.dart';
+export 'package:flutter_map/flutter_map.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'package:image_picker/image_picker.dart';
+export 'package:provider/provider.dart';
+export 'package:video_player/video_player.dart';
+export 'package:flutter/material.dart';

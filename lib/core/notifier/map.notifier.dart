@@ -1,101 +1,16 @@
-import 'package:afrocom/app/constants/images.tag.dart';
-import 'package:afrocom/core/models/fetch_posts.dart';
-import 'package:afrocom/meta/utilities/snackbar.utility.dart';
+import 'package:afrocom/app/constants/database.credentials.dart';
+import 'package:afrocom/app/routes/app.routes.dart';
+import 'package:afrocom/meta/arguments/solo_post.argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geocoding/geocoding.dart' as GeoCoding;
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'database.notifier.dart';
 
 class MapNotifier extends ChangeNotifier {
   LatLng? _currentLocation = LatLng(0.0, 0.0);
   LatLng? get currentLocation => _currentLocation;
-
-  final MapController mapController = new MapController();
-
-  Future animateToCurrentLocation({required BuildContext context}) async {
-    SnackbarUtility.showLoadingSnackbar(
-        time: 3, title: "Scanning location...", context: context);
-    Location location = new Location();
-    var _locationCords = await location.getLocation();
-    _currentLocation =
-        LatLng(_locationCords.latitude!, _locationCords.longitude!);
-    notifyListeners();
-    Future.delayed(Duration(seconds: 1)).whenComplete(() {
-      mapController.move(
-          LatLng(_locationCords.latitude!, _locationCords.longitude!), 18);
-    });
-    notifyListeners();
-  }
-
-  //! Find location
-  Future findLocation(
-      {required BuildContext context, required LatLng latLng}) async {
-    final List<GeoCoding.Placemark> placemark =
-        await GeoCoding.placemarkFromCoordinates(
-            latLng.latitude, latLng.longitude);
-    SnackbarUtility.showSnackbar(
-        context: context,
-        message:
-            "Address : ${placemark.first.administrativeArea}, ${placemark.first.subAdministrativeArea}, ${placemark.first.subLocality}, ${placemark.first.country}, ${placemark.first.isoCountryCode}");
-  }
-
-  //! Fetch current location
-  Future getCurrentLocation(
-      {required bool showBar,
-      required bool showCords,
-      required BuildContext context}) async {
-    Location location = new Location();
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationData = await location.getLocation();
-    _currentLocation =
-        LatLng(_locationData.latitude!, _locationData.longitude!);
-    notifyListeners();
-    if (_locationData.toString().isNotEmpty) {
-      List<GeoCoding.Placemark> placemark =
-          await GeoCoding.placemarkFromCoordinates(
-              _locationData.latitude!, _locationData.longitude!);
-      notifyListeners();
-      if (showBar) {
-        if (showCords) {
-          SnackbarUtility.showLoadingSnackbar(
-              time: 3, title: "Fetching location cords...", context: context);
-          SnackbarUtility.showSnackbar(
-              context: context,
-              message:
-                  "Current Location : Latitude = ${_locationData.latitude} Longitude = ${_locationData.longitude}");
-        } else {
-          SnackbarUtility.showLoadingSnackbar(
-              time: 3, title: "Fetching location...", context: context);
-          SnackbarUtility.showSnackbar(
-              context: context,
-              message:
-                  "Current Location : ${placemark.first.administrativeArea}, ${placemark.first.subAdministrativeArea}, ${placemark.first.subLocality}, ${placemark.first.country}, ${placemark.first.isoCountryCode}");
-        }
-      }
-    }
-  }
 
   //! UI SECTION
   bool? _showTaskBar = false;
@@ -131,15 +46,6 @@ class MapNotifier extends ChangeNotifier {
         "${placemark.first.subAdministrativeArea},${placemark.first.street},${placemark.first.subLocality},${placemark.first.country}";
     _selectedLocation = _userLocation;
     notifyListeners();
-    SnackbarUtility.showSnackbar(context: context, message: _userLocation);
-  }
-
-  double _initialZoomLevel = 6;
-  double get initialZoomLevel => _initialZoomLevel;
-  slideZoomLevel({required double candidateValue}) {
-    _initialZoomLevel = candidateValue;
-    print(_initialZoomLevel);
-    notifyListeners();
   }
 
   //!<---------------------------------------INITIATE MARKERS---------------------------------------------->
@@ -149,7 +55,8 @@ class MapNotifier extends ChangeNotifier {
   bool _isMarkerFiltered = false;
   bool get isMarkerFiltered => _isMarkerFiltered;
 
-  initiateMarkers({required BuildContext context}) async {
+  Future initiateMarkers(
+      {required String collectionId, required BuildContext context}) async {
     double postlatitude({required dynamic candidateString}) {
       var _data = candidateString.toString().split(",")[0];
       var renderedDouble = double.parse(_data);
@@ -162,130 +69,79 @@ class MapNotifier extends ChangeNotifier {
       return renderedDouble;
     }
 
-    final databaseNotifier =
-        Provider.of<DatabaseNotifier>(context, listen: false);
-    var data =
-        await databaseNotifier.fetchCoordinates(context: context) as List;
-    var _snapshot = data;
-    if (!_isMarkerFiltered) {
-      _snapshot.forEach((postData) {
-        FetchedPostData fetchPostsData = postData;
-        String markerImage = ImageTags.AngryFace;
-        var userMood = fetchPostsData.postusermood;
-        switch (userMood) {
-          case "Happy":
-            {
-              markerImage = ImageTags.HappyFace;
-            }
-            break;
-          case "Arrogant":
-            {
-              markerImage = ImageTags.ArrogantFace;
-            }
-            break;
-          case "Angry":
-            {
-              markerImage = ImageTags.AngryFace;
-            }
-            break;
-          case "Shock":
-            {
-              markerImage = ImageTags.ShockFace;
-            }
-            notifyListeners();
+    Color? markerColor;
+    switch (collectionId) {
+      case DatabaseCredentials.BlogCategoryCollectionID:
+        {
+          markerColor = Colors.pink;
         }
-        double addLatitude =
-            postlatitude(candidateString: fetchPostsData.postuserlocationcords);
-        double addLongitude = postlongitude(
-            candidateString: fetchPostsData.postuserlocationcords);
-        Marker marker = Marker(
-            point: LatLng(addLatitude, addLongitude),
-            builder: (context) => new CircleAvatar(
-                  radius: 30.0,
-                  backgroundImage: AssetImage(markerImage),
-                  backgroundColor: Colors.transparent,
-                ));
-        _markers.add(marker);
-        notifyListeners();
-      });
-    }
-  }
-
-  //!<-------------------------------------------------------FILTER MARKERS------------------------------------------------->
-
-  List<Marker> _filteredMarkers = [];
-  List<Marker> get filteredMarkers => _filteredMarkers;
-
-  Future filterMarkers(
-      {required BuildContext context, required String subCategory}) async {
-    _isMarkerFiltered = true;
-    notifyListeners();
-    _filteredMarkers.clear();
-    double postlatitude({required dynamic candidateString}) {
-      var _data = candidateString.toString().split(",")[0];
-      var renderedDouble = double.parse(_data);
-      return renderedDouble;
-    }
-
-    double postlongitude({required dynamic candidateString}) {
-      var _data = candidateString.toString().split(",")[1];
-      var renderedDouble = double.parse(_data);
-      return renderedDouble;
+        break;
+      case DatabaseCredentials.CampaignCategoryCollectionID:
+        {
+          markerColor = Colors.green;
+        }
+        break;
+      case DatabaseCredentials.EventCategoryCollectionID:
+        {
+          markerColor = Colors.orange;
+        }
+        break;
+      case DatabaseCredentials.JobCategoryCollectionID:
+        {
+          markerColor = Colors.blue;
+        }
+        break;
+      case DatabaseCredentials.MarketCategoryCollectionID:
+        {
+          markerColor = Colors.yellow;
+        }
+        break;
+      case DatabaseCredentials.PlaceCategoryCollectionID:
+        {
+          markerColor = Colors.brown;
+          break;
+        }
+      default:
+        {
+          //!Mood
+          markerColor = Colors.deepOrangeAccent;
+        }
     }
 
     final databaseNotifier =
         Provider.of<DatabaseNotifier>(context, listen: false);
-    var data = await databaseNotifier.filteredMarkersPosts(
-        subCategory: subCategory, context: context) as List;
+    var data = await databaseNotifier.fetchCoordinates(
+        collectionId: collectionId, context: context) as List;
     var _snapshot = data;
-    if (_snapshot.length == 0) {
-      SnackbarUtility.showSnackbar(
-          context: context, message: "No posts available");
-    }
     _snapshot.forEach((postData) {
-      FetchedPostData fetchPostsData = postData;
-      String markerImage = ImageTags.AngryFace;
-      var userMood = fetchPostsData.postusermood;
-      switch (userMood) {
-        case "Happy":
-          {
-            markerImage = ImageTags.HappyFace;
-          }
-          break;
-        case "Arrogant":
-          {
-            markerImage = ImageTags.ArrogantFace;
-          }
-          break;
-        case "Angry":
-          {
-            markerImage = ImageTags.AngryFace;
-          }
-          break;
-        case "Shock":
-          {
-            markerImage = ImageTags.ShockFace;
-          }
-          notifyListeners();
-      }
+      print('Assigning markers');
+      String collectionId = postData['\$collection'];
+      String query = postData['\$id'];
       double addLatitude =
-          postlatitude(candidateString: fetchPostsData.postuserlocationcords);
+          postlatitude(candidateString: postData['postuserlocationcords']);
       double addLongitude =
-          postlongitude(candidateString: fetchPostsData.postuserlocationcords);
+          postlongitude(candidateString: postData['postuserlocationcords']);
       Marker marker = Marker(
           point: LatLng(addLatitude, addLongitude),
-          builder: (context) => new CircleAvatar(
-              radius: 30.0,
-              backgroundImage: AssetImage(markerImage),
-              backgroundColor: Colors.transparent));
-      _filteredMarkers.add(marker);
+          builder: (context) => GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(SoloPostRoute,
+                      arguments: SoloPostArguments(
+                          collectionId: collectionId, query: query));
+                },
+                child: new CircleAvatar(
+                  radius: 22.0,
+                  backgroundColor: markerColor,
+                ),
+              ));
+      _markers.add(marker);
       notifyListeners();
     });
   }
 
   //!<------------------------------------------REMOVE FILTERED MARKERS OF POSTS--------------------------------------->
-  removeMarkerFilter() {
-    _isMarkerFiltered = false;
+  clearMarkers() {
+    _markers = [];
     notifyListeners();
   }
 }

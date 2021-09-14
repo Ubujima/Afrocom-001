@@ -2,13 +2,11 @@ import 'package:afrocom/app/constants/appwrite.credentials.dart';
 import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
-import 'package:logger/logger.dart';
 
 class StorageService {
   static StorageService? _instance;
   late Client _client;
   late Storage _storage;
-  Logger logger = new Logger();
 
   StorageService._initialize() {
     _client = Client(endPoint: AppwriteCredentials.AppwriteLocalEndpoint)
@@ -26,7 +24,6 @@ class StorageService {
   Future uploadUserProfilePicture(
       {required String imagePath, required BuildContext context}) async {
     try {
-      print("Uploading profile picture");
       var _file = await MultipartFile.fromFile(imagePath);
       final response =
           await _storage.createFile(file: _file, read: ["*"], write: ["*"]);
@@ -44,14 +41,14 @@ class StorageService {
   Future uploadPostAsset(
       {required String assetPath, required BuildContext context}) async {
     try {
+      print("==============UPLOADING ASSET===============");
       var _file = await MultipartFile.fromFile(assetPath);
       final response =
           await _storage.createFile(file: _file, read: ["*"], write: ["*"]);
       final resStatusCode = response.statusCode;
       if (resStatusCode == 201) {
-        SnackbarUtility.showSnackbar(
-            context: context, message: "Data uploaded to storage");
-        final assetId = response.data['\$id'];
+        dynamic assetId = response.data['\$id'];
+        print("============ASSET UPLOADED : $assetId==============");
         return assetId;
       }
     } on AppwriteException catch (error) {
@@ -71,7 +68,9 @@ class StorageService {
       }
     } on AppwriteException catch (error) {
       SnackbarUtility.showSnackbar(context: context, message: error.message!);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   //! <------------------------------------------DELETE POST IMAGE---------------------------------------------->
@@ -83,6 +82,8 @@ class StorageService {
       print(resStatusCode);
     } on AppwriteException catch (error) {
       SnackbarUtility.showSnackbar(context: context, message: error.message!);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 }

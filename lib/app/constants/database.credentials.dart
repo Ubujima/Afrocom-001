@@ -1,8 +1,15 @@
 class DatabaseCredentials {
-  //! Database IDs
-  static const String UserCollectionID = "610d7c664edbe";
+  //! Database IDs - ENTER THE NEW IDS OF COLLECTION
+  static const String UserCollectionID = "613d2f51cad03";
   static const String PostCollectionID = "611c38a604669";
-  static const String TestCollectionID = "60f60c1c07767";
+  static const String MoodCategoryCollectionID = "612846eeaf637";
+  static const String BlogCategoryCollectionID = "61284719b8f6d";
+  static const String ProjectCategoryCollectionID = "613d8c4c6a8b8";
+  static const String CampaignCategoryCollectionID = "613d8c4c6a8b8";
+  static const String PlaceCategoryCollectionID = "613d8f9066004";
+  static const String EventCategoryCollectionID = "613d8f9cddac4";
+  static const String JobCategoryCollectionID = "613d8fa72cd5b";
+  static const String MarketCategoryCollectionID = "613d9e2f415ff";
 }
 
 class APIKEYS {

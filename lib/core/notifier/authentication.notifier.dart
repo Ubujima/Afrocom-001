@@ -1,6 +1,6 @@
 import 'package:afrocom/app/constants/database.credentials.dart';
 import 'package:afrocom/core/models/oAuth/facebook_user.model.dart';
-import 'package:afrocom/core/notifier/cache.notifier.dart';
+import 'package:afrocom/core/services/cache.service.dart';
 import 'package:afrocom/core/services/OAuth2.service.dart';
 import 'package:afrocom/core/services/authentication.service.dart';
 import 'package:afrocom/core/services/database.service.dart';
@@ -17,11 +17,11 @@ class AuthenticationNotifier extends ChangeNotifier {
   bool? _accountAlreadyExists;
   bool? get accountAlreadyExists => _accountAlreadyExists;
 
-  bool? _checkedTandC = false;
-  bool? get checkedTandC => _checkedTandC;
+  bool _checkedTandC = false;
+  bool get checkedTandC => _checkedTandC;
 
   void toggleTermsAndConditionCheck() {
-    _checkedTandC = !_checkedTandC!;
+    _checkedTandC = !_checkedTandC;
     notifyListeners();
   }
 

@@ -5,10 +5,8 @@ import 'package:afrocom/meta/utilities/snackbar.utility.dart';
 import 'package:afrocom/meta/views/authentication/login/login.exports.dart';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:logger/logger.dart';
 
 class AppwriteAuthenticationAPI {
-  final _logger = Logger();
   static AppwriteAuthenticationAPI? _instance;
   late Client _client;
   late Account _account;
@@ -46,12 +44,11 @@ class AppwriteAuthenticationAPI {
               title: "Creating new account, Please wait",
               context: context);
           Future.delayed(Duration(seconds: 8)).whenComplete(() async {
-            Navigator.of(context).pushNamed(ShareRoute);
+            Navigator.of(context).pushNamed(ProfileSetupRoute);
           });
         }
       }
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
       var errorResponse = error.message;
       var errorCode = error.code;
       switch (errorCode) {
@@ -68,9 +65,7 @@ class AppwriteAuthenticationAPI {
               context: context, message: "User already exists.");
           break;
       }
-    } catch (error) {
-      _logger.i(error);
-    }
+    } catch (error) {}
   }
 
 //! Login to existing account
@@ -95,7 +90,6 @@ class AppwriteAuthenticationAPI {
         }
       }
     } on AppwriteException catch (error) {
-      _logger.i(error.code, error.message);
       var errorCode = error.code;
       var errorMessage = error.message;
       switch (errorCode) {
@@ -117,30 +111,23 @@ class AppwriteAuthenticationAPI {
 
   //! Get current session of the user
   Future getCurrentUserSession({required BuildContext context}) async {
-    var user;
     try {
       var res = await _account.get();
       var responseStatusCode = res.statusCode;
       if (responseStatusCode == 200) {
-        user = res.data;
-        var loggedUser = res.data['name'];
-        print("$loggedUser is logged in.");
+        return res.data;
       }
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
-      _logger.i(error.code);
       var responseCode = error.code;
       if (responseCode == 401) {
         print("Session expired. Please login one more time.");
       }
     }
-    return user;
   }
 
   //! Log out/Remove current session
   Future logOut({required BuildContext context}) async {
     try {
-      await _account.deleteSessions();
       var response = await _account.deleteSession(sessionId: "current");
       var responseCode = response.statusCode;
       if (responseCode == 204) {
@@ -151,7 +138,6 @@ class AppwriteAuthenticationAPI {
         });
       }
     } on AppwriteException catch (error) {
-      _logger.i(error.response);
       var responseCode = error.code;
       if (responseCode == 401) {
         SnackbarUtility.showSnackbar(
@@ -184,7 +170,6 @@ class AppwriteAuthenticationAPI {
           provider: 'google');
       print(res);
     } on AppwriteException catch (error) {
-      _logger.i(error.message);
       var responseCode = error.code;
       if (responseCode == 401) {}
     } catch (error) {

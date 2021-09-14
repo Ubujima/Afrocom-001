@@ -62,15 +62,15 @@ class SubTaskBar extends StatelessWidget {
   subTaskBarOptions({required dynamic onTap, required IconData icon}) =>
       GestureDetector(
         onTap: onTap,
-        child: Icon(icon, size: 30, color: KConstantColors.greenColor),
+        child: Icon(icon, size: 30, color: KConstantColors.whiteColor),
       );
   @override
   Widget build(BuildContext context) {
     final authenticationNotifier =
         Provider.of<AuthenticationNotifier>(context, listen: false);
     return Positioned(
-      top: SizeConfig.setHeight(context: context, factor: 0.78),
-      left: SizeConfig.setWidth(context: context, factor: 0.02),
+      top: SizeConfig.setHeight(context: context, factor: 0.81),
+      left: SizeConfig.setWidth(context: context, factor: 0.1),
       child: GestureDetector(
         child: AnimatedContainer(
           child: Row(
@@ -81,7 +81,6 @@ class SubTaskBar extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pushNamed(FeedRoute);
                   }),
-              subTaskBarOptions(icon: FontAwesomeIcons.mapPin, onTap: () {}),
               subTaskBarOptions(
                   icon: FontAwesomeIcons.edit,
                   onTap: () async {
@@ -94,12 +93,8 @@ class SubTaskBar extends StatelessWidget {
                           context: context, message: "Please login to post!");
                     }
                   }),
-              subTaskBarOptions(icon: FontAwesomeIcons.bell, onTap: () {}),
               subTaskBarOptions(
-                  icon: FontAwesomeIcons.user,
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ProfileRoute);
-                  })
+                  icon: FontAwesomeIcons.locationArrow, onTap: () {}),
             ],
           ),
           duration: Duration(seconds: 2),

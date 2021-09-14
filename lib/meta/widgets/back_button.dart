@@ -1,6 +1,5 @@
 import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/app/shared/textStyles.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class CustomBackButton extends StatelessWidget {
@@ -13,9 +12,9 @@ class CustomBackButton extends StatelessWidget {
       children: [
         IconButton(
             onPressed: backPressed,
-            icon: Icon(EvaIcons.arrowCircleLeft,
-                color: KConstantColors.greenColor)),
-        Text(title, style: KConstantTextStyles.BoldText(fontSize: 18)),
+            icon: Icon(Icons.arrow_back_ios_new,
+                color: KConstantColors.darkColor)),
+        Text(title, style: KConstantTextStyles.BoldText(fontSize: 16)),
       ],
     );
   }

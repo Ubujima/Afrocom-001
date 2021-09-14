@@ -1,6 +1,6 @@
-import 'package:afrocom/app/shared/colors.dart';
 import 'package:afrocom/core/notifier/authentication.notifier.dart';
 import 'package:afrocom/meta/utilities/font_size_config.dart';
+import 'package:afrocom/meta/views/sub_categories/common_widgets/common_widgets.dart';
 import 'package:provider/provider.dart';
 import 'signup.exports.dart';
 
@@ -10,8 +10,6 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-  TextEditingController userfirstnameController = TextEditingController();
-  TextEditingController userlastnameController = TextEditingController();
   TextEditingController useremailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController userpasswordController = TextEditingController();
@@ -19,8 +17,6 @@ class _SignupViewState extends State<SignupView> {
 
   @override
   void initState() {
-    userfirstnameController = TextEditingController();
-    userlastnameController = TextEditingController();
     useremailController = TextEditingController();
     usernameController = TextEditingController();
     userpasswordController = TextEditingController();
@@ -30,63 +26,75 @@ class _SignupViewState extends State<SignupView> {
 
   @override
   Widget build(BuildContext context) {
-    final authenticationNotifier =
-        Provider.of<AuthenticationNotifier>(context, listen: false);
-    Map<String, TextEditingController> textEditingController = {
-      "userfirstname": userfirstnameController,
-      "userlastname": userlastnameController,
-      "useremail": useremailController,
-      "username": usernameController,
-      "userpassword": userpasswordController,
-      "userconfirmpasswordController": userconfirmpasswordController
-    };
+    authenticationNotifier(bool renderUI) =>
+        Provider.of<AuthenticationNotifier>(context, listen: renderUI);
     return Scaffold(
-        backgroundColor: KConstantColors.darkColor,
         body: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizeConfig.verticalSizedBox(context: context, factor: 0.07),
-                    SignupWidgets.appLogo(context: context),
-                    vSizedBox2,
-                    SignupWidgets.signupSection(
-                        context: context,
-                        textEditingController: textEditingController),
-                    vSizedBox2,
-                    // SignupWidgets.termsAndConditions(context: context),
-                    vSizedBox2,
-                    SignupWidgets.signupButton(
-                        context: context,
-                        onPressed: () async {
-                          String useremail = useremailController.text;
-                          String username = usernameController.text;
-                          String userpassword = userpasswordController.text;
-                          String confirmedpassword =
-                              userconfirmpasswordController.text;
-                          if (userpassword == confirmedpassword) {
-                            await authenticationNotifier.signUp(
-                                context: context,
-                                username: username,
-                                useremail: useremail,
-                                userpassword: userpassword);
-                          } else {
-                            SnackbarUtility.showSnackbar(
-                                context: context,
-                                message: "Passwords do not match");
-                          }
-                        }),
-                    vSizedBox3,
-                  ],
-                ),
-              ),
+      physics: ClampingScrollPhysics(),
+      child: Container(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizeConfig.verticalSizedBox(context: context, factor: 0.07),
+                SignupWidgets.appLogo(context: context),
+                SizeConfig.verticalSizedBox(context: context, factor: 0.1),
+                CommonWidgets.customTextField(
+                    minLines: 1,
+                    hintText: "Enter name",
+                    descriptionController: usernameController),
+                vSizedBox1,
+                CommonWidgets.customTextField(
+                    minLines: 1,
+                    hintText: "Enter email address",
+                    descriptionController: useremailController),
+                vSizedBox1,
+                CommonWidgets.customTextField(
+                    minLines: 1,
+                    hintText: "Enter password",
+                    descriptionController: userpasswordController),
+                vSizedBox1,
+                CommonWidgets.customTextField(
+                    minLines: 1,
+                    hintText: "Confirm password",
+                    descriptionController: userconfirmpasswordController),
+                vSizedBox1,
+                SignupWidgets.termsAndConditions(context: context),
+                vSizedBox2,
+                SignupWidgets.signupButton(
+                    context: context,
+                    onPressed: () async {
+                      if (authenticationNotifier(false).checkedTandC) {
+                        String useremail = useremailController.text;
+                        String username = usernameController.text;
+                        String userpassword = userpasswordController.text;
+                        String confirmedpassword =
+                            userconfirmpasswordController.text;
+                        if (userpassword == confirmedpassword) {
+                          await authenticationNotifier(false).signUp(
+                              context: context,
+                              username: username,
+                              useremail: useremail,
+                              userpassword: userpassword);
+                        } else {
+                          SnackbarUtility.showSnackbar(
+                              context: context,
+                              message: "Passwords do not match");
+                        }
+                      } else {
+                        SnackbarUtility.showSnackbar(
+                            context: context,
+                            message: "Read and accept terms and conditions");
+                      }
+                    }),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }

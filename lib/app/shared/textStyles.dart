@@ -25,7 +25,7 @@ class KConstantTextStyles {
   static TextStyle BoldText({required double fontSize}) {
     return TextStyle(
         fontFamily: KConstantFonts.PoppinsBold,
-        color: KConstantColors.whiteColor,
+        color: KConstantColors.darkColor,
         fontWeight: FontWeight.bold,
         fontSize: fontSize);
   }
@@ -34,7 +34,7 @@ class KConstantTextStyles {
   static TextStyle RegularText({required double fontSize}) {
     return TextStyle(
         fontFamily: KConstantFonts.Poppins,
-        color: KConstantColors.whiteColor,
+        color: KConstantColors.darkColor,
         fontSize: fontSize);
   }
 
@@ -42,7 +42,7 @@ class KConstantTextStyles {
   static TextStyle MediumText({required double fontSize}) {
     return TextStyle(
         fontFamily: KConstantFonts.PoppinsMedium,
-        color: KConstantColors.whiteColor,
+        color: KConstantColors.darkColor,
         fontSize: fontSize);
   }
 }
