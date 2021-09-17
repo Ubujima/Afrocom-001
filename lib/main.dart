@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:newuiproject/configuration/colorProvider.dart';
 import 'package:newuiproject/presentation/views/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => ColorProvider())],
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'Roboto',
+        fontFamily: 'Georgia',
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

@@ -1,16 +1,21 @@
 import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newuiproject/configuration/colorProvider.dart';
+import 'package:newuiproject/helper.dart';
 import 'package:newuiproject/presentation/views/blog_posting_form.dart';
 import 'package:newuiproject/presentation/views/event_posting_form.dart';
 import 'package:newuiproject/presentation/views/job_posting_form.dart';
 import 'package:newuiproject/presentation/views/market_place_post_form.dart';
 import 'package:newuiproject/presentation/views/place_posting_form.dart';
 import 'package:newuiproject/presentation/views/post_display_with_mood_color_feature.dart';
+import 'package:newuiproject/presentation/views/profile_map.dart';
 import 'package:newuiproject/presentation/views/profile_screen.dart';
 import 'package:newuiproject/presentation/views/project_campaign_post_form.dart';
 import 'package:newuiproject/presentation/views/setting_screen.dart';
+import 'package:provider/provider.dart';
 
+import '../../helper.dart';
 import 'mood_post.dart';
 
 class HomePageView extends StatefulWidget {
@@ -31,7 +36,7 @@ class _HomePageViewState extends State<HomePageView> {
 
   List<Filter> filterList = [
     Filter("People", ["Female", "Male"]),
-    Filter("Mood", ["Value 1", "Value 2"]),
+    Filter("Moments", ["Value 1", "Value 2"]),
     Filter("Projects", ["Value 1", "Value 2"]),
     Filter("Blog", ["Value 1", "Value 2"]),
     Filter("Marketplace", ["Value 1", "Value 2"]),
@@ -42,6 +47,7 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
+    var colorProvider = Provider.of<ColorProvider>(context);
     return GestureDetector(
       onTap: () {
         if (showLeftBar == true) {
@@ -77,11 +83,7 @@ class _HomePageViewState extends State<HomePageView> {
                             width: 1,
                           )
                         : !showFab
-                            ? Image.asset(
-                                'assets/images/roundFab.png',
-                                height: 38,
-                                width: 38,
-                              )
+                            ? ColorsConfig.getFab(context)
                             : Padding(
                                 padding: const EdgeInsets.only(
                                     left: 80.0, right: 10),
@@ -100,6 +102,11 @@ class _HomePageViewState extends State<HomePageView> {
                                         children: [
                                           InkWell(
                                             onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PostDisplayWithMoodColorFeature()));
                                               if (showLeftBar == true) {
                                                 showLeftBar = false;
                                                 setState(() {});
@@ -120,8 +127,27 @@ class _HomePageViewState extends State<HomePageView> {
                                           ),
                                           InkWell(
                                             onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PostDisplayWithMoodColorFeature()));
                                               showLocation = true;
                                               setState(() {});
+                                            },
+                                            child: Image.asset(
+                                              'assets/images/wifi.png',
+                                              height: 24,
+                                              width: 24,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProfileMapView()));
                                             },
                                             child: Image.asset(
                                               'assets/images/roundPr.png',
@@ -334,11 +360,7 @@ class _HomePageViewState extends State<HomePageView> {
                                   showFilter = true;
                                   setState(() {});
                                 },
-                                child: Image.asset(
-                                  'assets/images/center.png',
-                                  height: 36,
-                                  width: 3368,
-                                ),
+                                child: ColorsConfig.getFilter(context),
                               ),
                             ],
                           ),
@@ -377,11 +399,7 @@ class _HomePageViewState extends State<HomePageView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               if (showLeftBar == false)
-                                Image.asset(
-                                  'assets/images/logo.png',
-                                  height: 36,
-                                  width: 36,
-                                ),
+                                ColorsConfig.getLogo(context),
                               if (showLeftBar == true)
                                 Container(
                                   height: 36,
@@ -398,10 +416,15 @@ class _HomePageViewState extends State<HomePageView> {
                                     child: Center(
                                       child: Booster.dynamicFontSize(
                                           label: "Search Afrocom",
-                                          fontSize: 14),
+                                          fontSize: 14,
+                                          color:
+                                              ColorsConfig.getColor(context)),
                                     ),
                                     decoration: BoxDecoration(
-                                        color: Color(0xafE9E9E9),
+                                        color: Colors.black.withOpacity(0.5),
+                                        border: Border.all(
+                                            color:
+                                                ColorsConfig.getColor(context)),
                                         borderRadius: BorderRadius.circular(6)),
                                   ),
                                 ],
@@ -417,11 +440,7 @@ class _HomePageViewState extends State<HomePageView> {
                                         showRightBar = !showRightBar;
                                         setState(() {});
                                       },
-                                      child: Image.asset(
-                                        'assets/images/dpMark.png',
-                                        height: 39,
-                                        width: 39,
-                                      ),
+                                      child: ColorsConfig.getDpMark(context),
                                     ),
                             ],
                           ),
@@ -848,125 +867,148 @@ class _HomePageViewState extends State<HomePageView> {
                 child: Stack(
                   children: [
                     Container(
-                      height: Booster.screenHeight(context) * 0.8,
-                      width: Booster.screenWidth(context),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.black,
+                        color: Colors.black.withOpacity(0.6),
                       ),
-                      child: Column(
-                        children: [
-                          Booster.verticalSpace(40),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: Booster.screenWidth(context) * 0.23,
-                                  right: Booster.screenWidth(context) * 0.23),
-                              child: Container(
-                                height: Booster.screenHeight(context),
-                                child: ListView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: filterList.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Expanded(
-                                              child: ExpansionTile(
-                                                expandedAlignment:
-                                                    Alignment.topLeft,
-                                                expandedCrossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                iconColor: Colors.white,
-                                                onExpansionChanged: (val) {
-                                                  selectedIndex.add(index);
-                                                  setState(() {});
-                                                },
-                                                title: Row(
-                                                  children: [
-                                                    !selectedIndex
-                                                            .contains(index)
-                                                        ? Icon(
-                                                            Icons
-                                                                .radio_button_off,
-                                                            color: Colors.white,
-                                                          )
-                                                        : Icon(
-                                                            Icons
-                                                                .radio_button_checked,
-                                                            color: Colors.blue,
-                                                          ),
-                                                    Booster.horizontalSpace(6),
-                                                    Text(
-                                                      filterList[index].label,
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ],
-                                                ),
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 48.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .check_box_outline_blank,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Booster.horizontalSpace(
-                                                            6),
-                                                        Text(
-                                                          filterList[index]
-                                                              .value[0],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Booster.verticalSpace(3),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 48.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .check_box_outline_blank,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Booster.horizontalSpace(
-                                                            6),
-                                                        Text(
-                                                          filterList[index]
-                                                              .value[1],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ),
+                      height: Booster.screenHeight(context),
+                      width: Booster.screenWidth(context),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 100.0),
+                        child: Container(
+                          height: Booster.screenHeight(context),
+                          width: Booster.screenWidth(context),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(77),
+                            color: Colors.black,
                           ),
-                        ],
+                          child: Column(
+                            children: [
+                              Booster.verticalSpace(40),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: Booster.screenWidth(context) * 0.23,
+                                      right:
+                                          Booster.screenWidth(context) * 0.23),
+                                  child: Container(
+                                    height: Booster.screenHeight(context),
+                                    child: ListView.builder(
+                                        physics: BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: filterList.length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Expanded(
+                                                  child: ExpansionTile(
+                                                    expandedAlignment:
+                                                        Alignment.topLeft,
+                                                    expandedCrossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    iconColor: Colors.white,
+                                                    onExpansionChanged: (val) {
+                                                      selectedIndex.add(index);
+                                                      setState(() {});
+                                                    },
+                                                    title: Row(
+                                                      children: [
+                                                        !selectedIndex
+                                                                .contains(index)
+                                                            ? Icon(
+                                                                Icons
+                                                                    .radio_button_off,
+                                                                color: Colors
+                                                                    .white,
+                                                              )
+                                                            : Icon(
+                                                                Icons
+                                                                    .radio_button_checked,
+                                                                color:
+                                                                    Colors.blue,
+                                                              ),
+                                                        Booster.horizontalSpace(
+                                                            6),
+                                                        Text(
+                                                          filterList[index]
+                                                              .label,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 48.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            Booster
+                                                                .horizontalSpace(
+                                                                    6),
+                                                            Text(
+                                                              filterList[index]
+                                                                  .value[0],
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Booster.verticalSpace(3),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 48.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            Booster
+                                                                .horizontalSpace(
+                                                                    6),
+                                                            Text(
+                                                              filterList[index]
+                                                                  .value[1],
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     Positioned.fill(
@@ -977,10 +1019,13 @@ class _HomePageViewState extends State<HomePageView> {
                               showFilter = false;
                               setState(() {});
                             },
-                            child: Image.asset(
-                              'assets/images/clear.png',
-                              height: 36,
-                              width: 36,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 13.0),
+                              child: Image.asset(
+                                'assets/images/clear.png',
+                                height: 36,
+                                width: 36,
+                              ),
                             ),
                           )),
                     ),

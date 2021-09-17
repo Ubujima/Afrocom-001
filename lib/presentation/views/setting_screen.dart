@@ -1,7 +1,9 @@
 import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newuiproject/configuration/colorProvider.dart';
 import 'package:newuiproject/presentation/elements/auth_text_field.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -11,8 +13,21 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  List<SelectedColor> colorList = [
+    SelectedColor(id: "B", color: Color(0xff000000)),
+    SelectedColor(id: "Y", color: Color(0xffF4FC14)),
+    SelectedColor(id: "BL", color: Color(0xff0000FF)),
+    SelectedColor(id: "R", color: Color(0xffFF1C1C)),
+    SelectedColor(id: "O", color: Color(0xffFF8C00)),
+    // SelectedColor(id: "W", color: Color(0xffffffff)),
+    SelectedColor(id: "G", color: Color(0xff0CA00C)),
+    SelectedColor(id: "PN", color: Color(0xffEE82EE)),
+    SelectedColor(id: "PU", color: Color(0xffA92DDB)),
+  ];
+
   @override
   Widget build(BuildContext context) {
+    var color = Provider.of<ColorProvider>(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -305,79 +320,34 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: Color(0xff7A7878),
                         ),
                         Booster.verticalSpace(19),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffA92DDB)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffFF1C1C)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffEE82EE)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xffF4FC14)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xff000000)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xff0000FF)),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xff0CA00C)),
-                              ),
-                            ),
-                          ],
+                        Container(
+                          height: 38,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemCount: colorList.length,
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                  onTap: () {
+                                    color.saveColor(colorList[i].id);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(
+                                      height: 28,
+                                      width: 28,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: color.getColor() ==
+                                                      colorList[i].id
+                                                  ? Colors.black
+                                                  : Colors.transparent),
+                                          shape: BoxShape.circle,
+                                          color: colorList[i].color),
+                                    ),
+                                  ),
+                                );
+                              }),
                         ),
                         Booster.verticalSpace(15)
                       ],
@@ -623,4 +593,11 @@ class _SettingScreenState extends State<SettingScreen> {
       ),
     );
   }
+}
+
+class SelectedColor {
+  final String id;
+  final Color color;
+
+  SelectedColor({required this.id, required this.color});
 }

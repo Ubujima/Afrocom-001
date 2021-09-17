@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Timer(Duration(milliseconds: 15000), () {
+    Timer(Duration(milliseconds: 4000), () {
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => OnBoardingScreens()));
     });
@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(milliseconds: 3000), () {
+    Timer(Duration(milliseconds: 666), () {
       if (index < 6) {
         index++;
         setState(() {});
