@@ -413,18 +413,20 @@ class _HomePageViewState extends State<HomePageView> {
                                   Container(
                                     height: 35,
                                     width: 190,
-                                    child: Center(
-                                      child: Booster.dynamicFontSize(
-                                          label: "Search Afrocom",
-                                          fontSize: 14,
-                                          color:
-                                              ColorsConfig.getColor(context)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Booster.horizontalSpace(10),
+                                        Booster.dynamicFontSize(
+                                            label: "Search Afrocom",
+                                            fontSize: 14,
+                                            color: Colors.grey),
+                                      ],
                                     ),
                                     decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5),
-                                        border: Border.all(
-                                            color:
-                                                ColorsConfig.getColor(context)),
+                                        color: ColorsConfig.getColor(context)
+                                            .withOpacity(0.75),
                                         borderRadius: BorderRadius.circular(6)),
                                   ),
                                 ],
@@ -868,7 +870,7 @@ class _HomePageViewState extends State<HomePageView> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
+                        color: Colors.black.withOpacity(0.5),
                       ),
                       height: Booster.screenHeight(context),
                       width: Booster.screenWidth(context),
@@ -878,7 +880,7 @@ class _HomePageViewState extends State<HomePageView> {
                           height: Booster.screenHeight(context),
                           width: Booster.screenWidth(context),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(77),
+                            borderRadius: BorderRadius.circular(57),
                             color: Colors.black,
                           ),
                           child: Column(

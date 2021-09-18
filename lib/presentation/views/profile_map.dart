@@ -15,6 +15,7 @@ import 'package:newuiproject/presentation/views/setting_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../helper.dart';
+import 'home_page.dart';
 import 'mood_post.dart';
 
 class ProfileMapView extends StatefulWidget {
@@ -71,7 +72,7 @@ class _ProfileMapViewState extends State<ProfileMapView> {
                   showFab = !showFab;
                   setState(() {});
                 },
-                child: showBottomSheet
+                child: showBottomSheet || showLocation
                     ? Container(
                         height: 1,
                         width: 1,
@@ -362,28 +363,29 @@ class _ProfileMapViewState extends State<ProfileMapView> {
                           ),
                         ),
                       ),
-                    Positioned.fill(
-                      bottom: 12,
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: 74,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showLocation = true;
-                                  setState(() {});
-                                },
-                                child: ColorsConfig.getWifi(context),
-                              ),
-                            ],
+                    if (!showLocation)
+                      Positioned.fill(
+                        bottom: 12,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: 74,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    showLocation = true;
+                                    setState(() {});
+                                  },
+                                  child: ColorsConfig.getWifi(context),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
                     if (!showLeftBar)
                       Align(
                         alignment: Alignment.bottomLeft,
@@ -431,18 +433,20 @@ class _ProfileMapViewState extends State<ProfileMapView> {
                                   Container(
                                     height: 35,
                                     width: 190,
-                                    child: Center(
-                                      child: Booster.dynamicFontSize(
-                                          label: "Search Afrocom",
-                                          fontSize: 14,
-                                          color:
-                                              ColorsConfig.getColor(context)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Booster.horizontalSpace(10),
+                                        Booster.dynamicFontSize(
+                                            label: "Search Afrocom",
+                                            fontSize: 14,
+                                            color: Colors.grey),
+                                      ],
                                     ),
                                     decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5),
-                                        border: Border.all(
-                                            color:
-                                                ColorsConfig.getColor(context)),
+                                        color: ColorsConfig.getColor(context)
+                                            .withOpacity(0.75),
                                         borderRadius: BorderRadius.circular(6)),
                                   ),
                                 ],
@@ -641,7 +645,7 @@ class _ProfileMapViewState extends State<ProfileMapView> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: 430.34,
+                  height: 390.34,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(40),
@@ -1091,11 +1095,4 @@ class _ProfileMapViewState extends State<ProfileMapView> {
       ],
     );
   }
-}
-
-class Filter {
-  final String label;
-  final List<String> value;
-
-  Filter(this.label, this.value);
 }

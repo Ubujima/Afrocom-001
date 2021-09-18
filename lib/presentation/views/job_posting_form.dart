@@ -13,6 +13,7 @@ import 'package:newuiproject/presentation/views/home_page.dart';
 import 'package:newuiproject/presentation/views/market_place_post_form.dart';
 import 'package:newuiproject/presentation/views/place_posting_form.dart';
 import 'package:newuiproject/presentation/views/post_display_with_mood_color_feature.dart';
+import 'package:newuiproject/presentation/views/profile_map.dart';
 import 'package:newuiproject/presentation/views/profile_screen.dart';
 import 'package:newuiproject/presentation/views/project_campaign_post_form.dart';
 import 'package:newuiproject/presentation/views/setting_screen.dart';
@@ -137,7 +138,7 @@ class _JobPostingFormState extends State<JobPostingForm> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          HomePageView()));
+                                                          PostDisplayWithMoodColorFeature()));
                                               if (showLeftBar == true) {
                                                 showLeftBar = false;
                                                 setState(() {});
@@ -151,15 +152,34 @@ class _JobPostingFormState extends State<JobPostingForm> {
                                               setState(() {});
                                             },
                                             child: Image.asset(
-                                              'assets/images/wifi.png',
-                                              height: 20,
-                                              width: 20,
+                                              'assets/images/world.png',
+                                              height: 30,
+                                              width: 30,
                                             ),
                                           ),
                                           InkWell(
                                             onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PostDisplayWithMoodColorFeature()));
                                               showLocation = true;
                                               setState(() {});
+                                            },
+                                            child: Image.asset(
+                                              'assets/images/wifi.png',
+                                              height: 24,
+                                              width: 24,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ProfileMapView()));
                                             },
                                             child: Image.asset(
                                               'assets/images/roundPr.png',
@@ -218,18 +238,20 @@ class _JobPostingFormState extends State<JobPostingForm> {
                                     Container(
                                       height: 35,
                                       width: 190,
-                                      child: Center(
-                                        child: Booster.dynamicFontSize(
-                                            label: "Search Afrocom",
-                                            fontSize: 14,
-                                            color:
-                                                ColorsConfig.getColor(context)),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Booster.horizontalSpace(10),
+                                          Booster.dynamicFontSize(
+                                              label: "Search Afrocom",
+                                              fontSize: 14,
+                                              color: Colors.grey),
+                                        ],
                                       ),
                                       decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          border: Border.all(
-                                              color: ColorsConfig.getColor(
-                                                  context)),
+                                          color: ColorsConfig.getColor(context)
+                                              .withOpacity(0.75),
                                           borderRadius:
                                               BorderRadius.circular(6)),
                                     ),
@@ -1100,125 +1122,148 @@ class _JobPostingFormState extends State<JobPostingForm> {
                 child: Stack(
                   children: [
                     Container(
-                      height: Booster.screenHeight(context) * 0.8,
-                      width: Booster.screenWidth(context),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.black,
+                        color: Colors.black.withOpacity(0.5),
                       ),
-                      child: Column(
-                        children: [
-                          Booster.verticalSpace(40),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: Booster.screenWidth(context) * 0.23,
-                                  right: Booster.screenWidth(context) * 0.23),
-                              child: Container(
-                                height: Booster.screenHeight(context),
-                                child: ListView.builder(
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: filterList.length,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Expanded(
-                                              child: ExpansionTile(
-                                                expandedAlignment:
-                                                    Alignment.topLeft,
-                                                expandedCrossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                iconColor: Colors.white,
-                                                onExpansionChanged: (val) {
-                                                  selectedIndex.add(index);
-                                                  setState(() {});
-                                                },
-                                                title: Row(
-                                                  children: [
-                                                    !selectedIndex
-                                                            .contains(index)
-                                                        ? Icon(
-                                                            Icons
-                                                                .radio_button_off,
-                                                            color: Colors.white,
-                                                          )
-                                                        : Icon(
-                                                            Icons
-                                                                .radio_button_checked,
-                                                            color: Colors.blue,
-                                                          ),
-                                                    Booster.horizontalSpace(6),
-                                                    Text(
-                                                      filterList[index].label,
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ],
-                                                ),
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 48.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .check_box_outline_blank,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Booster.horizontalSpace(
-                                                            6),
-                                                        Text(
-                                                          filterList[index]
-                                                              .value[0],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Booster.verticalSpace(3),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 48.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .check_box_outline_blank,
-                                                          color: Colors.white,
-                                                        ),
-                                                        Booster.horizontalSpace(
-                                                            6),
-                                                        Text(
-                                                          filterList[index]
-                                                              .value[1],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 14),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                              ),
-                            ),
+                      height: Booster.screenHeight(context),
+                      width: Booster.screenWidth(context),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 100.0),
+                        child: Container(
+                          height: Booster.screenHeight(context),
+                          width: Booster.screenWidth(context),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(57),
+                            color: Colors.black,
                           ),
-                        ],
+                          child: Column(
+                            children: [
+                              Booster.verticalSpace(40),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: Booster.screenWidth(context) * 0.23,
+                                      right:
+                                          Booster.screenWidth(context) * 0.23),
+                                  child: Container(
+                                    height: Booster.screenHeight(context),
+                                    child: ListView.builder(
+                                        physics: BouncingScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: filterList.length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Expanded(
+                                                  child: ExpansionTile(
+                                                    expandedAlignment:
+                                                        Alignment.topLeft,
+                                                    expandedCrossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    iconColor: Colors.white,
+                                                    onExpansionChanged: (val) {
+                                                      selectedIndex.add(index);
+                                                      setState(() {});
+                                                    },
+                                                    title: Row(
+                                                      children: [
+                                                        !selectedIndex
+                                                                .contains(index)
+                                                            ? Icon(
+                                                                Icons
+                                                                    .radio_button_off,
+                                                                color: Colors
+                                                                    .white,
+                                                              )
+                                                            : Icon(
+                                                                Icons
+                                                                    .radio_button_checked,
+                                                                color:
+                                                                    Colors.blue,
+                                                              ),
+                                                        Booster.horizontalSpace(
+                                                            6),
+                                                        Text(
+                                                          filterList[index]
+                                                              .label,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    children: <Widget>[
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 48.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            Booster
+                                                                .horizontalSpace(
+                                                                    6),
+                                                            Text(
+                                                              filterList[index]
+                                                                  .value[0],
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Booster.verticalSpace(3),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 48.0),
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .check_box_outline_blank,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            Booster
+                                                                .horizontalSpace(
+                                                                    6),
+                                                            Text(
+                                                              filterList[index]
+                                                                  .value[1],
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 14),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     Positioned.fill(
@@ -1229,10 +1274,13 @@ class _JobPostingFormState extends State<JobPostingForm> {
                               showFilter = false;
                               setState(() {});
                             },
-                            child: Image.asset(
-                              'assets/images/clear.png',
-                              height: 36,
-                              width: 36,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 13.0),
+                              child: Image.asset(
+                                'assets/images/clear.png',
+                                height: 36,
+                                width: 36,
+                              ),
                             ),
                           )),
                     ),
