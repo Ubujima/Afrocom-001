@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:booster/booster.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -292,7 +290,7 @@ class _HomePageViewState extends State<HomePageView> {
                         height: MediaQuery.of(context).size.height,
                         width: 74,
                         decoration: BoxDecoration(
-                          color: Color(0xcc000000),
+                          color: ColorsConfig.getColor(context).withOpacity(.5),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 50.0),
@@ -397,87 +395,56 @@ class _HomePageViewState extends State<HomePageView> {
                         Booster.verticalSpace(40),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                          child: Container(
-                            height: 52,
-                            //color: Colors.black.withOpacity(0.5),
-                            color: ColorsConfig.getColor(context)
-                                .withBlue(32)
-                                .withOpacity(0.5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                //   if (showLeftBar == false)
-                                //     ColorsConfig.getLogo(context),
-                                //   if (showLeftBar == true)
-                                //     Container(
-                                //       height: 36,
-                                //       width: 36,
-                                //     ),
-                                //   Booster.horizontalSpace(10),
-                                //   Row(
-                                //     mainAxisAlignment: MainAxisAlignment.center,
-                                //     mainAxisSize: MainAxisSize.min,
-                                //     children: [
-                                //       Container(
-                                //         height: 35,
-                                //         width: 190,
-                                //         child: Row(
-                                //           mainAxisAlignment:
-                                //               MainAxisAlignment.start,
-                                //           children: [
-                                //             Booster.horizontalSpace(10),
-                                //             Booster.dynamicFontSize(
-                                //                 label: "Search Afrocom",
-                                //                 fontSize: 14,
-                                //                 color: Colors.grey),
-                                //           ],
-                                //         ),
-                                //         decoration: BoxDecoration(
-                                //             color: ColorsConfig.getColor(context)
-                                //                 .withOpacity(0.75),
-                                //             borderRadius: BorderRadius.circular(6)),
-                                //       ),
-                                //     ],
-                                //   ),
-                                IconButton(
-                                  icon: Icon(Icons.arrow_back),
-                                  color: ColorsConfig.getColor(context),
-                                  highlightColor: Colors.red,
-                                  hoverColor: Colors.green,
-                                  focusColor: Colors.purple,
-                                  splashColor: Colors.yellow,
-                                  disabledColor: Colors.grey,
-                                  iconSize: 24,
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                Booster.horizontalSpace(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (showLeftBar == false)
+                                ColorsConfig.getLogo(context),
+                              if (showLeftBar == true)
                                 Container(
-                                  width: 260,
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      hintText: "Search AfroCom",
-                                      hintStyle:
-                                          TextStyle(color: Colors.white24),
-                                      prefixIcon: Icon(Icons.search_rounded),
-                                    ),
-                                  ),
+                                  height: 36,
+                                  width: 36,
                                 ),
-                                showRightBar
-                                    ? Container(
-                                        height: 36,
-                                        width: 36,
-                                      )
-                                    : InkWell(
-                                        onTap: () {
-                                          showRightBar = !showRightBar;
-                                          setState(() {});
-                                        },
-                                        child: ColorsConfig.getDpMark(context),
-                                      ),
-                              ],
-                            ),
+                              Booster.horizontalSpace(10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    height: 35,
+                                    width: 190,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Booster.horizontalSpace(10),
+                                        Booster.dynamicFontSize(
+                                            label: "Search Afrocom",
+                                            fontSize: 14,
+                                            color: Colors.grey),
+                                      ],
+                                    ),
+                                    decoration: BoxDecoration(
+                                        color: ColorsConfig.getColor(context)
+                                            .withOpacity(0.75),
+                                        borderRadius: BorderRadius.circular(6)),
+                                  ),
+                                ],
+                              ),
+                              Booster.horizontalSpace(10),
+                              showRightBar
+                                  ? Container(
+                                      height: 36,
+                                      width: 36,
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        showRightBar = !showRightBar;
+                                        setState(() {});
+                                      },
+                                      child: ColorsConfig.getDpMark(context),
+                                    ),
+                            ],
                           ),
                         )
                       ],
