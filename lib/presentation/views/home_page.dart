@@ -290,7 +290,7 @@ class _HomePageViewState extends State<HomePageView> {
                         height: MediaQuery.of(context).size.height,
                         width: 74,
                         decoration: BoxDecoration(
-                          color: Color(0xcc000000),
+                          color: ColorsConfig.getColor(context).withOpacity(.5),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 50.0),
