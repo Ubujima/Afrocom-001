@@ -17,13 +17,12 @@ Explore Africa around you with Afrocom.
 <a href="https://apps.apple.com/us/app/spot-videos/id1564675926?utm_source=github&utm_campaign=static" target="blank"><img src="https://raw.githubusercontent.com/dshukertjr/spot/main/assets/readme/download_ios.svg" alt="Download from AppStore" height="96" /></a></span><a href='https://play.google.com/store/apps/details?id=app.spotvideo&utm_source=github&utm_campaign=static&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target="blank"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="100" /></a>
 
 
-### Features
+### Project Roadmap
 App features and status are mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
 
 
-### Demo Video
-
-Coming soon!!!!!
+### Designs 
+* [Check out AfroCom designs and the aspirations roadmap](https://www.figma.com/file/9YkMdzZ8Qub40xHslT4HbY/AfroCom-MVP?node-id=0%3A1)
 
 
 
@@ -57,6 +56,11 @@ _\*Afrocom works on iOS and Android._
 
 ---
 
+
+### Local Set-up
+
+* [Check out the demo video on setting up your dev environment](https://www.youtube.com/watch?v=FrpTPiU8EiQ&list=PL1l89snvC0ZuDa0aTtWITulGOs4Rkgz8P&index=8)
+	
 
 ### Dependencies
 <details>
