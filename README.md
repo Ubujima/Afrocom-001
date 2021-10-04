@@ -9,7 +9,7 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 * community & resource networking
 * change facilitation through projects & campaign tools
 * ownership & run - 80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team
-* and whole lot more
+* an [ Ubujima initiative](https://ubujima.org) - to connect everything & anything Africa
 
 ### Download App
 Explore Africa around you with Afrocom.
@@ -19,6 +19,7 @@ Explore Africa around you with Afrocom.
 
 ### Project Roadmap
 App features and status are mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
+To join in all discussions, decisions & planning [ Click here](https://ubujima.com)
 
 
 ### Designs 
