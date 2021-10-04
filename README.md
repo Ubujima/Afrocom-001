@@ -34,11 +34,14 @@ Home Page        |  Home Main Menu     |   Home Profile Menu               |  Ho
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Main%20Navigation%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e2d91503d3279f8d5efd1c301cceb4a53ea7c3fa/Readme%20Screenshots/Main%20Menu%20opened.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e2d91503d3279f8d5efd1c301cceb4a53ea7c3fa/Readme%20Screenshots/Profile%20Menu%20Opened.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Taskbar%20Icon%20Opened.png?raw=true)|
 
-Posting Panel                  | PostForm- Moments      |   PostDisplay- Moments      |     LocationPost View
+Posting Panel                  | PostForm- Moments      |   PostDisplay- Moments      |     PostDisplay- Blogs
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Post%20Panel.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Mood%20Post.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Moment%20Post%20Display.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/User%20Location%20Screen.png?raw=true)|
+![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Post%20Panel.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Mood%20Post.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Moment%20Post%20Display.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Blog%20Post%20Display.png?raw=true)|
 
 
+User Location Home                 | User Location Feeds      |   Profile      |     LocationPost View
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen%200.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Profile%20Screen%201.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e88b08ea0380247b785d7474c3dd893f271f2108/Readme%20Screenshots/Profile%20Screen%20Editable.png?raw=true)|
 
 ## Contributing
 
