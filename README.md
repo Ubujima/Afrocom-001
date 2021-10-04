@@ -28,7 +28,8 @@ App features and status are mentioned at project section [ Click here](https://g
 
 Splash Screen              |  Onboarding Page              | Login Page              |  Sign up Page
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_1.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_2.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_3.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_4.jpg?raw=true)|
+![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Main%20Navigation%20Screen.png)|![]
+(https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Onboarding%203.png)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_3.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_4.jpg?raw=true)|
 
 Home Page        |  Home Main Menu     |   Home Profile Menu               |  Home Taskbar
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
