@@ -28,12 +28,11 @@ App features and status are mentioned at project section [ Click here](https://g
 
 Splash Screen              |  Onboarding Page              | Login Page              |  Sign up Page
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Main%20Navigation%20Screen.png)|![]
-(https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Onboarding%203.png)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_3.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_4.jpg?raw=true)|
+![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Splash%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Onboarding%203.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Connection%20Options.png?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Auth/screenshot_4.jpg?raw=true)|
 
 Home Page        |  Home Main Menu     |   Home Profile Menu               |  Home Taskbar
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_5.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_2.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_7.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_6.jpg?raw=true)|
+![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Main%20Navigation%20Screen.png?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_2.jpg?raw=true)|![](https://github.com/TheAlphamerc/flutter_twitter_clone/blob/master/screenshots/Home/screenshot_7.jpg?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Taskbar%20Icon%20Opened.png?raw=true)|
 
 User Location                  | Profile Page       |   NewsFeed- Moments      |     Compose Retweet with comment
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
