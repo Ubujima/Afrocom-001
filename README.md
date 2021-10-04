@@ -18,8 +18,8 @@ Explore Africa around you with Afrocom.
 
 
 ### Project Roadmap
-App features and status are mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
-To join in all discussions, decisions & planning [ Click here](https://ubujima.com)
+* App features and status are mentioned at project section [ Click here](https://github.com/Ubujima/Afrocom/projects)
+* To join in all discussions, decisions & planning [ Click here](https://ubujima.com)
 
 
 ### Designs 
