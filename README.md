@@ -22,9 +22,6 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 * To join in all discussions, decisions & planning [ Click here](https://ubujima.com)
 
 
-### Designs 
-* [Check out AfroCom designs and the aspirations roadmap](https://www.figma.com/file/9YkMdzZ8Qub40xHslT4HbY/AfroCom-MVP?node-id=0%3A1)
-
 ## Screenshots
 
 Splash Screen              |  Onboarding Page              | Login Page              |  Sign up Page
@@ -40,9 +37,15 @@ Posting Panel                  | PostForm- Moments      |   PostDisplay- Moments
 ![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Post%20Panel.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Mood%20Post.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Moment%20Post%20Display.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Blog%20Post%20Display.png?raw=true)|
 
 
-User Location Home                 | User Location Feeds      |   Profile      |     LocationPost View
+User Location Home                 | User Location Feeds      |   Profile      |     Profile Edit
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen%200.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Profile%20Screen%201.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e88b08ea0380247b785d7474c3dd893f271f2108/Readme%20Screenshots/Profile%20Screen%20Editable.png?raw=true)|
+
+
+
+### Designs 
+* [Check out the rest ](https://www.figma.com/file/9YkMdzZ8Qub40xHslT4HbY/AfroCom-MVP?node-id=0%3A1) of AfroCom designs and the aspirations roadmap.
+
 
 ## Contributing
 
@@ -76,7 +79,7 @@ $ flutter run --flavor production --target lib/main_production.dart --dart-defin
 
 ### Local Set-up
 
-* [Check out ](https://www.youtube.com/watch?v=FrpTPiU8EiQ&list=PL1l89snvC0ZuDa0aTtWITulGOs4Rkgz8P&index=8) the demo video on setting up your Local dev environment
+* [Check out ](https://www.youtube.com/watch?v=FrpTPiU8EiQ&list=PL1l89snvC0ZuDa0aTtWITulGOs4Rkgz8P&index=8) demo videos on setting up your local dev environment.
 
 * [AfroCom Schema ](https://tested-robe-f49.notion.site/Database-Schema-Afrocom-c865e3e7ce874079ac4ab8bb772ec207) here
 	
