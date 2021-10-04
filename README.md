@@ -70,14 +70,15 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 $ flutter run --flavor production --target lib/main_production.dart --dart-define=SUPABASE_URL=[Supabase Url] --dart-define=SUPABASE_ANNON_KEY=[Supabase annon key]
 ```
 
-_\*Afrocom works on iOS and Android._
 
 ---
 
 
 ### Local Set-up
 
-* [Check out the demo video on setting up your dev environment](https://www.youtube.com/watch?v=FrpTPiU8EiQ&list=PL1l89snvC0ZuDa0aTtWITulGOs4Rkgz8P&index=8)
+* [Check out ](https://www.youtube.com/watch?v=FrpTPiU8EiQ&list=PL1l89snvC0ZuDa0aTtWITulGOs4Rkgz8P&index=8) the demo video on setting up your Local dev environment
+
+* [AfroCom Schema ](https://tested-robe-f49.notion.site/Database-Schema-Afrocom-c865e3e7ce874079ac4ab8bb772ec207) here
 	
 
 ### Dependencies
