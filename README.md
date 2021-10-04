@@ -12,7 +12,7 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 * an [ Ubujima initiative](https://ubujima.org) - to connect everything & anything Africa
 
 ### Download App
-Explore Africa around you with Afrocom.
+* Explore Africa around you with Afrocom.
 
 <a href="https://apps.apple.com/us/app/spot-videos/id1564675926?utm_source=github&utm_campaign=static" target="blank"><img src="https://raw.githubusercontent.com/dshukertjr/spot/main/assets/readme/download_ios.svg" alt="Download from AppStore" height="96" /></a></span><a href='https://play.google.com/store/apps/details?id=app.spotvideo&utm_source=github&utm_campaign=static&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target="blank"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height="100" /></a>
 
@@ -341,6 +341,6 @@ Update the `CFBundleLocalizations` array in the `Info.plist` at `ios/Runner/Info
 [Ubujima Foundation](https://github.com/ubujima), [Twitter](https://www.twitter.com/ubujima), [Instagram](https://www.instagram.com/ubujima)
  
 
-> If you found this project worth donating and please donnate here [PayPal](https://paypal.me/ubujima?locale.x=en_US)
+> If you found this project worth donating - please donnate here [PayPal](https://paypal.me/ubujima?locale.x=en_US)
 
 
