@@ -1,4 +1,4 @@
-# Afrocom <img align="left" width="100" height="100" src="https://github.com/Ubujima/Afrocom/blob/master/Afrocom%20logo.png">  
+# AfroCom <img align="left" width="100" height="100" src="https://github.com/Ubujima/Afrocom/blob/bc2f93d5869d128e97891e73277baaeaf11e7a83/Readme%20Screenshots/Blue.png">  
 
 
 A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects & maps members activities (users, postings, polls, projects,reports, campaigns, businesses, resources, etc.) These data get spatialized & clusterized with customed markers on the map as per the whole continent, region, countries, towns and localities. Map interaction by tapping a map parts ulters feeds per chosen area. Also with filter and search functions that upon changed by user, the map view automatially changes.
@@ -8,7 +8,7 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 * realtime data mapping & access
 * community & resource networking
 * change facilitation through projects & campaign tools
-* 80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team
+* ownership & run - 80/20 principle: 80% of profit invested in Ubujima commnuity projects and 20% as incentive to contributors & team
 * and whole lot more
 
 ### Download App
