@@ -23,9 +23,8 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 
 
 ## Prototype
-<p align='center'>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GLuHN51plJg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</p>
+https://user-images.githubusercontent.com/63294054/160848537-74099e16-b8c4-444c-8c0a-4c0c8e1574f3.mp4
+
 
 ### Designs 
 * [Check out the rest ](https://www.figma.com/file/9YkMdzZ8Qub40xHslT4HbY/AfroCom-MVP?node-id=0%3A1) of AfroCom designs and the aspirations roadmap.
