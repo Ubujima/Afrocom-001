@@ -22,26 +22,10 @@ A `Super`, `Interactive`, `Directory` & `Geo-tagging` Application that collects 
 * To join in all discussions, decisions & planning [ Click here](https://ubujima.com)
 
 
-## Screenshots
-
-Splash Screen              |  Onboarding Page              | Login Page              |  Sign up Page
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Splash%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Onboarding%203.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Connection%20Options.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e2d91503d3279f8d5efd1c301cceb4a53ea7c3fa/Readme%20Screenshots/Create%20Account.png?raw=true)|
-
-Home Page        |  Home Main Menu     |   Home Profile Menu               |  Home Taskbar
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/2650cc0a8380dd665c6acc750adb93fa9e2fa1af/Readme%20Screenshots/Main%20Navigation%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e2d91503d3279f8d5efd1c301cceb4a53ea7c3fa/Readme%20Screenshots/Main%20Menu%20opened.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e2d91503d3279f8d5efd1c301cceb4a53ea7c3fa/Readme%20Screenshots/Profile%20Menu%20Opened.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/68ff0b4c4719736eaf3d42c94f4aa8e5cb93a640/Readme%20Screenshots/Taskbar%20Icon%20Opened.png?raw=true)|
-
-Posting Panel                  | PostForm- Moments      |   PostDisplay- Moments      |     PostDisplay- Blogs
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Post%20Panel.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Mood%20Post.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/af91f0232f0f889c85e3a65bde258c7d7f9814a5/Readme%20Screenshots/Moment%20Post%20Display.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Blog%20Post%20Display.png?raw=true)|
-
-
-User Location Home                 | User Location Feeds      |   Profile      |     Profile Edit
-:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen%200.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/User%20Location%20Screen.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e3ecf5d94bac33f00cbe203997cc2b899977549a/Readme%20Screenshots/Profile%20Screen%201.png?raw=true)|![](https://github.com/Ubujima/Afrocom/blob/e88b08ea0380247b785d7474c3dd893f271f2108/Readme%20Screenshots/Profile%20Screen%20Editable.png?raw=true)|
-
-
+## Prototype
+<p align='center'>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GLuHN51plJg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 ### Designs 
 * [Check out the rest ](https://www.figma.com/file/9YkMdzZ8Qub40xHslT4HbY/AfroCom-MVP?node-id=0%3A1) of AfroCom designs and the aspirations roadmap.
@@ -96,10 +80,8 @@ $ flutter run --flavor production --target lib/main_production.dart --dart-defin
 * [url_launcher](https://pub.dev/packages/url_launcher)
 * [google_fonts](https://pub.dev/packages/google_fonts)
 * [image_picker](https://pub.dev/packages/image_picker)
-* [firebase_auth](https://pub.dev/packages/firebase_auth)
+* [appwrite_baas](https://pub.dev/packages/appwrite)
 * [google_sign_in](https://pub.dev/packages/google_sign_in)
-* [firebase_analytics](https://pub.dev/packages/firebase_analytics)
-* [firebase_database](https://pub.dev/packages/firebase_database)
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
 * [flutter_advanced_networkimage](https://pub.dev/packages/flutter_advanced_networkimage)
      
